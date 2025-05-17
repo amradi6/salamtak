@@ -1,8 +1,22 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    Future.delayed(
+      Duration(seconds: 2),
+      () => Navigator.pushReplacementNamed(context, '/onboarding1'),
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +83,7 @@ class SplashScreen extends StatelessWidget {
           Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              children:  [
+              children: [
                 Image.asset('assets/images/logo.png', width: 70),
                 SizedBox(height: 16),
                 Text(
