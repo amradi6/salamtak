@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:salamtak/features/auth/views/login_screen.dart';
 import 'package:salamtak/features/auth/views/signup_screen.dart';
 import 'package:salamtak/features/onboarding/views/onboarding_screen_01.dart';
 import 'package:salamtak/features/onboarding/views/onboarding_screen_02.dart';
@@ -19,6 +20,8 @@ class AppRoutes {
         return createRoute(screen: OnboardingScreen03());
       case "/Signup":
         return createRoute(screen: SignupScreen());
+      case "/login":
+        return createRoute(screen: LoginScreen());
 
       default:
         return MaterialPageRoute(

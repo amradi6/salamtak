@@ -1,9 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:salamtak/features/auth/widgets/auth_with_google.dart';
 import 'package:salamtak/features/auth/widgets/custom_text_form_field.dart';
 
 import '../widgets/custom_elevated_button.dart';
+import '../widgets/custom_text_button.dart';
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({super.key});
@@ -73,69 +75,35 @@ class SignupScreen extends StatelessWidget {
             ),
 
             SingleChildScrollView(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: size.height * 0.1887495,
-                      left: size.width * 0.02,
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          "Join us to start searching",
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: "Rubik",
-                            color: Color(0XFF000000),
-                          ),
-                        ),
-                        SizedBox(height: size.height * 0.018633),
-                        Text(
-                          "You can search course, apply course and find \n              scholarship for abroad studies",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w300,
-                            fontFamily: "Rubik",
-                            color: Color(0XFF677294),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: size.height * 0.083229),
-                  Container(
-                    width: size.width * 0.41666,
-                    height: size.height * 0.06705575,
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(color: Color(0X06000000), blurRadius: 22),
-                      ],
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0XFFFFFFFF),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(12)),
-                        ),
+              child: SizedBox(
+                width: double.infinity,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: size.height * 0.1887495,
                       ),
-                      child: Padding(
-                        padding: EdgeInsets.only(left: size.width * 0.03),
-                        child: Row(
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Image.asset(
-                              "assets/images/google.png",
-                              width: size.width * 0.0473177,
-                              height: size.height * 0.022563,
-                            ),
-                            SizedBox(width: size.width * 0.0333),
                             Text(
-                              "Google",
+                              "Join us to start searching",
                               style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w200,
+                                fontSize: 24,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: "Rubik",
+                                color: Color(0XFF000000),
+                              ),
+                            ),
+                            SizedBox(height: size.height * 0.018633),
+                            Text(
+                              "You can search course, apply course and find \n              scholarship for abroad studies",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w300,
                                 fontFamily: "Rubik",
                                 color: Color(0XFF677294),
                               ),
@@ -144,11 +112,10 @@ class SignupScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: size.height * 0.04222),
-                  Padding(
-                    padding: EdgeInsets.only(left: size.width * 0.052083),
-                    child: Column(
+                    SizedBox(height: size.height * 0.083229),
+                    AuthWithGoogle(size: size),
+                    SizedBox(height: size.height * 0.04222),
+                    Column(
                       children: [
                         CustomTextFormField(
                           size: size,
@@ -170,23 +137,16 @@ class SignupScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                  ),
-                  SizedBox(height: size.height * 0.1043089),
-                  CustomElevatedButton(size: size, text: "Sign up"),
-                  SizedBox(height: size.height * 0.002111),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Have an account? Log in",
-                      style: TextStyle(
-                        color: Color(0X800EBE7F),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: "Rubik",
-                      ),
+                    SizedBox(height: size.height * 0.1043089),
+                    CustomElevatedButton(
+                      size: size, text: "Sign up", onPressed: () {},),
+                    SizedBox(height: size.height * 0.002111),
+                    CustomTextButton(
+                      text: "Have an account? Log in",
+                      onPressed: () => Navigator.pushNamed(context, "/login"),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],
