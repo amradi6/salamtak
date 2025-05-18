@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:salamtak/features/auth/views/forgot_screen.dart';
 import 'package:salamtak/features/auth/widgets/auth_with_google.dart';
 import 'package:salamtak/features/auth/widgets/custom_elevated_button.dart';
 import 'package:salamtak/features/auth/widgets/custom_text_button.dart';
@@ -132,9 +133,13 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(height: size.height*0.0397367),
                   CustomElevatedButton(onPressed: () {}, text: "Log in", size: size),
                   SizedBox(height: size.height*0.023593),
-                  CustomTextButton(text: "Forgot password?", onPressed: () {},),
+                  CustomTextButton(text: "Forgot password?", onPressed: () {
+                    ForgotScreen.showForgotPasswordSheet(context);
+                  },),
                   SizedBox(height: size.height*0.1),
-                  CustomTextButton(text: "Don’t have an account? Join us", onPressed: () {},),
+                  CustomTextButton(text: "Don’t have an account? Join us", onPressed: () {
+                    Navigator.pushNamed(context, "/Signup");
+                  },),
                 ],
               ),
             ),
