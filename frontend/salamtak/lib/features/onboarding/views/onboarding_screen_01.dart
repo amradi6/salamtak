@@ -64,7 +64,7 @@ class OnboardingScreen01 extends StatelessWidget {
                     () => Navigator.pushReplacementNamed(context, "/onboarding2"),
               ),
               SizedBox(height: size.height * 0.017384),
-              CustomTextButton(),
+              CustomTextButton(onPressed: () => Navigator.pushReplacementNamed(context, "/Signup"),),
             ],
           ),
         ],

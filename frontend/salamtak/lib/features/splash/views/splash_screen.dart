@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
     final double circleSize = size.width * 0.5625;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0XFFFFFFFF),
       body: Stack(
         children: [
           Positioned(
