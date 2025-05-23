@@ -131,7 +131,9 @@ class LoginScreen extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: size.height*0.0397367),
-                  CustomElevatedButton(onPressed: () {}, text: "Log in", size: size),
+                  CustomElevatedButton(onPressed: () {
+                    Navigator.pushReplacementNamed(context, "/home");
+                  }, text: "Log in", size: size),
                   SizedBox(height: size.height*0.023593),
                   CustomTextButton(text: "Forgot password?", onPressed: () {
                     ForgotScreen.showForgotPasswordSheet(context);
