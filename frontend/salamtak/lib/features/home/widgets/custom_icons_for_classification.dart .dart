@@ -22,6 +22,7 @@ class CustomIconsForClassification extends StatelessWidget {
           Container(
             width: size.width * 0.20833333,
             height: size.height * 0.1117595,
+            margin: EdgeInsets.only(left: size.width*0.0520833),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(8)),
               gradient: LinearGradient(

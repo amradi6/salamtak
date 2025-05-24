@@ -1,7 +1,20 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:salamtak/features/home/cubit/home__cubit.dart';
+import 'package:salamtak/features/home/widgets/container_for_popular_doctor.dart';
 import 'package:salamtak/features/home/widgets/custom_icons_for_classification.dart .dart';
+
+class NoGlowScrollBehavior extends ScrollBehavior {
+  Widget buildViewportChrome(
+    BuildContext context,
+    Widget child,
+    AxisDirection axisDirection,
+  ) {
+    return child;
+  }
+}
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -10,233 +23,445 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return Scaffold(
-      backgroundColor: Color(0XFFFFFFFF),
-      body: SizedBox(
-        height: double.infinity,
-        child: Stack(
-          children: [
-            Positioned(
-              top: size.height * 0.1838,
-              left: size.width * -0.265625,
-              child: Stack(
-                children: [
-                  Container(
-                    width: size.width * 0.56,
-                    height: size.width * 0.56,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: RadialGradient(
-                        colors: [Color(0x8061CEFF), Colors.transparent],
-                        radius: 0.8,
-                      ),
-                    ),
-                  ),
-                  Positioned.fill(
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
-                      child: Container(color: Colors.transparent),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            Positioned(
-              top: size.height * 1.1697,
-              left: size.width * 0.4896,
-              child: Stack(
-                children: [
-                  Container(
-                    width: size.width*0.630208,
-                    height: size.width*0.630208,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: RadialGradient(
-                        colors: [Color(0x480EBE7E), Colors.transparent],
-                        radius: 0.8,
-                      ),
-                    ),
-                  ),
-                  Positioned.fill(
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
-                      child: Container(color: Colors.transparent),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            Container(
-              width: double.infinity,
-              height: size.height * 0.19371662,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Color(0XFF0EBE7E), Color(0XFF07D9AD)],
-                ),
-                borderRadius: BorderRadius.vertical(
-                  bottom: Radius.circular(20),
-                ),
-              ),
-            ),
-
-            Positioned(
-              top: size.height * 0.0447038,
-              left: size.width * 0.049479166,
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Hi AmrAdi",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w200,
-                              fontFamily: "Rubik",
-                              color: Color(0XFFFAFAFA),
-                              decoration:
-                              TextDecoration.none, // Removed underline
-                            ),
-                          ),
-                          SizedBox(height: size.height * 0.0074506),
-                          Text(
-                            "Find Your Doctor",
-                            style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Rubik",
-                              color: Color(0XFFFFFFFF),
-                              decoration:
-                              TextDecoration.none, // Removed underline
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(width: size.width * 0.18489583),
-                      CircleAvatar(radius: 30, child: Icon(Icons.person)),
-                    ],
-                  ),
-                  SizedBox(height: size.height * 0.0335278),
-                  SizedBox(
-                    width: size.width * 0.872395,
-                    height: size.height * 0.0670557,
-                    child: TextFormField(
-                      keyboardType: TextInputType.text,
-                      cursorColor: Color(0XFF0EBE7E),
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Color(0XFFFFFFFF),
-                        prefixIcon: Icon(Icons.search),
-                        hintText: "Search..... ",
-                        suffixIcon: Icon(Icons.cancel),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFFFFFFFF)),
-                          borderRadius: BorderRadius.all(Radius.circular(6)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFFFFFFFF)),
-                          borderRadius: BorderRadius.all(Radius.circular(6)),
-                        ),
-                        disabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFFFFFFFF)),
-                          borderRadius: BorderRadius.all(Radius.circular(6)),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFFFFFFFF)),
-                          borderRadius: BorderRadius.all(Radius.circular(6)),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            Positioned(
-              top: size.height*0.2607723,
-              left: size.width*0.04947916,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Padding(
-                    padding:  EdgeInsets.only(left: size.width*0.04947916),
-                    child: Text(
-                      "reels",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontFamily: "Rubik",
-                        fontWeight: FontWeight.w400,
-                        color: Color(0XFF333333),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                      height: size.height*0.02483546
-                  ),
-                  SizedBox(
-                    height: size.height * 0.208617906,
-                    width:size.width * 0.9,
-                    child: ListView.builder(
-                      itemCount: 20,
-                      physics: const BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          height: size.height*0.208617906,
-                          width: size.width*0.303333,
-                          margin: EdgeInsets.only(left: size.width*0.03781),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                          ),
-                          child: Placeholder(),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            Positioned(
-              left: size.width*0.0520833,
-              top: size.height*0.55755619,
-              child: SizedBox(
-                height: size.height*0.14777101,
-                width: size.width*1.0130208,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
+    return BlocBuilder<HomeCubit, HomeState>(
+      builder: (context, state) {
+        final doctors = context.read<HomeCubit>().doctors;
+        return Scaffold(
+          backgroundColor: Color(0XFFFFFFFF),
+          body: Stack(
+            children: [
+              Positioned(
+                top: size.height * 0.1838,
+                left: size.width * -0.265625,
+                child: Stack(
                   children: [
-                    CustomIconsForClassification(size: size, color: [
-                      Color(0XFF2753F3),
-                      Color(0XFF765AFC),
-                    ], image: "assets/images/teeth.png",),
-                    CustomIconsForClassification(size: size, color: [
-                      Color(0XFF0EBE7E),
-                      Color(0XFF07D9AD),
-                    ], image: "assets/images/heart.png",),
-                    CustomIconsForClassification(size: size, color: [
-                      Color(0XFFFE7F44),
-                      Color(0XFFFFCF68),
-                    ], image: "assets/images/eye.png",),
-                    CustomIconsForClassification(size: size, color: [
-                      Color(0XFFFF484C),
-                      Color(0XFFFF6C60),
-                    ], image: "assets/images/Digestive.png",),
+                    Container(
+                      width: size.width * 0.56,
+                      height: size.width * 0.56,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: RadialGradient(
+                          colors: [Color(0x8061CEFF), Colors.transparent],
+                          radius: 0.8,
+                        ),
+                      ),
+                    ),
+                    Positioned.fill(
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
+                        child: Container(color: Colors.transparent),
+                      ),
+                    ),
                   ],
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
+
+              Positioned(
+                top: size.height * 1.1697,
+                left: size.width * 0.4896,
+                child: Stack(
+                  children: [
+                    Container(
+                      width: size.width * 0.630208,
+                      height: size.width * 0.630208,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: RadialGradient(
+                          colors: [Color(0x480EBE7E), Colors.transparent],
+                          radius: 0.8,
+                        ),
+                      ),
+                    ),
+                    Positioned.fill(
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
+                        child: Container(color: Colors.transparent),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              Container(
+                width: double.infinity,
+                height: size.height * 0.19371662,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Color(0XFF0EBE7E), Color(0XFF07D9AD)],
+                  ),
+                  borderRadius: BorderRadius.vertical(
+                    bottom: Radius.circular(20),
+                  ),
+                ),
+              ),
+
+              Column(
+                children: [
+                  SizedBox(height: size.height * 0.044703837),
+
+                  Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: size.width * 0.04947916,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Hi AmrAdi",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w200,
+                                    fontFamily: "Rubik",
+                                    color: Color(0XFFFAFAFA),
+                                    decoration:
+                                        TextDecoration
+                                            .none, // Removed underline
+                                  ),
+                                ),
+                                SizedBox(height: size.height * 0.0074506),
+                                Text(
+                                  "Find Your Doctor",
+                                  style: TextStyle(
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: "Rubik",
+                                    color: Color(0XFFFFFFFF),
+                                    decoration:
+                                        TextDecoration
+                                            .none, // Removed underline
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(width: size.width * 0.18489583),
+                            CircleAvatar(radius: 30, child: Icon(Icons.person)),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: size.height * 0.0335278),
+                      SizedBox(
+                        width: size.width * 0.872395,
+                        height: size.height * 0.0670557,
+                        child: TextFormField(
+                          keyboardType: TextInputType.text,
+                          cursorColor: Color(0XFF0EBE7E),
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Color(0XFFFFFFFF),
+                            prefixIcon: Icon(Icons.search),
+                            hintText: "Search..... ",
+                            suffixIcon: Icon(Icons.cancel),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Color(0xFFFFFFFF)),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(6),
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Color(0xFFFFFFFF)),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(6),
+                              ),
+                            ),
+                            disabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Color(0xFFFFFFFF)),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(6),
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Color(0xFFFFFFFF)),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(6),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  SizedBox(height: size.height * 0.037253197),
+
+                  Expanded(
+                    child: ScrollConfiguration(
+                      behavior: NoGlowScrollBehavior(),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: size.width * 0.04947916,
+                              ),
+                              child: Text(
+                                "reels",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontFamily: "Rubik",
+                                  fontWeight: FontWeight.w300,
+                                  color: Color(0XFF333333),
+                                ),
+                              ),
+                            ),
+
+                            SizedBox(height: size.height * 0.02483546),
+
+                            SizedBox(
+                              height: size.height * 0.208617906,
+                              child: ListView.builder(
+                                itemCount: 20,
+                                physics: const BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                    height: size.height * 0.208617906,
+                                    width: size.width * 0.303333,
+                                    margin: EdgeInsets.only(
+                                      left: size.width * 0.03781,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(10),
+                                      ),
+                                    ),
+                                    child: Placeholder(),
+                                  );
+                                },
+                              ),
+                            ),
+
+                            SizedBox(height: size.height * 0.037253197),
+
+                            SizedBox(
+                              height: size.height * 0.14777101,
+                              width: size.width * 1.0130208,
+                              child: ListView(
+                                scrollDirection: Axis.horizontal,
+                                children: [
+                                  CustomIconsForClassification(
+                                    size: size,
+                                    color: [
+                                      Color(0XFF2753F3),
+                                      Color(0XFF765AFC),
+                                    ],
+                                    image: "assets/images/teeth.png",
+                                  ),
+                                  CustomIconsForClassification(
+                                    size: size,
+                                    color: [
+                                      Color(0XFF0EBE7E),
+                                      Color(0XFF07D9AD),
+                                    ],
+                                    image: "assets/images/heart.png",
+                                  ),
+                                  CustomIconsForClassification(
+                                    size: size,
+                                    color: [
+                                      Color(0XFFFE7F44),
+                                      Color(0XFFFFCF68),
+                                    ],
+                                    image: "assets/images/eye.png",
+                                  ),
+                                  CustomIconsForClassification(
+                                    size: size,
+                                    color: [
+                                      Color(0XFFFF484C),
+                                      Color(0XFFFF6C60),
+                                    ],
+                                    image: "assets/images/Digestive.png",
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                            Column(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: size.width * 0.0494791,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Popular Doctor",
+                                        style: TextStyle(
+                                          fontFamily: "Rubik",
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w300,
+                                          color: Color(0XFF333333),
+                                        ),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {},
+                                        child: Text(
+                                          "See all>",
+                                          style: TextStyle(
+                                            fontFamily: "Rubik",
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w200,
+                                            color: Color(0XFF677294),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: size.height * 0.027319011),
+                                SizedBox(
+                                  height: size.height * 0.327828138,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount:
+                                        context
+                                            .read<HomeCubit>()
+                                            .doctors
+                                            .length,
+                                    itemBuilder: (context, index) {
+                                      final doctor = doctors[index];
+                                      return ContainerForPopularDoctor(
+                                        size: size,
+                                        image: doctor["image"],
+                                        nameDoctor: doctor["name"],
+                                        doctorSpecialty: doctor["specialty"],
+                                        rating: doctor["rating"],
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            SizedBox(height: size.height*0.03849497),
+
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: size.width * 0.0494791,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Feature Doctor",
+                                        style: TextStyle(
+                                          fontFamily: "Rubik",
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w300,
+                                          color: Color(0XFF333333),
+                                        ),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {},
+                                        child: Text(
+                                          "See all>",
+                                          style: TextStyle(
+                                            fontFamily: "Rubik",
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w200,
+                                            color: Color(0XFF677294),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: size.height * 0.027319011),
+                                SizedBox(
+                                  height: size.height*0.2,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount:5,
+                                    itemBuilder: (context, index) {
+                                      return Container(
+                                        height: size.height*0.2,
+                                        width: size.width*0.3,
+                                        margin: EdgeInsets.only(left: size.width * 0.0520833),
+                                        decoration: BoxDecoration(
+                                          //color: Color(0XFFFFFFFF),
+                                          color: Colors.black12,
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(6),
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Color(0X06000000),
+                                              offset: Offset(0, -1),
+                                              blurRadius: 20,
+                                            ),
+                                          ],
+                                          shape:BoxShape.rectangle,
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+                                                IconButton(
+                                                  onPressed: () {},
+                                                  icon: Icon(Icons.favorite,size: 18,),
+                                                ),
+                                                SizedBox(width: size.width*0.05),
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Colors.amber,
+                                                  size: 15,
+                                                ),
+                                                SizedBox(width: size.width*0.0078),
+                                                Text(
+                                                  "3.7",
+                                                  style: TextStyle(
+                                                    fontSize: 10,
+                                                    fontFamily: "Rubik",
+                                                    fontWeight: FontWeight.w300,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(height: size.height*0.0099341),
+                                            ClipRRect(
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(40),
+                                              ),
+                                              child: Image.asset(
+                                                "assets/images/doctor1.png",
+                                                width: size.width*0.140625,
+                                                height: size.width*0.140625,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            SizedBox(height: size.height*0.0248354),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
