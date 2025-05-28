@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:salamtak/core/constants/utils/nav_icon.dart';
 import 'package:salamtak/features/home/cubit/home__cubit.dart';
 import 'package:salamtak/features/home/widgets/container_for_feature_doctor.dart';
 import 'package:salamtak/features/home/widgets/container_for_popular_doctor.dart';
@@ -391,6 +392,69 @@ class HomeScreen extends StatelessWidget {
                           ),
 
                           SizedBox(height: size.height*0.0248354),
+
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Container(
+                              width: double.infinity,
+                              height: size.height*0.091,
+                              decoration: BoxDecoration(
+                                color: Color(0XFFFFFFFF),
+                                boxShadow: [
+                                  BoxShadow(
+                                    offset: Offset(0, 4),
+                                    blurRadius: 180,
+                                    color: Color(0X19000000),
+                                  ),
+                                ],
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(20),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment
+                                    .spaceAround,
+                                children: [
+                                  navIcon(
+                                    icon: Icons.home,
+                                    index: 0,
+                                    currentIndex: context
+                                        .read<HomeCubit>()
+                                        .currentIndex,
+                                    onTap: () =>
+                                        context.read<HomeCubit>().changeTab(0),
+                                  ),
+                                  navIcon(
+                                    icon: Icons.favorite,
+                                    index: 1,
+                                    currentIndex: context
+                                        .read<HomeCubit>()
+                                        .currentIndex,
+                                    onTap: () =>
+                                        context.read<HomeCubit>().changeTab(1),
+                                  ),
+                                  navIcon(
+                                    icon: Icons.book_online,
+                                    index: 2,
+                                    currentIndex: context
+                                        .read<HomeCubit>()
+                                        .currentIndex,
+                                    onTap: () =>
+                                        context.read<HomeCubit>().changeTab(2),
+                                  ),
+                                  navIcon(
+                                    icon: Icons.chat,
+                                    index: 3,
+                                    currentIndex: context
+                                        .read<HomeCubit>()
+                                        .currentIndex,
+                                    onTap: () =>
+                                        context.read<HomeCubit>().changeTab(3),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),

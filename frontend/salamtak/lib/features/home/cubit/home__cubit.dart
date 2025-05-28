@@ -1,5 +1,4 @@
-import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'home__state.dart';
 
@@ -36,5 +35,18 @@ class HomeCubit extends Cubit<HomeState> {
       "specialty": "Anatomy doctor",
       "rating": 0.5,
     },
+    {
+      "image": "assets/images/Abduallah Adi.jpg",
+      "name": "Dr. Abduallah Adi",
+      "specialty": "Urinary",
+      "rating": 2.0,
+    },
   ];
+
+  int currentIndex = 0;
+
+  void changeTab(int index) {
+    currentIndex = index;
+    emit(ChangeTabState());
+  }
 }
