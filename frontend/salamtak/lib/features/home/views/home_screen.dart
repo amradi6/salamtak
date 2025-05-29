@@ -1,8 +1,8 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/core/constants/utils/nav_icon.dart';
+import 'package:salamtak/core/constants/widgets/circle_for_bg.dart';
+import 'package:salamtak/core/constants/widgets/text_form_for_search.dart';
 import 'package:salamtak/features/home/cubit/home__cubit.dart';
 import 'package:salamtak/features/home/widgets/container_for_feature_doctor.dart';
 import 'package:salamtak/features/home/widgets/container_for_popular_doctor.dart';
@@ -32,57 +32,9 @@ class HomeScreen extends StatelessWidget {
           backgroundColor: Color(0XFFFFFFFF),
           body: Stack(
             children: [
-              Positioned(
-                top: size.height * 0.1838,
-                left: size.width * -0.265625,
-                child: Stack(
-                  children: [
-                    Container(
-                      width: size.width * 0.56,
-                      height: size.width * 0.56,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: RadialGradient(
-                          colors: [Color(0x8061CEFF), Colors.transparent],
-                          radius: 0.8,
-                        ),
-                      ),
-                    ),
-                    Positioned.fill(
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
-                        child: Container(color: Colors.transparent),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              CircleForBg(size: size,top: size.height * 0.1838,left: size.width * -0.265625,width:size.width * 0.56,height: size.width * 0.56, color: Color(0x8061CEFF),),
 
-              Positioned(
-                bottom: size.height*0.0062,
-                left: size.width * 0.4896,
-                child: Stack(
-                  children: [
-                    Container(
-                      width: size.width * 0.630208,
-                      height: size.width * 0.630208,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: RadialGradient(
-                          colors: [Color(0x480EBE7E), Colors.transparent],
-                          radius: 0.8,
-                        ),
-                      ),
-                    ),
-                    Positioned.fill(
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
-                        child: Container(color: Colors.transparent),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              CircleForBg(size: size,bottom: size.height*0.0062,left: size.width * 0.4896,width:size.width * 0.630208,height: size.width * 0.630208, color: Color(0x480EBE7E),),
 
               Container(
                 width: double.infinity,
@@ -146,44 +98,12 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: size.height * 0.0335278),
-                      SizedBox(
-                        width: size.width * 0.872395,
-                        height: size.height * 0.0670557,
-                        child: TextFormField(
-                          keyboardType: TextInputType.text,
-                          cursorColor: Color(0XFF0EBE7E),
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Color(0XFFFFFFFF),
-                            prefixIcon: Icon(Icons.search),
-                            hintText: "Search..... ",
-                            suffixIcon: Icon(Icons.cancel),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xFFFFFFFF)),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(6),
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xFFFFFFFF)),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(6),
-                              ),
-                            ),
-                            disabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xFFFFFFFF)),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(6),
-                              ),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xFFFFFFFF)),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(6),
-                              ),
-                            ),
-                          ),
-                        ),
+                      TextFormForSearch(
+                        size: size,
+                        onTap: () => Navigator.pushNamed(context,"/find_doctor"),
+                        filled: true,
+                        textInputType: TextInputType.text,
+                        hintText: "Search..... ",
                       ),
                     ],
                   ),
