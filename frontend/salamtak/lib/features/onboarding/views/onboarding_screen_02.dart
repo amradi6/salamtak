@@ -1,13 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:salamtak/features/onboarding/views/onboarding_screen_03.dart';
 import 'package:salamtak/features/onboarding/widgets/custom_elevated_button.dart';
 import 'package:salamtak/features/onboarding/widgets/custom_hint_text.dart';
 import 'package:salamtak/features/onboarding/widgets/custom_sizedbox.dart';
 import 'package:salamtak/features/onboarding/widgets/custom_text.dart';
 import 'package:salamtak/features/onboarding/widgets/custom_text_button.dart';
-import 'package:salamtak/shared/utils/create_route.dart';
 
 class OnboardingScreen02 extends StatelessWidget {
   const OnboardingScreen02({super.key});

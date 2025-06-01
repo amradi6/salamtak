@@ -1,9 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/core/constants/widgets/circle_for_bg.dart';
 import 'package:salamtak/core/constants/widgets/text_form_for_search.dart';
+import 'package:salamtak/features/find_doctors/cubit/find_doctor_cubit.dart';
+import 'package:salamtak/features/find_doctors/cubit/find_doctor_state.dart';
+import 'package:salamtak/features/find_doctors/widgets/container_for_search_doctors.dart';
 
-class FindDoctorScreen extends StatelessWidget {
+class FindDoctorScreen extends StatefulWidget {
   const FindDoctorScreen({super.key});
+
+  @override
+  State<FindDoctorScreen> createState() => _FindDoctorScreenState();
+}
+
+class _FindDoctorScreenState extends State<FindDoctorScreen> {
+
+  final TextEditingController controller =TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,23 +47,21 @@ class FindDoctorScreen extends StatelessWidget {
             color: Color(0X1E0EBE7E),
           ),
           Positioned(
-            top: size.height*0.0447,
-            left: size.width*0.052,
+            top: size.height * 0.0447,
+            left: size.width * 0.052,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
                     GestureDetector(
-                      onTap:() => Navigator.pop(context),
+                      onTap: () => Navigator.pop(context),
                       child: Container(
-                        width: size.width*0.078,
-                        height: size.width*0.078,
+                        width: size.width * 0.078,
+                        height: size.width * 0.078,
                         decoration: BoxDecoration(
                           color: Color(0XFFFFFFFF),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(10),
-                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
                         child: Icon(
                           Icons.arrow_back_ios_new,
@@ -52,20 +69,102 @@ class FindDoctorScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(width: size.width*0.049),
+                    SizedBox(width: size.width * 0.049),
                     Text(
                       "Find Doctors",
                       style: TextStyle(
                         color: Color(0XFF222222),
                         fontSize: 18,
                         fontWeight: FontWeight.w400,
-                        fontFamily: "Rubik"
+                        fontFamily: "Rubik",
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: size.height*0.0422),
-                TextFormForSearch(size: size, textInputType: TextInputType.text, filled: true, hintText: "Search...."),
+                SizedBox(height: size.height * 0.0422),
+                Form(
+                  key: _formKey,
+                  child: TextFormForSearch(
+                    controller: controller,
+                    size: size,
+                    validator: (value) {
+                      if (value == null || value
+                          .trim()
+                          .isEmpty) {
+                        return "Please Enter The Name Doctor";
+                      }
+                      return null;
+                    },
+                    onFieldSubmitted: (value) {
+                      if (_formKey.currentState!.validate()) {
+                        context.read<FindDoctorCubit>().filterDoctors(
+                            value.trim());
+                      }
+                    },
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        context.read<FindDoctorCubit>().resetDoctors();
+                        controller.clear();
+                      },
+                      icon: Icon(Icons.cancel),
+                    ),
+                    onChanged: (value) {
+                      final trimmedValue = value.trim();
+                      if (trimmedValue.isEmpty) {
+                        context.read<FindDoctorCubit>().resetDoctors();
+                      } else {
+                        context.read<FindDoctorCubit>().filterDoctors(trimmedValue);
+                      }
+                    },
+                    textInputType: TextInputType.text,
+                    filled: true,
+                    hintText: "Search....",
+                  ),
+                ),
+                SizedBox(height: size.height * 0.0298),
+                SingleChildScrollView(
+                  child: SizedBox(
+                    height: size.height * 0.745,
+                    width: size.width * 0.872,
+                    child: BlocBuilder<FindDoctorCubit, FindDoctorState>(
+                      builder: (context, state) {
+                        List<Map<String, dynamic>>doctors = [];
+                        if (state is FindDoctorInitialState) {
+                          doctors = state.allDoctors;
+                        }
+                        else if (state is DoctorFilterState) {
+                          doctors = state.filteredDoctors;
+                        }
+                        if(doctors.isEmpty){
+                          return Padding(
+                            padding: EdgeInsets.symmetric(horizontal: size.width*0.085,vertical: size.height*0.074),
+                            child: Text(
+                              "No doctor found with this name",
+                              style: TextStyle(
+                                fontSize: 18, color: Color(0XFF333333),fontWeight: FontWeight.bold),
+                            ),
+                          );
+                        }
+                        return ListView.builder(
+                          itemCount: doctors.length,
+                          itemBuilder: (context, index) {
+                            final doctor = doctors[index];
+                            return ContainerForFindDoctors(
+                              size: size,
+                              nameDoctor: doctor["name"],
+                              image: doctor["image"],
+                              doctorSpecialty: doctor["specialty"],
+                              numberOfPatients: 69,
+                              numberOfYearsOfExperience: 7,
+                              rate: 87,
+                              timeNextAvailable: "10:00 AM Tomorrow",
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

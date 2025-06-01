@@ -4,6 +4,7 @@ import 'package:salamtak/core/constants/utils/nav_icon.dart';
 import 'package:salamtak/core/constants/widgets/circle_for_bg.dart';
 import 'package:salamtak/core/constants/widgets/text_form_for_search.dart';
 import 'package:salamtak/features/home/cubit/home__cubit.dart';
+import 'package:salamtak/features/home/cubit/home__state.dart';
 import 'package:salamtak/features/home/widgets/container_for_feature_doctor.dart';
 import 'package:salamtak/features/home/widgets/container_for_popular_doctor.dart';
 import 'package:salamtak/features/home/widgets/custom_icons_for_classification.dart .dart';
@@ -25,16 +26,30 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return BlocBuilder<HomeCubit, HomeState>(
+    return BlocBuilder<HomeCubit,HomeState>(
       builder: (context, state) {
-        final doctors = context.read<HomeCubit>().doctors;
+        final doctors = context.read<HomeCubit>().allDoctors;
         return Scaffold(
           backgroundColor: Color(0XFFFFFFFF),
           body: Stack(
             children: [
-              CircleForBg(size: size,top: size.height * 0.1838,left: size.width * -0.265625,width:size.width * 0.56,height: size.width * 0.56, color: Color(0x8061CEFF),),
+              CircleForBg(
+                size: size,
+                top: size.height * 0.1838,
+                left: size.width * -0.265625,
+                width: size.width * 0.56,
+                height: size.width * 0.56,
+                color: Color(0x8061CEFF),
+              ),
 
-              CircleForBg(size: size,bottom: size.height*0.0062,left: size.width * 0.4896,width:size.width * 0.630208,height: size.width * 0.630208, color: Color(0x480EBE7E),),
+              CircleForBg(
+                size: size,
+                bottom: size.height * 0.0062,
+                left: size.width * 0.4896,
+                width: size.width * 0.630208,
+                height: size.width * 0.630208,
+                color: Color(0x480EBE7E),
+              ),
 
               Container(
                 width: double.infinity,
@@ -98,18 +113,21 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: size.height * 0.0335278),
-                      TextFormForSearch(
-                        size: size,
-                        onTap: () => Navigator.pushNamed(context,"/find_doctor"),
-                        filled: true,
-                        textInputType: TextInputType.text,
-                        hintText: "Search..... ",
+                      GestureDetector(
+                        onTap:
+                            () => Navigator.pushNamed(context, "/find_doctor"),
+                        child: AbsorbPointer(
+                          child: TextFormForSearch(
+                            size: size,
+                            filled: true,
+                            textInputType: TextInputType.text,
+                            hintText: "Search..... ",
+                          ),
+                        ),
                       ),
                     ],
                   ),
-
                   SizedBox(height: size.height * 0.037253197),
-
                   Expanded(
                     child: SingleChildScrollView(
                       child: Column(
@@ -167,34 +185,22 @@ class HomeScreen extends StatelessWidget {
                               children: [
                                 CustomIconsForClassification(
                                   size: size,
-                                  color: [
-                                    Color(0XFF2753F3),
-                                    Color(0XFF765AFC),
-                                  ],
+                                  color: [Color(0XFF2753F3), Color(0XFF765AFC)],
                                   image: "assets/images/teeth.png",
                                 ),
                                 CustomIconsForClassification(
                                   size: size,
-                                  color: [
-                                    Color(0XFF0EBE7E),
-                                    Color(0XFF07D9AD),
-                                  ],
+                                  color: [Color(0XFF0EBE7E), Color(0XFF07D9AD)],
                                   image: "assets/images/heart.png",
                                 ),
                                 CustomIconsForClassification(
                                   size: size,
-                                  color: [
-                                    Color(0XFFFE7F44),
-                                    Color(0XFFFFCF68),
-                                  ],
+                                  color: [Color(0XFFFE7F44), Color(0XFFFFCF68)],
                                   image: "assets/images/eye.png",
                                 ),
                                 CustomIconsForClassification(
                                   size: size,
-                                  color: [
-                                    Color(0XFFFF484C),
-                                    Color(0XFFFF6C60),
-                                  ],
+                                  color: [Color(0XFFFF484C), Color(0XFFFF6C60)],
                                   image: "assets/images/Digestive.png",
                                 ),
                               ],
@@ -243,7 +249,7 @@ class HomeScreen extends StatelessWidget {
                                   itemCount:
                                       context
                                           .read<HomeCubit>()
-                                          .doctors
+                                          .allDoctors
                                           .length,
                                   itemBuilder: (context, index) {
                                     final doctor = doctors[index];
@@ -260,7 +266,7 @@ class HomeScreen extends StatelessWidget {
                             ],
                           ),
 
-                          SizedBox(height: size.height*0.03849497),
+                          SizedBox(height: size.height * 0.03849497),
 
                           Column(
                             mainAxisSize: MainAxisSize.min,
@@ -271,7 +277,7 @@ class HomeScreen extends StatelessWidget {
                                 ),
                                 child: Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       "Feature Doctor",
@@ -299,25 +305,31 @@ class HomeScreen extends StatelessWidget {
                               ),
                               SizedBox(height: size.height * 0.027319011),
                               SizedBox(
-                                height: size.height*0.2,
+                                height: size.height * 0.2,
                                 child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
-                                  itemCount:5,
+                                  itemCount: 5,
                                   itemBuilder: (context, index) {
-                                    return ContainerForFeatureDoctor(size: size,totalRate: "3.7",image: "assets/images/doctor1.png",nameDoctor: "Dr. Crick", price: 25.00,);
+                                    return ContainerForFeatureDoctor(
+                                      size: size,
+                                      totalRate: "3.7",
+                                      image: "assets/images/doctor1.png",
+                                      nameDoctor: "Dr. Crick",
+                                      price: 25.00,
+                                    );
                                   },
                                 ),
                               ),
                             ],
                           ),
 
-                          SizedBox(height: size.height*0.0248354),
+                          SizedBox(height: size.height * 0.0248354),
 
                           Align(
                             alignment: Alignment.bottomCenter,
                             child: Container(
                               width: double.infinity,
-                              height: size.height*0.091,
+                              height: size.height * 0.091,
                               decoration: BoxDecoration(
                                 color: Color(0XFFFFFFFF),
                                 boxShadow: [
@@ -332,44 +344,48 @@ class HomeScreen extends StatelessWidget {
                                 ),
                               ),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment
-                                    .spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   navIcon(
                                     icon: Icons.home,
                                     index: 0,
-                                    currentIndex: context
-                                        .read<HomeCubit>()
-                                        .currentIndex,
-                                    onTap: () =>
-                                        context.read<HomeCubit>().changeTab(0),
+                                    currentIndex:
+                                        context.read<HomeCubit>().currentIndex,
+                                    onTap:
+                                        () => context
+                                            .read<HomeCubit>()
+                                            .changeTab(0),
                                   ),
                                   navIcon(
                                     icon: Icons.favorite,
                                     index: 1,
-                                    currentIndex: context
-                                        .read<HomeCubit>()
-                                        .currentIndex,
-                                    onTap: () =>
-                                        context.read<HomeCubit>().changeTab(1),
+                                    currentIndex:
+                                        context.read<HomeCubit>().currentIndex,
+                                    onTap:
+                                        () => context
+                                            .read<HomeCubit>()
+                                            .changeTab(1),
                                   ),
                                   navIcon(
                                     icon: Icons.book_online,
                                     index: 2,
-                                    currentIndex: context
-                                        .read<HomeCubit>()
-                                        .currentIndex,
-                                    onTap: () =>
-                                        context.read<HomeCubit>().changeTab(2),
+                                    currentIndex:
+                                        context.read<HomeCubit>().currentIndex,
+                                    onTap:
+                                        () => context
+                                            .read<HomeCubit>()
+                                            .changeTab(2),
                                   ),
                                   navIcon(
                                     icon: Icons.chat,
                                     index: 3,
-                                    currentIndex: context
-                                        .read<HomeCubit>()
-                                        .currentIndex,
-                                    onTap: () =>
-                                        context.read<HomeCubit>().changeTab(3),
+                                    currentIndex:
+                                        context.read<HomeCubit>().currentIndex,
+                                    onTap:
+                                        () => context
+                                            .read<HomeCubit>()
+                                            .changeTab(3),
                                   ),
                                 ],
                               ),
