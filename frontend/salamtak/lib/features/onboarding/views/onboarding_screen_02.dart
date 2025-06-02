@@ -1,9 +1,8 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:salamtak/core/constants/widgets/circle_for_bg.dart';
 import 'package:salamtak/features/onboarding/widgets/custom_elevated_button.dart';
 import 'package:salamtak/features/onboarding/widgets/custom_hint_text.dart';
-import 'package:salamtak/features/onboarding/widgets/custom_sizedbox.dart';
+import 'package:salamtak/features/onboarding/widgets/custom_circle_for_onboarding.dart';
 import 'package:salamtak/features/onboarding/widgets/custom_text.dart';
 import 'package:salamtak/features/onboarding/widgets/custom_text_button.dart';
 
@@ -16,34 +15,17 @@ class OnboardingScreen02 extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned(
+          CircleForBg(
+            size: size,
+            width: size.width * 0.5625,
+            height: size.width * 0.5625,
             bottom: size.height * -0.08,
             right: size.width * -0.15,
-            child: Stack(
-              children: [
-                Container(
-                  width: size.width * 0.5625,
-                  height: size.width * 0.5625,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: RadialGradient(
-                      colors: [Color(0x480EBE7E), Colors.transparent],
-                      radius: 0.8,
-                    ),
-                  ),
-                ),
-                Positioned.fill(
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
-                    child: Container(color: Colors.transparent),
-                  ),
-                ),
-              ],
-            ),
+            color: Color(0x480EBE7E),
           ),
           Column(
             children: [
-              CustomSizedBox(
+              CustomCircleForOnboarding(
                 size: size,
                 top: size.height * -0.0248,
                 right: size.width * -0.2708,
@@ -59,10 +41,14 @@ class OnboardingScreen02 extends StatelessWidget {
               SizedBox(height: size.height * 0.06457),
               CustomElevatedButton(
                 onPressed:
-                    () => Navigator.pushReplacementNamed(context, "/onboarding3"),
+                    () =>
+                        Navigator.pushReplacementNamed(context, "/onboarding3"),
               ),
               SizedBox(height: size.height * 0.017384),
-              CustomTextButton(onPressed: ()=> Navigator.pushReplacementNamed(context, "/Signup"),),
+              CustomTextButton(
+                onPressed:
+                    () => Navigator.pushReplacementNamed(context, "/Signup"),
+              ),
             ],
           ),
         ],

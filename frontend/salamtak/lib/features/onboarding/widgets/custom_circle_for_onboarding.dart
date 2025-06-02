@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CustomSizedBox extends StatelessWidget {
-  const CustomSizedBox({
+class CustomCircleForOnboarding extends StatelessWidget {
+  const CustomCircleForOnboarding({
     super.key,
     required this.size,
     this.top,

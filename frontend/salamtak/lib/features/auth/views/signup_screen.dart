@@ -1,6 +1,5 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:salamtak/core/constants/widgets/circle_for_bg.dart';
 import 'package:salamtak/features/auth/widgets/auth_with_google.dart';
 import 'package:salamtak/features/auth/widgets/custom_text_form_field.dart';
 
@@ -14,7 +13,6 @@ class SignupScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    final double circleSize = size.width * 0.5625;
     return Scaffold(
       backgroundColor: Color(0XFFFFFFFF),
       body: SizedBox(
@@ -22,56 +20,22 @@ class SignupScreen extends StatelessWidget {
         height: double.infinity,
         child: Stack(
           children: [
-            Positioned(
+            CircleForBg(
+              size: size,
+              width: size.width * 0.5625,
+              height: size.width * 0.5625,
               top: size.height * -0.1242,
               left: size.width * -0.0859,
-              child: Stack(
-                children: [
-                  Container(
-                    width: circleSize,
-                    height: circleSize,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: RadialGradient(
-                        colors: [Color(0x8461CEFF), Colors.transparent],
-                        radius: 0.8,
-                      ),
-                    ),
-                  ),
-                  Positioned.fill(
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
-                      child: Container(color: Colors.transparent),
-                    ),
-                  ),
-                ],
-              ),
+              color: Color(0x8461CEFF),
             ),
 
-            Positioned(
+            CircleForBg(
+              size: size,
+              width: size.width * 0.716145,
+              height: size.width * 0.716145,
               top: size.height * 0.8057,
               left: size.width * 0.5260,
-              child: Stack(
-                children: [
-                  Container(
-                    width: size.width * 0.716145,
-                    height: size.width * 0.716145,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: RadialGradient(
-                        colors: [Color(0x4D0EBE7E), Colors.transparent],
-                        radius: 0.8,
-                      ),
-                    ),
-                  ),
-                  Positioned.fill(
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
-                      child: Container(color: Colors.transparent),
-                    ),
-                  ),
-                ],
-              ),
+              color: Color(0x4D0EBE7E),
             ),
 
             SingleChildScrollView(
@@ -81,9 +45,7 @@ class SignupScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(
-                        top: size.height * 0.1887495,
-                      ),
+                      padding: EdgeInsets.only(top: size.height * 0.1887495),
                       child: SizedBox(
                         width: double.infinity,
                         child: Column(
@@ -139,7 +101,10 @@ class SignupScreen extends StatelessWidget {
                     ),
                     SizedBox(height: size.height * 0.1043089),
                     CustomElevatedButton(
-                      size: size, text: "Sign up", onPressed: () {},),
+                      size: size,
+                      text: "Sign up",
+                      onPressed: () {},
+                    ),
                     SizedBox(height: size.height * 0.002111),
                     CustomTextButton(
                       text: "Have an account? Log in",

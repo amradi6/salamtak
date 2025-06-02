@@ -1,5 +1,5 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:salamtak/core/constants/widgets/circle_for_bg.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -21,63 +21,26 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
-    final double circleSize = size.width * 0.5625;
-
     return Scaffold(
       backgroundColor: Color(0XFFFFFFFF),
       body: Stack(
         children: [
-          Positioned(
+          CircleForBg(
+            size: size,
+            width: size.width * 0.5625,
+            height: size.width * 0.5625,
+            color: Color(0x8461CEFF),
             top: size.height * -0.1242,
             left: size.width * -0.0859,
-            child: Stack(
-              children: [
-                Container(
-                  width: circleSize,
-                  height: circleSize,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: RadialGradient(
-                      colors: [Color(0x8461CEFF), Colors.transparent],
-                      radius: 0.8,
-                    ),
-                  ),
-                ),
-                Positioned.fill(
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
-                    child: Container(color: Colors.transparent),
-                  ),
-                ),
-              ],
-            ),
           ),
 
-          Positioned(
+          CircleForBg(
+            size: size,
+            width: size.width * 0.5625,
+            height: size.width * 0.5625,
+            color: Color(0x480EBE7E),
             top: size.height * 0.8057,
             left: size.width * 0.5260,
-            child: Stack(
-              children: [
-                Container(
-                  width: circleSize,
-                  height: circleSize,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: RadialGradient(
-                      colors: [Color(0x480EBE7E), Colors.transparent],
-                      radius: 0.8,
-                    ),
-                  ),
-                ),
-                Positioned.fill(
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
-                    child: Container(color: Colors.transparent),
-                  ),
-                ),
-              ],
-            ),
           ),
 
           Center(

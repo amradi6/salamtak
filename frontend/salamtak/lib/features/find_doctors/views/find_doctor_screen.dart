@@ -14,8 +14,7 @@ class FindDoctorScreen extends StatefulWidget {
 }
 
 class _FindDoctorScreenState extends State<FindDoctorScreen> {
-
-  final TextEditingController controller =TextEditingController();
+  final TextEditingController controller = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -42,8 +41,8 @@ class _FindDoctorScreenState extends State<FindDoctorScreen> {
             size: size,
             width: size.width * 0.56,
             height: size.width * 0.56,
-            top: size.height * 0.257,
-            left: size.width * 1.638,
+            bottom: size.height * 0.0062,
+            left: size.width * 0.4896,
             color: Color(0X1E0EBE7E),
           ),
           Positioned(
@@ -88,9 +87,7 @@ class _FindDoctorScreenState extends State<FindDoctorScreen> {
                     controller: controller,
                     size: size,
                     validator: (value) {
-                      if (value == null || value
-                          .trim()
-                          .isEmpty) {
+                      if (value == null || value.trim().isEmpty) {
                         return "Please Enter The Name Doctor";
                       }
                       return null;
@@ -98,7 +95,8 @@ class _FindDoctorScreenState extends State<FindDoctorScreen> {
                     onFieldSubmitted: (value) {
                       if (_formKey.currentState!.validate()) {
                         context.read<FindDoctorCubit>().filterDoctors(
-                            value.trim());
+                          value.trim(),
+                        );
                       }
                     },
                     suffixIcon: IconButton(
@@ -113,7 +111,9 @@ class _FindDoctorScreenState extends State<FindDoctorScreen> {
                       if (trimmedValue.isEmpty) {
                         context.read<FindDoctorCubit>().resetDoctors();
                       } else {
-                        context.read<FindDoctorCubit>().filterDoctors(trimmedValue);
+                        context.read<FindDoctorCubit>().filterDoctors(
+                          trimmedValue,
+                        );
                       }
                     },
                     textInputType: TextInputType.text,
@@ -128,20 +128,25 @@ class _FindDoctorScreenState extends State<FindDoctorScreen> {
                     width: size.width * 0.872,
                     child: BlocBuilder<FindDoctorCubit, FindDoctorState>(
                       builder: (context, state) {
-                        List<Map<String, dynamic>>doctors = [];
+                        List<Map<String, dynamic>> doctors = [];
                         if (state is FindDoctorInitialState) {
                           doctors = state.allDoctors;
-                        }
-                        else if (state is DoctorFilterState) {
+                        } else if (state is DoctorFilterState) {
                           doctors = state.filteredDoctors;
                         }
-                        if(doctors.isEmpty){
+                        if (doctors.isEmpty) {
                           return Padding(
-                            padding: EdgeInsets.symmetric(horizontal: size.width*0.085,vertical: size.height*0.074),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: size.width * 0.085,
+                              vertical: size.height * 0.074,
+                            ),
                             child: Text(
                               "No doctor found with this name",
                               style: TextStyle(
-                                fontSize: 18, color: Color(0XFF333333),fontWeight: FontWeight.bold),
+                                fontSize: 18,
+                                color: Color(0XFF333333),
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           );
                         }

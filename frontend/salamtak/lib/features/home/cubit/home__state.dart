@@ -14,12 +14,6 @@ final List<Map<String, dynamic>> doctors = [
     "rating": 5.0,
   },
   {
-    "image": "assets/images/shahed shami.jpg",
-    "name": "Dr. Shahed Shami",
-    "specialty": "Cardiology",
-    "rating": 5.0,
-  },
-  {
     "image": "assets/images/Abduallah Wassi.png",
     "name": "Dr. Abduallah Wassi",
     "specialty": "In-kind",
