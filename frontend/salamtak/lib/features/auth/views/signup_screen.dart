@@ -108,7 +108,7 @@ class SignupScreen extends StatelessWidget {
                     SizedBox(height: size.height * 0.002111),
                     CustomTextButton(
                       text: "Have an account? Log in",
-                      onPressed: () => Navigator.pushNamed(context, "/login"),
+                      onPressed: () => Navigator.pushReplacementNamed(context, "/login"),
                     ),
                   ],
                 ),

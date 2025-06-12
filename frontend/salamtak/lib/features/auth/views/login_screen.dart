@@ -94,7 +94,7 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(height: size.height * 0.0397367),
                   CustomElevatedButton(
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, "/home");
+                      Navigator.pushNamed(context, "/layout");
                     },
                     text: "Log in",
                     size: size,
@@ -110,7 +110,7 @@ class LoginScreen extends StatelessWidget {
                   CustomTextButton(
                     text: "Don’t have an account? Join us",
                     onPressed: () {
-                      Navigator.pushNamed(context, "/Signup");
+                      Navigator.pushReplacementNamed(context, "/Signup");
                     },
                   ),
                 ],
