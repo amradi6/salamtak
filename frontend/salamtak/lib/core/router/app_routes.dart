@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:salamtak/features/auth/views/login_screen.dart';
 import 'package:salamtak/features/auth/views/signup_screen.dart';
+import 'package:salamtak/features/favorite_doctors/views/favorite_doctors_screen.dart';
 import 'package:salamtak/features/find_doctors/views/find_doctor_screen.dart';
 import 'package:salamtak/features/home/views/home_screen.dart';
+import 'package:salamtak/features/home/views/layout_screen.dart';
 import 'package:salamtak/features/onboarding/views/onboarding_screen_01.dart';
 import 'package:salamtak/features/onboarding/views/onboarding_screen_02.dart';
 import 'package:salamtak/features/onboarding/views/onboarding_screen_03.dart';
@@ -28,6 +30,10 @@ class AppRoutes {
         return createRoute(screen: HomeScreen());
       case "/find_doctor":
         return createRoute(screen: FindDoctorScreen());
+      case "/favorite_doctor":
+        return createRoute(screen: FavoriteDoctorsScreen());
+      case "/layout":
+        return createRoute(screen: LayoutScreen());
 
       default:
         return MaterialPageRoute(
