@@ -1,4 +1,14 @@
+import 'package:salamtak/data/models/doctors.dart';
+
 sealed class HomeState {}
+
+final List<Doctors> dummyDoctors=[
+  Doctors(name: "Dr. Fillerup Grab", image: "assets/images/doctor1.png", rating: 4.5,isPopular: true,specialty:"Medicine Specialist", isFeatured: false),
+  Doctors(name: "Dr. Abduallah Wassi", image: "assets/images/Abduallah Wassi.png", rating: 4.0,isPopular: true,specialty:"In-kind",isFeatured: false),
+  Doctors(name: "Dr. Osamma Saaed", image: "assets/images/Osamma Saaed.webp", rating: 0.5,isPopular: true,specialty:"Anatomy doctor",isFeatured: false),
+  Doctors(name: "Dr. Amr Adi", image: "assets/images/AmrAdi.jpg", rating: 5.0,isFavorite: true,isFeatured: true,price: 100.0,isPopular: false),
+  Doctors(name: "Dr. Mohaamad Razzoq", image: "assets/images/Mohaamad Razzouq.jpg", rating: 2.0,isFeatured: true,isFavorite:false,price:25.0,isPopular: false),
+];
 
 final List<Map<String, dynamic>> popDoctors = [
   {
@@ -85,7 +95,7 @@ final List<Map<String, dynamic>> featDoctors = [
 ];
 
 final class HomeInitialState extends HomeState {
-  final List<Map<String, dynamic>> allDoctors;
+  final List<Doctors> allDoctors;
 
   HomeInitialState(this.allDoctors);
 }

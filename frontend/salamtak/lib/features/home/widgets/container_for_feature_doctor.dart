@@ -92,6 +92,8 @@ class ContainerForFeatureDoctor extends StatelessWidget {
                     fontFamily: "Rubik",
                     fontWeight: FontWeight.w300
                 ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
               SizedBox(height: size.height*0.0037),
               Text(
