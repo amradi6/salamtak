@@ -11,6 +11,7 @@ class ContainerForFindDoctors extends StatelessWidget {
     required this.rate,
     required this.numberOfPatients,
     required this.timeNextAvailable,
+    required this.isFavourite,
   });
 
   final Size size;
@@ -21,6 +22,7 @@ class ContainerForFindDoctors extends StatelessWidget {
   final int rate;
   final int numberOfPatients;
   final String timeNextAvailable;
+  final bool isFavourite;
 
   @override
   Widget build(BuildContext context) {
@@ -53,75 +55,79 @@ class ContainerForFindDoctors extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: size.width * 0.03645),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      nameDoctor,
-                      style: TextStyle(
-                        color: Color(0XFF333333),
-                        fontFamily: "Rubik",
-                        fontSize: 18,
-                        fontWeight: FontWeight.w300,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        nameDoctor,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: Color(0XFF333333),
+                          fontFamily: "Rubik",
+                          fontSize: 18,
+                          fontWeight: FontWeight.w300,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: size.height * 0.0012),
-                    Text(
-                      doctorSpecialty,
-                      style: TextStyle(
-                        color: Color(0XFF0EBE7F),
-                        fontFamily: "PT Sans",
-                        fontSize: 13,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                    SizedBox(height: size.height * 0.0049),
-                    Text(
-                      "$numberOfYearsOfExperience Years experience ",
-                      style: TextStyle(
-                        color: Color(0XFF677294),
-                        fontFamily: "Rubik",
-                        fontSize: 12,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                    SizedBox(height: size.height * 0.00124),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.circle,
+                      SizedBox(height: size.height * 0.0012),
+                      Text(
+                        doctorSpecialty,
+                        style: TextStyle(
                           color: Color(0XFF0EBE7F),
-                          size: size.width * 0.026,
+                          fontFamily: "PT Sans",
+                          fontSize: 13,
+                          fontWeight: FontWeight.normal,
                         ),
-                        SizedBox(width: size.width * 0.0052),
-                        Text(
-                          "$rate%",
-                          style: TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w300,
-                            color: Color(0XFF677294),
-                            fontFamily: "Rubik",
+                      ),
+                      SizedBox(height: size.height * 0.0049),
+                      Text(
+                        "$numberOfYearsOfExperience Years experience ",
+                        style: TextStyle(
+                          color: Color(0XFF677294),
+                          fontFamily: "Rubik",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                      SizedBox(height: size.height * 0.00124),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.circle,
+                            color: Color(0XFF0EBE7F),
+                            size: size.width * 0.026,
                           ),
-                        ),
-                        SizedBox(width: size.width * 0.044),
-                        Icon(
-                          Icons.circle,
-                          color: Color(0XFF0EBE7F),
-                          size: size.width * 0.026,
-                        ),
-                        SizedBox(width: size.width * 0.0052),
-                        Text(
-                          "$numberOfPatients Patient Stories",
-                          style: TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w300,
-                            color: Color(0XFF677294),
-                            fontFamily: "Rubik",
+                          SizedBox(width: size.width * 0.0052),
+                          Text(
+                            "$rate%",
+                            style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w300,
+                              color: Color(0XFF677294),
+                              fontFamily: "Rubik",
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                          SizedBox(width: size.width * 0.044),
+                          Icon(
+                            Icons.circle,
+                            color: Color(0XFF0EBE7F),
+                            size: size.width * 0.026,
+                          ),
+                          SizedBox(width: size.width * 0.0052),
+                          Text(
+                            "$numberOfPatients Patient Stories",
+                            style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w300,
+                              color: Color(0XFF677294),
+                              fontFamily: "Rubik",
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
                 SizedBox(width: size.width * 0.04),
                 SizedBox(
@@ -129,7 +135,10 @@ class ContainerForFindDoctors extends StatelessWidget {
                   height: size.height * 0.021,
                   child: IconButton(
                     onPressed: () {},
-                    icon: Icon(Icons.favorite_border),
+                    icon: Icon(
+                        Icons.favorite,
+                      color: isFavourite?Colors.red:Colors.grey,
+                    ),
                   ),
                 ),
               ],

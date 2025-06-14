@@ -163,6 +163,7 @@ class _FindDoctorScreenState extends State<FindDoctorScreen> {
                               numberOfYearsOfExperience: 7,
                               rate: 87,
                               timeNextAvailable: "10:00 AM Tomorrow",
+                              isFavourite: true,
                             );
                           },
                         );
