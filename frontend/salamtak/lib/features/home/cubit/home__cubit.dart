@@ -7,9 +7,11 @@ import 'package:salamtak/features/home/views/home_screen.dart';
 
 
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit() : super(HomeInitialState(doctors));
+  HomeCubit() : super(HomeInitialState(popDoctors));
 
-  final allDoctors=doctors;
+  final popularDoctors=popDoctors;
+
+  final featureDoctors=featDoctors;
 
   int currentIndex = 0;
 
@@ -24,4 +26,15 @@ class HomeCubit extends Cubit<HomeState> {
     currentIndex = index;
     emit(ChangeTabState());
   }
+
+  void toggleFavorite(String doctorName) {
+    for (var doctor in featureDoctors) {
+      if (doctor['name'] == doctorName) {
+        doctor['favorite'] = !(doctor['favorite'] as bool);
+        break;
+      }
+    }
+    emit(ChangeFavourite());
+  }
+
 }

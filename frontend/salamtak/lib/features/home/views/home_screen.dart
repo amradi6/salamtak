@@ -27,7 +27,9 @@ class HomeScreen extends StatelessWidget {
 
     return BlocBuilder<HomeCubit,HomeState>(
       builder: (context, state) {
-        final doctors = context.read<HomeCubit>().allDoctors;
+        final popDoctors = context.read<HomeCubit>().popularDoctors;
+        final featDoctors = context.read<HomeCubit>().featureDoctors;
+
         return Scaffold(
           backgroundColor: Color(0XFFFFFFFF),
           body: Stack(
@@ -250,10 +252,10 @@ class HomeScreen extends StatelessWidget {
                                   itemCount:
                                       context
                                           .read<HomeCubit>()
-                                          .allDoctors
+                                          .popularDoctors
                                           .length,
                                   itemBuilder: (context, index) {
-                                    final doctor = doctors[index];
+                                    final doctor = popDoctors[index];
                                     return ContainerForPopularDoctor(
                                       size: size,
                                       image: doctor["image"],
@@ -309,14 +311,16 @@ class HomeScreen extends StatelessWidget {
                                 height: size.height * 0.2,
                                 child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
-                                  itemCount: 5,
+                                  itemCount: featDoctors.length,
                                   itemBuilder: (context, index) {
+                                    final doctor=featDoctors[index];
                                     return ContainerForFeatureDoctor(
                                       size: size,
-                                      totalRate: "3.7",
-                                      image: "assets/images/doctor1.png",
-                                      nameDoctor: "Dr. Crick",
-                                      price: 25.00,
+                                      totalRate: doctor["rating"],
+                                      image: doctor["image"],
+                                      nameDoctor: doctor["name"],
+                                      price: doctor["price"],
+                                      isFavourite: doctor["favorite"],
                                     );
                                   },
                                 ),
@@ -324,7 +328,7 @@ class HomeScreen extends StatelessWidget {
                             ],
                           ),
 
-                          SizedBox(height: size.height * 0.0248354),
+                          SizedBox(height: size.height*0.124),
                         ],
                       ),
                     ),

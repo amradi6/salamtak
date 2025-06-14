@@ -3,14 +3,14 @@ import 'package:salamtak/features/find_doctors/cubit/find_doctor_state.dart';
 import 'package:salamtak/features/home/cubit/home__state.dart';
 
 class FindDoctorCubit extends Cubit<FindDoctorState> {
-  FindDoctorCubit() : super(FindDoctorInitialState(doctors));
+  FindDoctorCubit() : super(FindDoctorInitialState(popDoctors));
 
   void filterDoctors(String name) {
     if (name.isEmpty) {
-      emit(FindDoctorInitialState(doctors));
+      emit(FindDoctorInitialState(popDoctors));
     } else {
       final filteredList =
-          doctors
+          popDoctors
               .where(
                 (doctor) => doctor["name"].toString().toLowerCase().contains(
                   name.toLowerCase(),
@@ -22,7 +22,7 @@ class FindDoctorCubit extends Cubit<FindDoctorState> {
   }
 
   void resetDoctors() {
-    emit(FindDoctorInitialState(doctors));
+    emit(FindDoctorInitialState(popDoctors));
   }
 
 }
