@@ -25,4 +25,14 @@ class FindDoctorCubit extends Cubit<FindDoctorState> {
     emit(FindDoctorInitialState(popDoctors));
   }
 
+  void toggleFavorite(String doctorName) {
+    for (var doctor in popDoctors) {
+      if (doctor['name'] == doctorName) {
+        doctor['favorite'] = !(doctor['favorite'] as bool);
+        break;
+      }
+    }
+    emit(ChangeFavouriteState());
+  }
+
 }

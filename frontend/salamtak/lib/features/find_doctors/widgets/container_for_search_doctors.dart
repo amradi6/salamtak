@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:salamtak/features/find_doctors/cubit/find_doctor_cubit.dart';
 
 class ContainerForFindDoctors extends StatelessWidget {
   const ContainerForFindDoctors({
@@ -134,7 +136,9 @@ class ContainerForFindDoctors extends StatelessWidget {
                   width: size.width * 0.0494,
                   height: size.height * 0.021,
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      context.read<FindDoctorCubit>().toggleFavorite(nameDoctor);
+                    },
                     icon: Icon(
                         Icons.favorite,
                       color: isFavourite?Colors.red:Colors.grey,

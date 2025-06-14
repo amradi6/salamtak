@@ -11,3 +11,5 @@ final class DoctorFilterState extends FindDoctorState {
 
   DoctorFilterState(this.filteredDoctors);
 }
+
+final class ChangeFavouriteState extends FindDoctorState {}
