@@ -27,8 +27,8 @@ class HomeScreen extends StatelessWidget {
 
     return BlocBuilder<HomeCubit,HomeState>(
       builder: (context, state) {
-        final popDoctors = context.read<HomeCubit>().popularDoctors;
-        final featDoctors = context.read<HomeCubit>().featureDoctors;
+        final popDoctors = context.watch<HomeCubit>().popularDoctors;
+        final featDoctors = context.watch<HomeCubit>().featureDoctors;
 
         return Scaffold(
           backgroundColor: Color(0XFFFFFFFF),
@@ -249,19 +249,15 @@ class HomeScreen extends StatelessWidget {
                                 height: size.height * 0.327828138,
                                 child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
-                                  itemCount:
-                                      context
-                                          .read<HomeCubit>()
-                                          .popularDoctors
-                                          .length,
+                                  itemCount: popDoctors.length,
                                   itemBuilder: (context, index) {
                                     final doctor = popDoctors[index];
                                     return ContainerForPopularDoctor(
                                       size: size,
-                                      image: doctor["image"],
-                                      nameDoctor: doctor["name"],
-                                      doctorSpecialty: doctor["specialty"],
-                                      rating: doctor["rating"],
+                                      image: doctor.image,
+                                      nameDoctor: doctor.name,
+                                      doctorSpecialty: doctor.specialty!,
+                                      rating: doctor.rating,
                                     );
                                   },
                                 ),
@@ -316,11 +312,11 @@ class HomeScreen extends StatelessWidget {
                                     final doctor=featDoctors[index];
                                     return ContainerForFeatureDoctor(
                                       size: size,
-                                      totalRate: doctor["rating"],
-                                      image: doctor["image"],
-                                      nameDoctor: doctor["name"],
-                                      price: doctor["price"],
-                                      isFavourite: doctor["favorite"],
+                                      totalRate: doctor.rating,
+                                      image: doctor.image,
+                                      nameDoctor: doctor.name,
+                                      price: doctor.price!,
+                                      isFavourite: doctor.isFavorite!,
                                     );
                                   },
                                 ),
