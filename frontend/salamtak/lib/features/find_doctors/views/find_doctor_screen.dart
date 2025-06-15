@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/core/constants/widgets/circle_for_bg.dart';
 import 'package:salamtak/core/constants/widgets/text_form_for_search.dart';
+import 'package:salamtak/data/models/doctors.dart';
 import 'package:salamtak/features/find_doctors/cubit/find_doctor_cubit.dart';
 import 'package:salamtak/features/find_doctors/cubit/find_doctor_state.dart';
 import 'package:salamtak/features/find_doctors/widgets/container_for_search_doctors.dart';
@@ -128,7 +129,7 @@ class _FindDoctorScreenState extends State<FindDoctorScreen> {
                     width: size.width * 0.872,
                     child: BlocBuilder<FindDoctorCubit, FindDoctorState>(
                       builder: (context, state) {
-                        List<Map<String, dynamic>> doctors = [];
+                        List<Doctors> doctors = [];
                         if (state is FindDoctorInitialState) {
                           doctors = state.allDoctors;
                         } else if (state is DoctorFilterState) {
@@ -156,14 +157,14 @@ class _FindDoctorScreenState extends State<FindDoctorScreen> {
                             final doctor = doctors[index];
                             return ContainerForFindDoctors(
                               size: size,
-                              nameDoctor: doctor["name"],
-                              image: doctor["image"],
-                              doctorSpecialty: doctor["specialty"],
-                              numberOfPatients: 69,
-                              numberOfYearsOfExperience: 7,
-                              rate: 87,
-                              timeNextAvailable: "10:00 AM Tomorrow",
-                              isFavourite: true,
+                              nameDoctor: doctor.name,
+                              image: doctor.image,
+                              doctorSpecialty: doctor.specialty,
+                              numberOfPatients: doctor.numberOfPatients,
+                              numberOfYearsOfExperience: doctor.numberOfYearsOfExperience,
+                              rate: doctor.rating,
+                              timeNextAvailable: doctor.timeNextAvailable,
+                              isFavourite: doctor.isFavorite!,
                             );
                           },
                         );

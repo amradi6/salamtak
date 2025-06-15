@@ -256,7 +256,7 @@ class HomeScreen extends StatelessWidget {
                                       size: size,
                                       image: doctor.image,
                                       nameDoctor: doctor.name,
-                                      doctorSpecialty: doctor.specialty!,
+                                      doctorSpecialty: doctor.specialty,
                                       rating: doctor.rating,
                                     );
                                   },
@@ -315,7 +315,7 @@ class HomeScreen extends StatelessWidget {
                                       totalRate: doctor.rating,
                                       image: doctor.image,
                                       nameDoctor: doctor.name,
-                                      price: doctor.price!,
+                                      price: doctor.price,
                                       isFavourite: doctor.isFavorite!,
                                     );
                                   },

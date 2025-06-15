@@ -1,13 +1,15 @@
+import 'package:salamtak/data/models/doctors.dart';
+
 sealed class FindDoctorState {}
 
 final class FindDoctorInitialState extends FindDoctorState {
-  final List<Map<String, dynamic>> allDoctors;
+  final List<Doctors> allDoctors;
 
   FindDoctorInitialState(this.allDoctors);
 }
 
 final class DoctorFilterState extends FindDoctorState {
-  final List<Map<String, dynamic>> filteredDoctors;
+  final List<Doctors> filteredDoctors;
 
   DoctorFilterState(this.filteredDoctors);
 }

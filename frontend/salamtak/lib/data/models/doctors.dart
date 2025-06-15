@@ -1,28 +1,28 @@
 class Doctors {
   final String name;
   final String image;
-  final String? specialty;
+  final String specialty;
   final double rating;
-  final double? price;
+  final double price;
   bool? isFavorite;
   final bool isPopular;
   final bool isFeatured;
-  final int? numberOfYearsOfExperience;
-  final int? numberOfPatients;
-  final String? timeNextAvailable;
+  final int numberOfYearsOfExperience;
+  final int numberOfPatients;
+  final String timeNextAvailable;
 
   Doctors({
     required this.name,
     required this.image,
-    this.specialty,
+    required this.specialty,
     required this.rating,
-    this.price,
+    required this.price,
     this.isFavorite=false,
     required this.isPopular,
     required this.isFeatured,
-    this.numberOfYearsOfExperience,
-    this.numberOfPatients,
-    this.timeNextAvailable,
+    required this.numberOfYearsOfExperience,
+    required this.numberOfPatients,
+    required this. timeNextAvailable,
   });
 
   factory Doctors.fromMap(Map<String, dynamic> map) {
@@ -31,7 +31,7 @@ class Doctors {
       name: map['name'],
       specialty: map['specialty'] ?? '',
       rating: (map['rating'] ?? 0).toDouble(),
-      price: map['price'] != null ? (map['price'] as num).toDouble() : null,
+      price: map['price'] != null ? (map['price'] as num).toDouble() : 0,
       isFavorite: map['favorite'],
       isPopular: map['isPopular'] ?? false,
       isFeatured: map['isFeatured'] ?? false,
