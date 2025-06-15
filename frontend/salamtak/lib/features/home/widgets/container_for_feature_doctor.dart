@@ -1,13 +1,19 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_cubit.dart';
+import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_state.dart';
 import 'package:salamtak/features/home/cubit/home__cubit.dart';
 import 'package:salamtak/features/home/cubit/home__state.dart';
 
 class ContainerForFeatureDoctor extends StatelessWidget {
   const ContainerForFeatureDoctor({
     super.key,
-    required this.size, required this.totalRate, required this.image, required this.nameDoctor, required this.price, required this.isFavourite,
+    required this.size,
+    required this.totalRate,
+    required this.image,
+    required this.nameDoctor,
+    required this.price,
+    required this.isFavourite,
   });
 
   final Size size;
@@ -19,17 +25,18 @@ class ContainerForFeatureDoctor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeCubit,HomeState>(
+    return BlocBuilder<FavoriteDoctorCubit, FavoriteDoctorState>(
       builder: (context, state) {
         return Container(
-          height: size.height*0.2,
-          width: size.width*0.3,
-          margin: EdgeInsets.only(left: size.width * 0.0520833,right: size.width*0.026),
+          height: size.height * 0.2,
+          width: size.width * 0.3,
+          margin: EdgeInsets.only(
+            left: size.width * 0.0520833,
+            right: size.width * 0.026,
+          ),
           decoration: BoxDecoration(
             color: Color(0XFFFFFFFF),
-            borderRadius: BorderRadius.all(
-              Radius.circular(6),
-            ),
+            borderRadius: BorderRadius.all(Radius.circular(6)),
             boxShadow: [
               BoxShadow(
                 color: Color(0X06000000),
@@ -37,7 +44,7 @@ class ContainerForFeatureDoctor extends StatelessWidget {
                 blurRadius: 20,
               ),
             ],
-            shape:BoxShape.rectangle,
+            shape: BoxShape.rectangle,
           ),
           child: Column(
             children: [
@@ -46,7 +53,9 @@ class ContainerForFeatureDoctor extends StatelessWidget {
                 children: [
                   IconButton(
                     onPressed: () {
-                      context.read<HomeCubit>().toggleFavorite(nameDoctor);
+                      context.read<FavoriteDoctorCubit>().toggleFavorite(
+                        nameDoctor,
+                      );
                     },
                     icon: Icon(
                       Icons.favorite,
@@ -54,13 +63,9 @@ class ContainerForFeatureDoctor extends StatelessWidget {
                       color: isFavourite ? Colors.red : Colors.grey,
                     ),
                   ),
-                  SizedBox(width: size.width*0.05),
-                  Icon(
-                    Icons.star,
-                    color: Colors.amber,
-                    size: 15,
-                  ),
-                  SizedBox(width: size.width*0.0078),
+                  SizedBox(width: size.width * 0.05),
+                  Icon(Icons.star, color: Colors.amber, size: 15),
+                  SizedBox(width: size.width * 0.0078),
                   Text(
                     totalRate.toString(),
                     style: TextStyle(
@@ -71,31 +76,29 @@ class ContainerForFeatureDoctor extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: size.height*0.002483),
+              SizedBox(height: size.height * 0.002483),
               ClipRRect(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(40),
-                ),
+                borderRadius: BorderRadius.all(Radius.circular(40)),
                 child: Image.asset(
                   image,
-                  width: size.width*0.140625,
-                  height: size.width*0.140625,
+                  width: size.width * 0.140625,
+                  height: size.width * 0.140625,
                   fit: BoxFit.cover,
                 ),
               ),
-              SizedBox(height: size.height*0.00372),
+              SizedBox(height: size.height * 0.00372),
               Text(
                 nameDoctor,
                 style: TextStyle(
-                    color: Color(0XFF333333),
-                    fontSize: 12,
-                    fontFamily: "Rubik",
-                    fontWeight: FontWeight.w300
+                  color: Color(0XFF333333),
+                  fontSize: 12,
+                  fontFamily: "Rubik",
+                  fontWeight: FontWeight.w300,
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
-              SizedBox(height: size.height*0.0037),
+              SizedBox(height: size.height * 0.0037),
               Text(
                 "\$ $price/ hours",
                 style: TextStyle(

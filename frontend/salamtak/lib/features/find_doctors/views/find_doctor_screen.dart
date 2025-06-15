@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/core/constants/widgets/circle_for_bg.dart';
 import 'package:salamtak/core/constants/widgets/text_form_for_search.dart';
 import 'package:salamtak/data/models/doctors.dart';
+import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_cubit.dart';
+import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_state.dart';
 import 'package:salamtak/features/find_doctors/cubit/find_doctor_cubit.dart';
 import 'package:salamtak/features/find_doctors/cubit/find_doctor_state.dart';
 import 'package:salamtak/features/find_doctors/widgets/container_for_search_doctors.dart';
@@ -151,20 +153,28 @@ class _FindDoctorScreenState extends State<FindDoctorScreen> {
                             ),
                           );
                         }
-                        return ListView.builder(
-                          itemCount: doctors.length,
-                          itemBuilder: (context, index) {
-                            final doctor = doctors[index];
-                            return ContainerForFindDoctors(
-                              size: size,
-                              nameDoctor: doctor.name,
-                              image: doctor.image,
-                              doctorSpecialty: doctor.specialty,
-                              numberOfPatients: doctor.numberOfPatients,
-                              numberOfYearsOfExperience: doctor.numberOfYearsOfExperience,
-                              rate: doctor.rating,
-                              timeNextAvailable: doctor.timeNextAvailable,
-                              isFavourite: doctor.isFavorite!,
+                        return BlocBuilder<
+                          FavoriteDoctorCubit,
+                          FavoriteDoctorState
+                        >(
+                          builder: (context, state) {
+                            return ListView.builder(
+                              itemCount: doctors.length,
+                              itemBuilder: (context, index) {
+                                final doctor = doctors[index];
+                                return ContainerForFindDoctors(
+                                  size: size,
+                                  nameDoctor: doctor.name,
+                                  image: doctor.image,
+                                  doctorSpecialty: doctor.specialty,
+                                  numberOfPatients: doctor.numberOfPatients,
+                                  numberOfYearsOfExperience:
+                                      doctor.numberOfYearsOfExperience,
+                                  rate: doctor.rating,
+                                  timeNextAvailable: doctor.timeNextAvailable,
+                                  isFavourite: doctor.isFavorite!,
+                                );
+                              },
                             );
                           },
                         );

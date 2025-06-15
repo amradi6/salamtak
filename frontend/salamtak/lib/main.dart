@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_cubit.dart';
 import 'package:salamtak/features/find_doctors/cubit/find_doctor_cubit.dart';
 
 import 'core/router/app_routes.dart';
@@ -21,6 +22,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<FindDoctorCubit>(
           create: (context) => FindDoctorCubit(),
+        ),
+        BlocProvider<FavoriteDoctorCubit>(
+          create: (context) => FavoriteDoctorCubit(),
         ),
       ],
       child: MaterialApp(

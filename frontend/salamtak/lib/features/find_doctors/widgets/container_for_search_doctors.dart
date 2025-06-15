@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_cubit.dart';
+import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_state.dart';
 import 'package:salamtak/features/find_doctors/cubit/find_doctor_cubit.dart';
 import 'package:salamtak/features/find_doctors/cubit/find_doctor_state.dart';
 
 class ContainerForFindDoctors extends StatelessWidget {
-  const  ContainerForFindDoctors({
+  const ContainerForFindDoctors({
     super.key,
     required this.size,
     required this.image,
@@ -29,7 +31,7 @@ class ContainerForFindDoctors extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FindDoctorCubit,FindDoctorState>(
+    return BlocBuilder<FavoriteDoctorCubit, FavoriteDoctorState>(
       builder: (context, state) {
         return Container(
           margin: EdgeInsets.only(bottom: size.height * 0.0124),
@@ -140,7 +142,9 @@ class ContainerForFindDoctors extends StatelessWidget {
                       height: size.height * 0.021,
                       child: GestureDetector(
                         onTap: () {
-                          context.read<FindDoctorCubit>().toggleFavorite(nameDoctor);
+                          context.read<FavoriteDoctorCubit>().toggleFavorite(
+                            nameDoctor,
+                          );
                         },
                         child: Icon(
                           Icons.favorite,

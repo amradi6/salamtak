@@ -1,6 +1,6 @@
 import 'package:salamtak/data/models/doctors.dart';
 
-sealed class FindDoctorState {}
+class FindDoctorState {}
 
 final class FindDoctorInitialState extends FindDoctorState {
   final List<Doctors> allDoctors;
@@ -13,5 +13,3 @@ final class DoctorFilterState extends FindDoctorState {
 
   DoctorFilterState(this.filteredDoctors);
 }
-
-final class ChangeFavouriteState extends FindDoctorState {}

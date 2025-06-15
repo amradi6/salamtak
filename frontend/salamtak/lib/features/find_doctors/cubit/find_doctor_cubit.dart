@@ -27,24 +27,4 @@ class FindDoctorCubit extends Cubit<FindDoctorState> {
   void resetDoctors() {
     emit(FindDoctorInitialState(dummyDoctors));
   }
-
-  void toggleFavorite(String doctorName) {
-    for (var doctor in allDoctors) {
-      if (doctor.name == doctorName) {
-        doctor.isFavorite = !doctor.isFavorite!;
-        break;
-      }
-    }
-    if (state is DoctorFilterState) {
-      final currentFilter = (state as DoctorFilterState).filteredDoctors;
-      final updatedFilter = allDoctors
-          .where((doctor) =>
-          currentFilter.any((filteredDoc) => filteredDoc.name == doctor.name))
-          .toList();
-
-      emit(DoctorFilterState(List.from(updatedFilter)));
-    } else {
-      emit(FindDoctorInitialState(List.from(allDoctors)));
-    }
-  }
 }
