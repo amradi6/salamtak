@@ -1,9 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/core/constants/widgets/circle_for_bg.dart';
 import 'package:salamtak/core/constants/widgets/text_form_for_search.dart';
+import 'package:salamtak/data/models/doctors.dart';
+import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_cubit.dart';
+import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_state.dart';
+import 'package:salamtak/features/favorite_doctors/widgets/favorite_doctors_cards.dart';
 
-class FavoriteDoctorsScreen extends StatelessWidget {
+class FavoriteDoctorsScreen extends StatefulWidget {
   const FavoriteDoctorsScreen({super.key});
+
+  @override
+  State<FavoriteDoctorsScreen> createState() => _FavoriteDoctorsScreenState();
+}
+
+class _FavoriteDoctorsScreenState extends State<FavoriteDoctorsScreen> {
+  @override
+  void dispose() {
+    super.dispose();
+    context.read<FavoriteDoctorCubit>().controller.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,94 +76,130 @@ class FavoriteDoctorsScreen extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: size.height * 0.042),
-                TextFormForSearch(
-                  size: size,
-                  textInputType: TextInputType.text,
-                  filled: true,
-                  hintText: "Find your favorite doctor",
-                  suffixIcon: Icon(Icons.cancel),
+                Form(
+                  key: context.read<FavoriteDoctorCubit>().formKey,
+                  child: TextFormForSearch(
+                    size: size,
+                    controller: context.read<FavoriteDoctorCubit>().controller,
+                    textInputType: TextInputType.text,
+                    filled: true,
+                    hintText: "Find your favorite doctor",
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        context.read<FavoriteDoctorCubit>().resetFavorites();
+                        setState(() {
+                          context
+                              .read<FavoriteDoctorCubit>()
+                              .controller
+                              .clear();
+                        });
+                      },
+                      icon: Icon(Icons.cancel),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return "Please Enter The Name Doctor";
+                      }
+                      return null;
+                    },
+                    onFieldSubmitted: (value) {
+                      if (context
+                          .read<FavoriteDoctorCubit>()
+                          .formKey
+                          .currentState!
+                          .validate()) {
+                        context
+                            .read<FavoriteDoctorCubit>()
+                            .filterFavoriteDoctors(value.trim());
+                      }
+                    },
+                    onChanged: (value) {
+                      final trimmedValue = value.trim();
+                      if (trimmedValue.isEmpty) {
+                        context.read<FavoriteDoctorCubit>().resetFavorites();
+                      } else {
+                        context
+                            .read<FavoriteDoctorCubit>()
+                            .filterFavoriteDoctors(trimmedValue);
+                      }
+                    },
+                  ),
                 ),
                 SizedBox(height: size.height * 0.029),
-                SizedBox(
-                  width: size.width*0.8723,
-                  height: size.height*0.62088,
-                  child: GridView.builder(
-                    scrollDirection: Axis.vertical,
-                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 160,
-                      mainAxisSpacing:size.height*0.019,
-                      crossAxisSpacing:size.height*0.019,
-                      childAspectRatio: 0.8888,
-                    ),
-                    itemBuilder: (context, index) {
-                      return Container(
-                        width: 180,
-                        decoration: BoxDecoration(
-                          color: Color(0XFFFFFFFF),
-                          borderRadius: BorderRadius.circular(6),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Color(0X06000000),
-                              blurRadius: 20,
-                              offset: Offset(0, -1),
-                            ),
-                          ],
+                BlocBuilder<FavoriteDoctorCubit, FavoriteDoctorState>(
+                  builder: (context, state) {
+                    List<Doctors> doctor = [];
+
+                    if (state is FavoriteDoctorInitialState) {
+                      doctor = state.favoriteDoctors;
+                    } else if (state is DoctorFavoriteFilterState) {
+                      doctor = state.filteredDoctors;
+                    }
+                    if (doctor.isEmpty) {
+                      final massage =
+                          context.read<FavoriteDoctorCubit>().isSearching
+                              ? "There is no favorite doctor with this name."
+                              : "You don't have any favorite doctors yet.";
+                      return Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: size.height * 0.2483,
                         ),
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding:EdgeInsets.only(right: size.width*0.065,top: size.height*0.0105),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  SizedBox(
-                                    width:size.width*0.0436,
-                                    height: size.height*0.0186,
-                                    child: IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(Icons.favorite),
-                                    ),
+                        child: Center(
+                          child: Text(
+                            massage,
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Color(0XFF333333),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+
+                    return SingleChildScrollView(
+                      child: SizedBox(
+                        width: size.width * 0.8723,
+                        height: size.height * 0.745,
+                        child: GridView.builder(
+                          shrinkWrap: true,
+                          padding: EdgeInsets.only(bottom: 80),
+                          itemCount: doctor.length,
+                          scrollDirection: Axis.vertical,
+                          gridDelegate:
+                              SliverGridDelegateWithMaxCrossAxisExtent(
+                                maxCrossAxisExtent: 160,
+                                mainAxisSpacing: size.height * 0.019,
+                                crossAxisSpacing: size.height * 0.019,
+                                childAspectRatio: 0.8888,
+                              ),
+                          itemBuilder: (context, index) {
+                            return Container(
+                              width: size.width * 0.468,
+                              decoration: BoxDecoration(
+                                color: Color(0XFFFFFFFF),
+                                borderRadius: BorderRadius.circular(6),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color(0X06000000),
+                                    blurRadius: 20,
+                                    offset: Offset(0, -1),
                                   ),
                                 ],
                               ),
-                            ),
-                            SizedBox(height: size.height*0.0186),
-                            ClipRRect(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(50),
+                              child: FavoriteDoctorsCards(
+                                isFavorite: doctor[index].isFavorite!,
+                                specialization: doctor[index].specialty,
+                                name: doctor[index].name,
+                                image: doctor[index].image,
+                                size: size,
                               ),
-                              child: Image.asset(
-                                "assets/images/AmrAdi.jpg",
-                                height: size.height*0.1043,
-                                width: size.height*0.1043,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            SizedBox(height: size.height*0.0136),
-                            Text(
-                              "Dr. Shouey",
-                              style: TextStyle(
-                                fontSize: 15,
-                                color: Color(0XFF333333),
-                                fontWeight: FontWeight.normal,
-                                fontFamily: "Rubik",
-                              ),
-                            ),
-                            SizedBox(height: size.height*0.00496),
-                            Text(
-                              "Specalist Cardiology",
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Color(0XFF0EBE7E),
-                                fontWeight: FontWeight.w300,
-                                fontFamily: "Rubik",
-                              ),
-                            ),
-                          ],
+                            );
+                          },
                         ),
-                      );
-                    },
-                  ),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
