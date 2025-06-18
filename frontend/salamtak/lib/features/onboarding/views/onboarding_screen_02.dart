@@ -47,7 +47,7 @@ class OnboardingScreen02 extends StatelessWidget {
               SizedBox(height: size.height * 0.017384),
               CustomTextButton(
                 onPressed:
-                    () => Navigator.pushReplacementNamed(context, "/Signup"),
+                    () => Navigator.pushReplacementNamed(context, "/who_are_you"),
               ),
             ],
           ),
