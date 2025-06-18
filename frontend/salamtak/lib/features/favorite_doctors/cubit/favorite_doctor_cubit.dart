@@ -4,19 +4,23 @@ import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_state.d
 import 'package:salamtak/features/home/cubit/home__state.dart';
 
 class FavoriteDoctorCubit extends Cubit<FavoriteDoctorState> {
-  FavoriteDoctorCubit() :super(FavoriteDoctorInitialState(dummyDoctors));
-
-  final allDoctors = dummyDoctors;
+  FavoriteDoctorCubit()
+    : super(
+        FavoriteDoctorInitialState(
+          dummyDoctors.where((d) => d.isFavorite ?? false).toList(),
+        ),
+      );
 
   get favoriteDoctors =>
       allDoctors.where((d) => d.isFavorite ?? false).toList();
+
+  final allDoctors = dummyDoctors;
 
   final TextEditingController controller = TextEditingController();
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   bool isSearching = false;
-
 
   void toggleFavorite(String doctorName) {
     for (var doctor in allDoctors) {
@@ -34,14 +38,13 @@ class FavoriteDoctorCubit extends Cubit<FavoriteDoctorState> {
       emit(FavoriteDoctorInitialState(favoriteDoctors));
     } else {
       final filteredList =
-      favoriteDoctors
-          .where(
-            (doctor) =>
-            doctor.name.toString().toLowerCase().contains(
-              name.toLowerCase(),
-            ),
-      )
-          .toList();
+          favoriteDoctors
+              .where(
+                (doctor) => doctor.name.toString().toLowerCase().contains(
+                  name.toLowerCase(),
+                ),
+              )
+              .toList();
       emit(DoctorFavoriteFilterState(filteredList));
     }
   }
@@ -49,5 +52,10 @@ class FavoriteDoctorCubit extends Cubit<FavoriteDoctorState> {
   void resetFavorites() {
     isSearching = false;
     emit(FavoriteDoctorInitialState(favoriteDoctors));
+  }
+
+  Future<void> clos(){
+    controller.dispose();
+    return super.close();
   }
 }

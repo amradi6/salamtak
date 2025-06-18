@@ -15,11 +15,6 @@ class FavoriteDoctorsScreen extends StatefulWidget {
 }
 
 class _FavoriteDoctorsScreenState extends State<FavoriteDoctorsScreen> {
-  @override
-  void dispose() {
-    super.dispose();
-    context.read<FavoriteDoctorCubit>().controller.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
