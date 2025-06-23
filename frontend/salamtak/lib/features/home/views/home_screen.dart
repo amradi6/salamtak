@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return BlocBuilder<HomeCubit,HomeState>(
+    return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
         final popDoctors = context.watch<HomeCubit>().popularDoctors;
         final featDoctors = context.watch<HomeCubit>().featureDoctors;
@@ -129,55 +129,12 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
 
-                  SizedBox(height: size.height * 0.037253197),
-                  
                   Expanded(
                     child: SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: size.width * 0.04947916,
-                            ),
-                            child: Text(
-                              "reels",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontFamily: "Rubik",
-                                fontWeight: FontWeight.w300,
-                                color: Color(0XFF333333),
-                              ),
-                            ),
-                          ),
-
-                          SizedBox(height: size.height * 0.02483546),
-
-                          SizedBox(
-                            height: size.height * 0.208617906,
-                            child: ListView.builder(
-                              itemCount: 20,
-                              physics: const BouncingScrollPhysics(),
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  height: size.height * 0.208617906,
-                                  width: size.width * 0.303333,
-                                  margin: EdgeInsets.only(
-                                    left: size.width * 0.03781,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(10),
-                                    ),
-                                  ),
-                                  child: Placeholder(),
-                                );
-                              },
-                            ),
-                          ),
-
                           SizedBox(height: size.height * 0.037253197),
 
                           SizedBox(
@@ -309,7 +266,7 @@ class HomeScreen extends StatelessWidget {
                                   scrollDirection: Axis.horizontal,
                                   itemCount: featDoctors.length,
                                   itemBuilder: (context, index) {
-                                    final doctor=featDoctors[index];
+                                    final doctor = featDoctors[index];
                                     return ContainerForFeatureDoctor(
                                       size: size,
                                       totalRate: doctor.rating,
@@ -324,7 +281,7 @@ class HomeScreen extends StatelessWidget {
                             ],
                           ),
 
-                          SizedBox(height: size.height*0.124),
+                          SizedBox(height: size.height * 0.124),
                         ],
                       ),
                     ),
