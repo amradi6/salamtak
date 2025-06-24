@@ -210,6 +210,9 @@ class HomeScreen extends StatelessWidget {
                                   itemBuilder: (context, index) {
                                     final doctor = popDoctors[index];
                                     return ContainerForPopularDoctor(
+                                      onTap: () {
+                                        Navigator.of(context).pushReplacementNamed("/doctor_details");
+                                      },
                                       size: size,
                                       image: doctor.image,
                                       nameDoctor: doctor.name,
