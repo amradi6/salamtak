@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:salamtak/features/auth/views/login_screen.dart';
 import 'package:salamtak/features/auth/views/signup_screen.dart';
-import 'package:salamtak/features/auth/views/who_are_you_screen.dart';
 import 'package:salamtak/features/favorite_doctors/views/favorite_doctors_screen.dart';
 import 'package:salamtak/features/find_doctors/views/find_doctor_screen.dart';
 import 'package:salamtak/features/home/views/home_screen.dart';
@@ -35,8 +34,6 @@ class AppRoutes {
         return createRoute(screen: FavoriteDoctorsScreen());
       case "/layout":
         return createRoute(screen: LayoutScreen());
-      case "/who_are_you":
-        return createRoute(screen: WhoAreYouScreen());
 
       default:
         return MaterialPageRoute(
