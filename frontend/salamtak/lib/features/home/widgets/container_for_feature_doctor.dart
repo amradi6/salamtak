@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_cubit.dart';
 import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_state.dart';
-import 'package:salamtak/features/home/cubit/home__cubit.dart';
-import 'package:salamtak/features/home/cubit/home__state.dart';
 
 class ContainerForFeatureDoctor extends StatelessWidget {
   const ContainerForFeatureDoctor({
