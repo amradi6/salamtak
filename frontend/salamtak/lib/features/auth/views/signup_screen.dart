@@ -30,10 +30,12 @@ class _SignupScreenState extends State<SignupScreen> {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if(state is SingUpLoading){
-          CircularProgressIndicator();
+           const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
         }
         if (state is SingUpSuccess) {
-          Navigator.pushReplacementNamed(context, '/home');
+          Navigator.pushNamed(context, '/home');
         }
         if(state is SingUpError){
           ScaffoldMessenger.of(context).showSnackBar(
@@ -211,8 +213,8 @@ class _SignupScreenState extends State<SignupScreen> {
                       CustomElevatedButton(
                         size: size,
                         text: "Sign up",
-                        onPressed: () {
-                          context.read<AuthCubit>().signup(
+                        onPressed: () async{
+                          await context.read<AuthCubit>().signup(
                             email: emailController.text,
                             username: nameController.text,
                             password1: passwordController.text,
@@ -222,7 +224,9 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                       SizedBox(height: size.height * 0.002111),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, "/login");
+                        },
                         child: Text(
                           "Have an account? Log in",
                           style: TextStyle(

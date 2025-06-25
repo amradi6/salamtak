@@ -9,10 +9,10 @@ class AuthCubit extends Cubit<AuthState> {
     emit(SingUpLoading());
     try {
       final response = await http.post(
-        Uri.parse('https://example.com/api/signup'),
+        Uri.parse('https://mohammadhussien.pythonanywhere.com/api/auth/registration/'),
         body: {'email': email, 'password1': password1, 'password2': password2,'username':username},
       );
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         emit(SingUpSuccess());
       } else {
         emit(SingUpError('Signup failed'));

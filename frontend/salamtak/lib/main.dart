@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/features/auth/cubit/auth_cubit.dart';
+import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_cubit.dart';
+import 'package:salamtak/features/find_doctors/cubit/find_doctor_cubit.dart';
+import 'package:salamtak/features/home/cubit/home__cubit.dart';
 
 import 'core/router/app_routes.dart';
 
@@ -9,6 +12,9 @@ void main() {
     MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => AuthCubit()),
+        BlocProvider(create: (_) => HomeCubit()),
+        BlocProvider(create: (_) => FavoriteDoctorCubit()),
+        BlocProvider(create: (_) => FindDoctorCubit()),
       ],
       child: MyApp(),
     ),
