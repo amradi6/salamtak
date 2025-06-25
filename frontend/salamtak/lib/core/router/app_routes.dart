@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:salamtak/features/auth/views/login_screen.dart';
 import 'package:salamtak/features/auth/views/signup_screen.dart';
+import 'package:salamtak/features/auth/views/who_are_you_screen.dart';
 import 'package:salamtak/features/doctor_details/views/doctor_detiles_screen.dart';
 import 'package:salamtak/features/favorite_doctors/views/favorite_doctors_screen.dart';
 import 'package:salamtak/features/find_doctors/views/find_doctor_screen.dart';
@@ -27,6 +28,8 @@ class AppRoutes {
         return createRoute(screen: SignupScreen());
       case "/login":
         return createRoute(screen: LoginScreen());
+      case "/who_are_you":
+        return createRoute(screen: WhoAreYouScreen());
       case "/home":
         return createRoute(screen: HomeScreen());
       case "/find_doctor":
