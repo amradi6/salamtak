@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_cubit.dart';
-import 'package:salamtak/features/find_doctors/cubit/find_doctor_cubit.dart';
+import 'package:salamtak/features/auth/cubit/auth_cubit.dart';
 
 import 'core/router/app_routes.dart';
-import 'features/home/cubit/home__cubit.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => AuthCubit()),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -15,20 +20,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<HomeCubit>(create: (context) => HomeCubit()),
-        BlocProvider<FindDoctorCubit>(create: (context) => FindDoctorCubit()),
-        BlocProvider<FavoriteDoctorCubit>(
-          create: (context) => FavoriteDoctorCubit(),
-        ),
-      ],
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        debugShowCheckedModeBanner: false,
-        initialRoute: "/",
-        onGenerateRoute: AppRoutes.generateRoute,
-      ),
+    return MaterialApp(
+      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      initialRoute: "/",
+      onGenerateRoute: AppRoutes.generateRoute,
     );
   }
 }

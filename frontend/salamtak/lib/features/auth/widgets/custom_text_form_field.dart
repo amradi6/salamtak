@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     super.key,
-    required this.size, required this.hintText, required this.keyboardType, this.suffixIcon,
+    required this.size, required this.hintText, required this.keyboardType, this.suffixIcon, this.controller,
   });
 
   final Size size;
   final String hintText;
   final TextInputType keyboardType;
   final Widget? suffixIcon;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +18,7 @@ class CustomTextFormField extends StatelessWidget {
       width: size.width*0.872395,
       height: size.height*0.0670557,
       child: TextFormField(
+        controller: controller,
         keyboardType: keyboardType,
         decoration: InputDecoration(
           hintText: hintText,
