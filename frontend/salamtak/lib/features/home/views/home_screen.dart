@@ -10,10 +10,10 @@ import 'package:salamtak/features/home/widgets/custom_icons_for_classification.d
 
 class NoGlowScrollBehavior extends ScrollBehavior {
   Widget buildViewportChrome(
-    BuildContext context,
-    Widget child,
-    AxisDirection axisDirection,
-  ) {
+      BuildContext context,
+      Widget child,
+      AxisDirection axisDirection,
+      ) {
     return child;
   }
 }
@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return BlocBuilder<HomeCubit,HomeState>(
+    return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
         final popDoctors = context.watch<HomeCubit>().popularDoctors;
         final featDoctors = context.watch<HomeCubit>().featureDoctors;
@@ -89,8 +89,8 @@ class HomeScreen extends StatelessWidget {
                                     fontFamily: "Rubik",
                                     color: Color(0XFFFAFAFA),
                                     decoration:
-                                        TextDecoration
-                                            .none, // Removed underline
+                                    TextDecoration
+                                        .none, // Removed underline
                                   ),
                                 ),
                                 SizedBox(height: size.height * 0.0074506),
@@ -102,8 +102,8 @@ class HomeScreen extends StatelessWidget {
                                     fontFamily: "Rubik",
                                     color: Color(0XFFFFFFFF),
                                     decoration:
-                                        TextDecoration
-                                            .none, // Removed underline
+                                    TextDecoration
+                                        .none, // Removed underline
                                   ),
                                 ),
                               ],
@@ -129,55 +129,12 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
 
-                  SizedBox(height: size.height * 0.037253197),
-                  
                   Expanded(
                     child: SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: size.width * 0.04947916,
-                            ),
-                            child: Text(
-                              "reels",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontFamily: "Rubik",
-                                fontWeight: FontWeight.w300,
-                                color: Color(0XFF333333),
-                              ),
-                            ),
-                          ),
-
-                          SizedBox(height: size.height * 0.02483546),
-
-                          SizedBox(
-                            height: size.height * 0.208617906,
-                            child: ListView.builder(
-                              itemCount: 20,
-                              physics: const BouncingScrollPhysics(),
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  height: size.height * 0.208617906,
-                                  width: size.width * 0.303333,
-                                  margin: EdgeInsets.only(
-                                    left: size.width * 0.03781,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(10),
-                                    ),
-                                  ),
-                                  child: Placeholder(),
-                                );
-                              },
-                            ),
-                          ),
-
                           SizedBox(height: size.height * 0.037253197),
 
                           SizedBox(
@@ -218,7 +175,7 @@ class HomeScreen extends StatelessWidget {
                                 ),
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       "Popular Doctor",
@@ -253,10 +210,13 @@ class HomeScreen extends StatelessWidget {
                                   itemBuilder: (context, index) {
                                     final doctor = popDoctors[index];
                                     return ContainerForPopularDoctor(
+                                      onTap: () {
+                                        Navigator.of(context).pushReplacementNamed("/doctor_details");
+                                      },
                                       size: size,
                                       image: doctor.image,
                                       nameDoctor: doctor.name,
-                                      doctorSpecialty: doctor.specialty!,
+                                      doctorSpecialty: doctor.specialty,
                                       rating: doctor.rating,
                                     );
                                   },
@@ -276,7 +236,7 @@ class HomeScreen extends StatelessWidget {
                                 ),
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       "Feature Doctor",
@@ -309,13 +269,13 @@ class HomeScreen extends StatelessWidget {
                                   scrollDirection: Axis.horizontal,
                                   itemCount: featDoctors.length,
                                   itemBuilder: (context, index) {
-                                    final doctor=featDoctors[index];
+                                    final doctor = featDoctors[index];
                                     return ContainerForFeatureDoctor(
                                       size: size,
                                       totalRate: doctor.rating,
                                       image: doctor.image,
                                       nameDoctor: doctor.name,
-                                      price: doctor.price!,
+                                      price: doctor.price,
                                       isFavourite: doctor.isFavorite!,
                                     );
                                   },
@@ -324,7 +284,7 @@ class HomeScreen extends StatelessWidget {
                             ],
                           ),
 
-                          SizedBox(height: size.height*0.124),
+                          SizedBox(height: size.height * 0.124),
                         ],
                       ),
                     ),

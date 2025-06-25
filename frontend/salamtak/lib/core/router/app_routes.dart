@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:salamtak/features/auth/views/login_screen.dart';
 import 'package:salamtak/features/auth/views/signup_screen.dart';
+import 'package:salamtak/features/doctor_details/views/doctor_detiles_screen.dart';
 import 'package:salamtak/features/favorite_doctors/views/favorite_doctors_screen.dart';
 import 'package:salamtak/features/find_doctors/views/find_doctor_screen.dart';
 import 'package:salamtak/features/home/views/home_screen.dart';
@@ -34,13 +35,15 @@ class AppRoutes {
         return createRoute(screen: FavoriteDoctorsScreen());
       case "/layout":
         return createRoute(screen: LayoutScreen());
+      case "/doctor_details":
+        return createRoute(screen: DoctorDetailsScreen());
 
       default:
         return MaterialPageRoute(
           builder:
               (_) => const Scaffold(
-                body: Center(child: Text('404 - Page not found')),
-              ),
+            body: Center(child: Text('404 - Page not found')),
+          ),
         );
     }
   }
