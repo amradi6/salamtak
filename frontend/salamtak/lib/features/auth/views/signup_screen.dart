@@ -24,28 +24,26 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     final size = MediaQuery.of(context).size;
 
     final double circleSize = size.width * 0.5625;
+
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
-        if(state is SingUpLoading){
-           const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
-          );
-        }
         if (state is SingUpSuccess) {
-          Navigator.pushNamed(context, '/home');
+          Navigator.pushNamed(context, '/layout');
         }
-        if(state is SingUpError){
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-            ),
-          );
+        if (state is SingUpError) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(state.message)));
         }
       },
       builder: (context, state) {
+        if (state is SingUpLoading) {
+          return const Scaffold(body: Center(child: CircularProgressIndicator()));
+        }
         return Scaffold(
           backgroundColor: Color(0XFFFFFFFF),
           body: SizedBox(
@@ -187,6 +185,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           children: [
                             CustomTextFormField(
                               size: size,
+                              obscure: false,
                               controller: nameController,
                               keyboardType: TextInputType.name,
                               hintText: "Name",
@@ -195,6 +194,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             CustomTextFormField(
                               controller: emailController,
                               size: size,
+                              obscure: false,
                               keyboardType: TextInputType.emailAddress,
                               hintText: "Email",
                             ),
@@ -202,9 +202,18 @@ class _SignupScreenState extends State<SignupScreen> {
                             CustomTextFormField(
                               controller: passwordController,
                               size: size,
+                              obscure: context.watch<AuthCubit>().obscurePassword,
                               keyboardType: TextInputType.visiblePassword,
                               hintText: "Password",
-                              suffixIcon: Icon(Icons.remove_red_eye),
+                                suffixIcon: IconButton(
+                                  onPressed: () => context.read<AuthCubit>().togglePasswordVisibility(),
+                                  icon: Icon(
+                                    context.read<AuthCubit>().obscurePassword
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: Color(0XFF677294),
+                                  ),
+                                ),
                             ),
                           ],
                         ),
@@ -213,7 +222,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       CustomElevatedButton(
                         size: size,
                         text: "Sign up",
-                        onPressed: () async{
+                        onPressed: () async {
                           await context.read<AuthCubit>().signup(
                             email: emailController.text,
                             username: nameController.text,

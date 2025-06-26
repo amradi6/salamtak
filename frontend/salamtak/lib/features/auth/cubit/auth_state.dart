@@ -10,3 +10,17 @@ class SingUpError extends AuthState{
   final String message;
   SingUpError(this.message);
 }
+
+class PasswordVisibilityChanged extends AuthState {
+  final bool obscurePassword;
+  PasswordVisibilityChanged(this.obscurePassword);
+}
+
+class LogInLoading extends AuthState{}
+
+class LogInSuccess extends AuthState{}
+
+class LogInError extends AuthState{
+  final String message;
+  LogInError(this.message);
+}

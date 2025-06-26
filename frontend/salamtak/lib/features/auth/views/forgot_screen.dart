@@ -62,6 +62,7 @@ class ForgotScreen {
             ),
             CustomTextFormField(
               size: size,
+              obscure: true,
               keyboardType: TextInputType.emailAddress,
               hintText: "Email",
             ),

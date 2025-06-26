@@ -140,11 +140,14 @@ class ContainerForFindDoctors extends StatelessWidget {
                       height: size.height * 0.021,
                       child: IconButton(
                         onPressed: () {
-                          context.read<FavoriteDoctorCubit>().toggleFavorite(nameDoctor);
+                          context.read<FavoriteDoctorCubit>().toggleFavorite(
+                            nameDoctor,
+                          );
                         },
                         icon: Icon(
                           Icons.favorite,
-                          color: isFavourite ? Colors.red : Colors.grey,),
+                          color: isFavourite ? Colors.red : Colors.grey,
+                        ),
                         padding: EdgeInsets.zero,
                       ),
                     ),

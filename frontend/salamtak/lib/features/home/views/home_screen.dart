@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/core/constants/widgets/circle_for_bg.dart';
 import 'package:salamtak/core/constants/widgets/text_form_for_search.dart';
+import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_cubit.dart';
+import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_state.dart';
 import 'package:salamtak/features/home/cubit/home__cubit.dart';
 import 'package:salamtak/features/home/cubit/home__state.dart';
 import 'package:salamtak/features/home/widgets/container_for_feature_doctor.dart';
@@ -10,10 +12,10 @@ import 'package:salamtak/features/home/widgets/custom_icons_for_classification.d
 
 class NoGlowScrollBehavior extends ScrollBehavior {
   Widget buildViewportChrome(
-      BuildContext context,
-      Widget child,
-      AxisDirection axisDirection,
-      ) {
+    BuildContext context,
+    Widget child,
+    AxisDirection axisDirection,
+  ) {
     return child;
   }
 }
@@ -89,8 +91,8 @@ class HomeScreen extends StatelessWidget {
                                     fontFamily: "Rubik",
                                     color: Color(0XFFFAFAFA),
                                     decoration:
-                                    TextDecoration
-                                        .none, // Removed underline
+                                        TextDecoration
+                                            .none, // Removed underline
                                   ),
                                 ),
                                 SizedBox(height: size.height * 0.0074506),
@@ -102,8 +104,8 @@ class HomeScreen extends StatelessWidget {
                                     fontFamily: "Rubik",
                                     color: Color(0XFFFFFFFF),
                                     decoration:
-                                    TextDecoration
-                                        .none, // Removed underline
+                                        TextDecoration
+                                            .none, // Removed underline
                                   ),
                                 ),
                               ],
@@ -175,7 +177,7 @@ class HomeScreen extends StatelessWidget {
                                 ),
                                 child: Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       "Popular Doctor",
@@ -211,7 +213,11 @@ class HomeScreen extends StatelessWidget {
                                     final doctor = popDoctors[index];
                                     return ContainerForPopularDoctor(
                                       onTap: () {
-                                        Navigator.of(context).pushReplacementNamed("/doctor_details");
+                                        Navigator.of(
+                                          context,
+                                        ).pushReplacementNamed(
+                                          "/doctor_details",
+                                        );
                                       },
                                       size: size,
                                       image: doctor.image,
@@ -236,7 +242,7 @@ class HomeScreen extends StatelessWidget {
                                 ),
                                 child: Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       "Feature Doctor",
@@ -265,18 +271,25 @@ class HomeScreen extends StatelessWidget {
                               SizedBox(height: size.height * 0.027319011),
                               SizedBox(
                                 height: size.height * 0.2,
-                                child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: featDoctors.length,
-                                  itemBuilder: (context, index) {
-                                    final doctor = featDoctors[index];
-                                    return ContainerForFeatureDoctor(
-                                      size: size,
-                                      totalRate: doctor.rating,
-                                      image: doctor.image,
-                                      nameDoctor: doctor.name,
-                                      price: doctor.price,
-                                      isFavourite: doctor.isFavorite!,
+                                child: BlocBuilder<
+                                  FavoriteDoctorCubit,
+                                  FavoriteDoctorState
+                                >(
+                                  builder: (context, state) {
+                                    return ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: featDoctors.length,
+                                      itemBuilder: (context, index) {
+                                        final doctor = featDoctors[index];
+                                        return ContainerForFeatureDoctor(
+                                          size: size,
+                                          totalRate: doctor.rating,
+                                          image: doctor.image,
+                                          nameDoctor: doctor.name,
+                                          price: doctor.price,
+                                          isFavourite: doctor.isFavorite!,
+                                        );
+                                      },
                                     );
                                   },
                                 ),
