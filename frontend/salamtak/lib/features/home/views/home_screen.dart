@@ -215,7 +215,7 @@ class HomeScreen extends StatelessWidget {
                                       onTap: () {
                                         Navigator.of(
                                           context,
-                                        ).pushReplacementNamed(
+                                        ).pushNamed(
                                           "/doctor_details",
                                         );
                                       },

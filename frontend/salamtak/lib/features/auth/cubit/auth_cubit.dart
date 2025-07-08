@@ -7,6 +7,7 @@ class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(AuthInitial());
 
   bool _obscurePassword = true;
+
   bool get obscurePassword => _obscurePassword;
 
   void togglePasswordVisibility() {
@@ -45,20 +46,12 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> logIn({
-    required String email,
-    required String password,
-  }) async {
+  Future<void> logIn({required String email, required String password}) async {
     emit(LogInLoading());
     try {
       final response = await http.post(
-        Uri.parse(
-          'https://mohammadhussien.pythonanywhere.com/api/auth/login/',
-        ),
-        body: {
-          'email': email,
-          'password': password,
-        },
+        Uri.parse('https://mohammadhussien.pythonanywhere.com/api/auth/login/'),
+        body: {'email': email, 'password': password},
       );
       debugPrint('Response status: ${response.statusCode}');
       debugPrint('Response body: ${response.body}');

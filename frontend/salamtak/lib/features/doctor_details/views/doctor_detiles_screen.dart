@@ -28,7 +28,9 @@ class DoctorDetailsScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                           icon: Container(
                             width: size.height * 0.064,
                             height: size.height * 0.064,
