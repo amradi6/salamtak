@@ -7,7 +7,8 @@ import 'package:salamtak/features/home/cubit/home__cubit.dart';
 
 import 'core/router/app_routes.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     MultiBlocProvider(
       providers: [

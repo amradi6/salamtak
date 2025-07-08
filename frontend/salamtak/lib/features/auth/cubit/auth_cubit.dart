@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:salamtak/features/auth/cubit/auth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(AuthInitial());
@@ -37,6 +40,14 @@ class AuthCubit extends Cubit<AuthState> {
       debugPrint('Response status: ${response.statusCode}');
       debugPrint('Response body: ${response.body}');
       if (response.statusCode == 200 || response.statusCode == 201) {
+        final data = jsonDecode(response.body);
+
+
+        final usernameFromApi = data['username'] ?? username;
+
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('username', usernameFromApi);
+
         emit(SingUpSuccess());
       } else {
         emit(SingUpError('Signup failed'));
@@ -63,5 +74,12 @@ class AuthCubit extends Cubit<AuthState> {
     } catch (e) {
       emit(LogInError('Error: $e'));
     }
+  }
+
+  Future<String?> get userName async {
+    final prefs = await SharedPreferences.getInstance();
+    final name = prefs.getString('username');
+    debugPrint('username: ${name ?? "user"}');
+    return name;
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/core/constants/widgets/circle_for_bg.dart';
 import 'package:salamtak/core/constants/widgets/text_form_for_search.dart';
+import 'package:salamtak/features/auth/cubit/auth_cubit.dart';
 import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_cubit.dart';
 import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_state.dart';
 import 'package:salamtak/features/home/cubit/home__cubit.dart';
@@ -83,17 +84,21 @@ class HomeScreen extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  "Hi AmrAdi",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w200,
-                                    fontFamily: "Rubik",
-                                    color: Color(0XFFFAFAFA),
-                                    decoration:
-                                        TextDecoration
-                                            .none, // Removed underline
-                                  ),
+                                FutureBuilder(
+                                  future: context.read<AuthCubit>().userName,
+                                  builder:
+                                      (context, snapshot) => Text(
+                                        "Hi ${snapshot.data}",
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w200,
+                                          fontFamily: "Rubik",
+                                          color: Color(0XFFFAFAFA),
+                                          decoration:
+                                              TextDecoration
+                                                  .none, // Removed underline
+                                        ),
+                                      ),
                                 ),
                                 SizedBox(height: size.height * 0.0074506),
                                 Text(
@@ -215,9 +220,7 @@ class HomeScreen extends StatelessWidget {
                                       onTap: () {
                                         Navigator.of(
                                           context,
-                                        ).pushNamed(
-                                          "/doctor_details",
-                                        );
+                                        ).pushNamed("/doctor_details");
                                       },
                                       size: size,
                                       image: doctor.image,
