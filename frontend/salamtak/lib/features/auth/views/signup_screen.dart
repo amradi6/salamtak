@@ -25,7 +25,6 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     final size = MediaQuery.of(context).size;
 
     final double circleSize = size.width * 0.5625;
@@ -36,14 +35,22 @@ class _SignupScreenState extends State<SignupScreen> {
           Navigator.pushNamed(context, '/layout');
         }
         if (state is SingUpError) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.message)));
+          ScaffoldMessenger.of(context).clearSnackBars();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+              showCloseIcon: true,
+              closeIconColor: Colors.red,
+              duration: Duration(seconds: 10),
+            ),
+          );
         }
       },
       builder: (context, state) {
         if (state is SingUpLoading) {
-          return const Scaffold(body: Center(child: CircularProgressIndicator()));
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
         }
         return Scaffold(
           backgroundColor: Color(0XFFFFFFFF),
@@ -171,18 +178,23 @@ class _SignupScreenState extends State<SignupScreen> {
                             CustomTextFormField(
                               controller: passwordController,
                               size: size,
-                              obscure: context.watch<AuthCubit>().obscurePassword,
+                              obscure:
+                                  context.watch<AuthCubit>().obscurePassword,
                               keyboardType: TextInputType.visiblePassword,
                               hintText: "Password",
-                                suffixIcon: IconButton(
-                                  onPressed: () => context.read<AuthCubit>().togglePasswordVisibility(),
-                                  icon: Icon(
-                                    context.read<AuthCubit>().obscurePassword
-                                        ? Icons.visibility_off
-                                        : Icons.visibility,
-                                    color: Color(0XFF677294),
-                                  ),
+                              suffixIcon: IconButton(
+                                onPressed:
+                                    () =>
+                                        context
+                                            .read<AuthCubit>()
+                                            .togglePasswordVisibility(),
+                                icon: Icon(
+                                  context.read<AuthCubit>().obscurePassword
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                  color: Color(0XFF677294),
                                 ),
+                              ),
                             ),
                           ],
                         ),
@@ -194,7 +206,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         onPressed: () async {
                           await context.read<AuthCubit>().signup(
                             email: emailController.text,
-                            username: nameController.text,
+                            username: nameController.text.replaceAll(" ", ""),
                             password1: passwordController.text,
                             password2: passwordController.text,
                           );

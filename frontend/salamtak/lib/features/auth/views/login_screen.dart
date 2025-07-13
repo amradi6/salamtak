@@ -29,8 +29,14 @@ class _LoginScreenState extends State<LoginScreen> {
         if(state is LogInSuccess){
           Navigator.pushNamed(context, '/layout');
         }
-        if(state is LogInError){
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message)));
+        if (state is LogInError) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(state.message),
+            showCloseIcon: true,
+            closeIconColor: Colors.red,
+            duration: Duration(seconds: 10),
+          ),
+          );
         }
       },
       builder: (BuildContext context, state) {

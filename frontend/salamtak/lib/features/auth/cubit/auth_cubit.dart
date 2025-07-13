@@ -37,12 +37,12 @@ class AuthCubit extends Cubit<AuthState> {
           'username': username,
         },
       );
+
       debugPrint('Response status: ${response.statusCode}');
       debugPrint('Response body: ${response.body}');
+
       if (response.statusCode == 200 || response.statusCode == 201) {
         final data = jsonDecode(response.body);
-
-
         final usernameFromApi = data['username'] ?? username;
 
         final prefs = await SharedPreferences.getInstance();
@@ -50,10 +50,24 @@ class AuthCubit extends Cubit<AuthState> {
 
         emit(SingUpSuccess());
       } else {
-        emit(SingUpError('Signup failed'));
+        final errorData = jsonDecode(response.body);
+        String errorMessage = 'SignUp failed.';
+
+        if (errorData is Map<String, dynamic>) {
+          final errors = <String>[];
+
+          errorData.forEach((key, value) {
+            if (value is List && value.isNotEmpty) {
+              errors.add('$key: ${value.first}');
+            }
+          });
+
+          errorMessage = errors.join('\n');
+        }
+        emit(SingUpError(errorMessage));
       }
     } catch (e) {
-      emit(SingUpError('Error: $e'));
+      emit(SingUpError('Unexpected error occurred. Please try again.'));
     }
   }
 
@@ -69,10 +83,24 @@ class AuthCubit extends Cubit<AuthState> {
       if (response.statusCode == 200 || response.statusCode == 201) {
         emit(LogInSuccess());
       } else {
-        emit(LogInError('Login failed'));
+        final errorData = jsonDecode(response.body);
+        String errorMessage = 'LogIn failed.';
+
+        if (errorData is Map<String, dynamic>) {
+          final errors = <String>[];
+
+          errorData.forEach((key, value) {
+            if (value is List && value.isNotEmpty) {
+              errors.add('$key: ${value.first}');
+            }
+          });
+
+          errorMessage = errors.join('\n');
+        }
+        emit(LogInError(errorMessage));
       }
     } catch (e) {
-      emit(LogInError('Error: $e'));
+      emit(LogInError('Unexpected error occurred. Please try again.'));
     }
   }
 
