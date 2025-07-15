@@ -19,8 +19,6 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController emailController = TextEditingController();
 
-  final TextEditingController nameController = TextEditingController();
-
   final TextEditingController passwordController = TextEditingController();
 
   @override
@@ -162,7 +160,8 @@ class _SignupScreenState extends State<SignupScreen> {
                             CustomTextFormField(
                               size: size,
                               obscure: false,
-                              controller: nameController,
+                              controller:
+                                  context.watch<AuthCubit>().nameController,
                               keyboardType: TextInputType.name,
                               hintText: "Name",
                             ),
@@ -204,12 +203,15 @@ class _SignupScreenState extends State<SignupScreen> {
                         size: size,
                         text: "Sign up",
                         onPressed: () async {
+                          final authCubit = context.read<AuthCubit>();
+                          final name = authCubit.nameController.text;
                           await context.read<AuthCubit>().signup(
                             email: emailController.text,
-                            username: nameController.text.replaceAll(" ", ""),
+                            username: name.replaceAll(" ", ""),
                             password1: passwordController.text,
                             password2: passwordController.text,
                           );
+                          await authCubit.saveDisplayName(name);
                         },
                       ),
                       SizedBox(height: size.height * 0.002111),

@@ -13,6 +13,8 @@ class AuthCubit extends Cubit<AuthState> {
 
   bool get obscurePassword => _obscurePassword;
 
+  final TextEditingController nameController = TextEditingController();
+
   void togglePasswordVisibility() {
     _obscurePassword = !_obscurePassword;
     emit(PasswordVisibilityChanged(_obscurePassword));
@@ -104,10 +106,14 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<String?> get userName async {
+  Future<void> saveDisplayName(String name) async {
+    final displayName = name.trim();
     final prefs = await SharedPreferences.getInstance();
-    final name = prefs.getString('username');
-    debugPrint('username: ${name ?? "user"}');
-    return name;
+    await prefs.setString('displayName', displayName);
+  }
+
+  Future<String> get displayName async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('displayName') ?? 'User';
   }
 }

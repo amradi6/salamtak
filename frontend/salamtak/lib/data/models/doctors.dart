@@ -1,4 +1,5 @@
 class Doctors {
+  final int id;
   final String name;
   final String image;
   final String specialty;
@@ -12,6 +13,7 @@ class Doctors {
   final String timeNextAvailable;
 
   Doctors({
+    required this.id,
     required this.name,
     required this.image,
     required this.specialty,
@@ -26,12 +28,14 @@ class Doctors {
   });
 
   factory Doctors.fromMap(Map<String, dynamic> map) {
+    final user = map['user'] ?? {};
     return Doctors(
-      image: map['image'],
-      name: map['name'],
-      specialty: map['specialty'] ?? '',
-      rating: (map['rating'] ?? 0).toDouble(),
-      price: map['price'] != null ? (map['price'] as num).toDouble() : 0,
+      id: map['id'],
+      image: map['photo']??"assets/images/doctor1.png",
+      name: user['username']??"User Name",
+      specialty: map['sepciality'] ?? '',
+      rating: double.tryParse(map['rating'] ?? "0.0") ?? 0.0,
+      price: double.tryParse(map['price'] ?? "0.0") ?? 0.0,
       isFavorite: map['favorite'],
       isPopular: map['isPopular'] ?? false,
       isFeatured: map['isFeatured'] ?? false,
@@ -43,6 +47,7 @@ class Doctors {
 
   Map<String, dynamic> toMap() {
     return {
+      'id':id,
       'image': image,
       'name': name,
       'specialty': specialty,

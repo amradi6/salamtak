@@ -4,6 +4,7 @@ class HomeState {}
 
 final List<Doctors> dummyDoctors = [
   Doctors(
+    id: 1,
     name: "Dr. Fillerup Grab",
     image: "assets/images/doctor1.png",
     rating: 4.5,
@@ -16,6 +17,7 @@ final List<Doctors> dummyDoctors = [
     price: 50.00,
   ),
   Doctors(
+    id: 2,
     name: "Dr. Abduallah Wassi",
     image: "assets/images/Abduallah Wassi.png",
     rating: 4.0,
@@ -28,6 +30,7 @@ final List<Doctors> dummyDoctors = [
     price: 10.00,
   ),
   Doctors(
+    id: 3,
     name: "Dr. Osamma Saaed",
     image: "assets/images/Osamma Saaed.webp",
     rating: 0.5,
@@ -40,6 +43,7 @@ final List<Doctors> dummyDoctors = [
     price: 0.5,
   ),
   Doctors(
+    id: 4,
     name: "Dr. Amr Adi",
     image: "assets/images/AmrAdi.jpg",
     rating: 5.0,
@@ -53,6 +57,7 @@ final List<Doctors> dummyDoctors = [
     timeNextAvailable: "10:00 AM",
   ),
   Doctors(
+    id: 5,
     name: "Dr. Mohaamad Razzoq",
     image: "assets/images/Mohaamad Razzouq.jpg",
     rating: 2.0,
@@ -74,3 +79,19 @@ final class HomeInitialState extends HomeState {
 }
 
 class ChangeTabState extends HomeState {}
+
+class PopularDoctorsInitial extends HomeState {}
+
+class PopularDoctorsLoading extends HomeState {}
+
+class PopularDoctorsLoaded extends HomeState {
+  final List<Doctors> doctors;
+
+  PopularDoctorsLoaded(this.doctors);
+}
+
+class PopularDoctorsError extends HomeState {
+  final String message;
+
+  PopularDoctorsError(this.message);
+}

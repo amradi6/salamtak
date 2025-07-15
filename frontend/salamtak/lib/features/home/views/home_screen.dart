@@ -30,9 +30,8 @@ class HomeScreen extends StatelessWidget {
 
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
-        final popDoctors = context.watch<HomeCubit>().popularDoctors;
+        final doctors = state is PopularDoctorsLoaded ? state.doctors : [];
         final featDoctors = context.watch<HomeCubit>().featureDoctors;
-
         return Scaffold(
           backgroundColor: Color(0XFFFFFFFF),
           body: Stack(
@@ -85,7 +84,7 @@ class HomeScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 FutureBuilder(
-                                  future: context.read<AuthCubit>().userName,
+                                  future: context.read<AuthCubit>().displayName,
                                   builder:
                                       (context, snapshot) => Text(
                                         "Hi ${snapshot.data}",
@@ -213,9 +212,9 @@ class HomeScreen extends StatelessWidget {
                                 height: size.height * 0.327828138,
                                 child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
-                                  itemCount: popDoctors.length,
+                                  itemCount: doctors.length,
                                   itemBuilder: (context, index) {
-                                    final doctor = popDoctors[index];
+                                    final doctor = doctors[index];
                                     return ContainerForPopularDoctor(
                                       onTap: () {
                                         Navigator.of(
@@ -223,7 +222,7 @@ class HomeScreen extends StatelessWidget {
                                         ).pushNamed("/doctor_details");
                                       },
                                       size: size,
-                                      image: doctor.image,
+                                      image: doctor.image ,
                                       nameDoctor: doctor.name,
                                       doctorSpecialty: doctor.specialty,
                                       rating: doctor.rating,
