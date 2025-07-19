@@ -80,18 +80,30 @@ final class HomeInitialState extends HomeState {
 
 class ChangeTabState extends HomeState {}
 
-class PopularDoctorsInitial extends HomeState {}
-
 class PopularDoctorsLoading extends HomeState {}
 
-class PopularDoctorsLoaded extends HomeState {
-  final List<Doctors> doctors;
+class PopularDoctorsSuccess extends HomeState {
+  final List<Doctors> popularDoctors;
 
-  PopularDoctorsLoaded(this.doctors);
+  PopularDoctorsSuccess(this.popularDoctors);
 }
 
 class PopularDoctorsError extends HomeState {
   final String message;
 
   PopularDoctorsError(this.message);
+}
+
+class DoctorLoading extends HomeState {}
+
+class DoctorSuccess extends HomeState {
+  final List<Doctors> featureDoctors;
+
+  DoctorSuccess(this.featureDoctors);
+}
+
+class DoctorError extends HomeState {
+  final String message;
+
+  DoctorError(this.message);
 }

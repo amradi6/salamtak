@@ -10,8 +10,7 @@ class LayoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size=MediaQuery.of(context).size;
-    return  BlocConsumer<HomeCubit,HomeState>(
-        listener: (context, state) {},
+    return  BlocBuilder<HomeCubit,HomeState>(
         builder:(context, state) {
           final cubit = context.watch<HomeCubit>();
           return Scaffold(

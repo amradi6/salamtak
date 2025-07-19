@@ -11,8 +11,9 @@ import 'package:salamtak/features/home/views/home_screen.dart';
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(HomeInitialState(dummyDoctors));
 
-  final featureDoctors =
-      dummyDoctors.where((element) => element.isFeatured).toList();
+  List<Doctors> popularDoctors = [];
+
+  List<Doctors> featureDoctors = [];
 
   int currentIndex = 0;
 
@@ -34,13 +35,35 @@ class HomeCubit extends Cubit<HomeState> {
       final response = await http.get(Uri.parse('https://mohammadhussien.pythonanywhere.com/getpopulardoctors/'));
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
-          final doctors = data.map((e) => Doctors.fromMap(e)).toList();
-        emit(PopularDoctorsLoaded(doctors));
+           popularDoctors = data.map((e) => Doctors.fromMap(e)).toList();
+        emit(PopularDoctorsSuccess(popularDoctors));
       } else {
         emit(PopularDoctorsError("Error Fetching Data"));
       }
     } catch (e) {
       emit(PopularDoctorsError(e.toString()));
+    }
+  }
+
+  Future<void> getDoctorsBySpeciality(String speciality) async {
+    emit(DoctorLoading());
+
+    final url = Uri.parse(
+        'https://mohammadhussien.pythonanywhere.com/getsepcialitydoctors/$speciality/',
+    );
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+         featureDoctors = data.map((e) => Doctors.fromMap(e)).toList();
+        emit(DoctorSuccess(featureDoctors));
+      } else {
+        emit(DoctorError("Failed to fetch data: ${response.statusCode}"));
+      }
+    } catch (e) {
+      emit(DoctorError("An error occurred while connecting to the server."));
     }
   }
 }
