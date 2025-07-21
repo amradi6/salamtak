@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:salamtak/data/models/doctors.dart';
 
 class DoctorDetailsScreen extends StatelessWidget {
-  const DoctorDetailsScreen({super.key});
+  const DoctorDetailsScreen({super.key, required this.doctor});
+
+  final Doctors doctor;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +53,11 @@ class DoctorDetailsScreen extends StatelessWidget {
                               color: Color(0XFFFFFFFF),
                               borderRadius: BorderRadius.circular(50),
                             ),
-                            child: Icon(Icons.favorite_border),
+                            child: Icon(
+                              Icons.favorite,
+                              color:
+                                  doctor.isFavorite! ? Colors.red : Colors.grey,
+                            ),
                           ),
                         ),
                       ],
@@ -64,7 +71,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                       height: size.height * 0.1986,
                       child: CircleAvatar(
                         radius: 60,
-                        backgroundImage: AssetImage("assets/images/AmrAdi.jpg"),
+                        backgroundImage: AssetImage(doctor.image),
                       ),
                     ),
                   ),
@@ -75,7 +82,7 @@ class DoctorDetailsScreen extends StatelessWidget {
             Column(
               children: [
                 Text(
-                  "DR.AMRADI",
+                  "DR.${doctor.name}",
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
@@ -85,7 +92,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                 ),
                 SizedBox(height: size.height * 0.0024),
                 Text(
-                  "General Practitioner",
+                  doctor.specialty,
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w400,
@@ -104,7 +111,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                     ),
                     SizedBox(width: size.width * 0.0078),
                     Text(
-                      "4.8 (124 reviews)",
+                      "${doctor.rating} (124 reviews)",
                       style: TextStyle(
                         fontFamily: "Inter",
                         fontWeight: FontWeight.w400,
@@ -123,12 +130,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
                   color: Color(0XFFFFFFFF),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black,
-                        blurRadius: 0.1,
-                      ),
-                    ],
+                  boxShadow: [BoxShadow(color: Colors.black, blurRadius: 0.1)],
                 ),
                 child: Column(
                   children: [
@@ -157,7 +159,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                               ),
                               SizedBox(height: size.height * 0.00869),
                               Text(
-                                "60 mins",
+                                "${doctor.consultation} mins",
                                 style: TextStyle(
                                   fontFamily: "Inter",
                                   fontWeight: FontWeight.w600,
@@ -190,7 +192,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                               ),
                               SizedBox(height: size.height * 0.00869),
                               Text(
-                                "\$100",
+                                "\$${doctor.price}",
                                 style: TextStyle(
                                   fontFamily: "Inter",
                                   fontWeight: FontWeight.w600,
@@ -227,7 +229,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                               ),
                               SizedBox(width: size.width * 0.041),
                               Text(
-                                "0996598693",
+                                "${doctor.phoneNumber}",
                                 style: TextStyle(
                                   fontFamily: "Inter",
                                   fontWeight: FontWeight.w400,
@@ -254,13 +256,17 @@ class DoctorDetailsScreen extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(width: size.width * 0.041),
-                              Text(
-                                "amreloadi62002@gmail.com",
-                                style: TextStyle(
-                                  fontFamily: "Inter",
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 15,
-                                  color: Color(0XFF4B5563),
+                              Expanded(
+                                child: Text(
+                                  doctor.email!,
+                                  softWrap: true,
+                                  maxLines: 2,
+                                  style: TextStyle(
+                                    fontFamily: "Inter",
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 15,
+                                    color: Color(0XFF4B5563),
+                                  ),
                                 ),
                               ),
                             ],
@@ -283,7 +289,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                               ),
                               SizedBox(width: size.width * 0.041),
                               Text(
-                                "123 Medical Center, \n Healthcare Ave.",
+                                doctor.address!,
                                 style: TextStyle(
                                   fontFamily: "Inter",
                                   fontWeight: FontWeight.w400,
@@ -308,12 +314,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
                   color: Color(0XFFFFFFFF),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black,
-                      blurRadius: 0.1,
-                    ),
-                  ],
+                  boxShadow: [BoxShadow(color: Colors.black, blurRadius: 0.1)],
                 ),
                 child: Padding(
                   padding: EdgeInsets.only(left: size.width * 0.052),
@@ -331,86 +332,52 @@ class DoctorDetailsScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: size.height * 0.02483),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.circle,
-                            size: size.height * 0.0149,
-                            color: Color(0XFF10B981),
+                      if (doctor.services != null && doctor.services!.isNotEmpty) ...[
+                        ...doctor.services!.map((service) => Padding(
+                          padding: EdgeInsets.only(bottom: size.height * 0.0149),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.circle,
+                                size: size.height * 0.0149,
+                                color: Color(0XFF10B981),
+                              ),
+                              SizedBox(width: size.width * 0.02083),
+                              Text(
+                                service,
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: "Inter",
+                                  color: Color(0XFF374151),
+                                ),
+                              ),
+                            ],
                           ),
-                          SizedBox(width: size.width * 0.02083),
-                          Text(
-                            "General Checkup",
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: "Inter",
-                              color: Color(0XFF374151),
+                        )),
+                      ] else ...[
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.circle,
+                              size: size.height * 0.0149,
+                              color: Colors.red,
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: size.height * 0.0149),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.circle,
-                            size: size.height * 0.0149,
-                            color: Color(0XFF10B981),
-                          ),
-                          SizedBox(width: size.width * 0.02083),
-                          Text(
-                            "Vaccination",
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: "Inter",
-                              color: Color(0XFF374151),
+                            SizedBox(width: size.width * 0.02083),
+                            Text(
+                              "No services available",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: "Inter",
+                                color: Color(0XFF374151),
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: size.height * 0.0149),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.circle,
-                            size: size.height * 0.0149,
-                            color: Color(0XFF10B981),
-                          ),
-                          SizedBox(width: size.width * 0.02083),
-                          Text(
-                            "Lab Tests",
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: "Inter",
-                              color: Color(0XFF374151),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: size.height * 0.0149),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.circle,
-                            size: size.height * 0.0149,
-                            color: Color(0XFF10B981),
-                          ),
-                          SizedBox(width: size.width * 0.02083),
-                          Text(
-                            "Health Certificates",
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: "Inter",
-                              color: Color(0XFF374151),
-                            ),
-                          ),
-                        ],
-                      ),
+                          ],
+                        ),
+                      ],
                       SizedBox(height: size.height * 0.02484),
+
                     ],
                   ),
                 ),
@@ -423,12 +390,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
                   color: Color(0XFFFFFFFF),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black,
-                      blurRadius: 0.1,
-                    ),
-                  ],
+                  boxShadow: [BoxShadow(color: Colors.black, blurRadius: 0.1)],
                 ),
                 child: Padding(
                   padding: EdgeInsets.only(left: size.width * 0.052),
@@ -447,7 +409,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                       ),
                       SizedBox(height: size.height * 0.0235),
                       Padding(
-                        padding:  EdgeInsets.only(right: size.width*0.052),
+                        padding: EdgeInsets.only(right: size.width * 0.052),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -474,7 +436,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                       ),
                       SizedBox(height: size.height * 0.0149),
                       Padding(
-                        padding:  EdgeInsets.only(right: size.width*0.052),
+                        padding: EdgeInsets.only(right: size.width * 0.052),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -501,7 +463,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                       ),
                       SizedBox(height: size.height * 0.0149),
                       Padding(
-                        padding:  EdgeInsets.only(right: size.width*0.052),
+                        padding: EdgeInsets.only(right: size.width * 0.052),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -528,7 +490,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                       ),
                       SizedBox(height: size.height * 0.0149),
                       Padding(
-                        padding:  EdgeInsets.only(right: size.width*0.052),
+                        padding: EdgeInsets.only(right: size.width * 0.052),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -555,7 +517,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                       ),
                       SizedBox(height: size.height * 0.0149),
                       Padding(
-                        padding:  EdgeInsets.only(right: size.width*0.052),
+                        padding: EdgeInsets.only(right: size.width * 0.052),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -582,7 +544,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                       ),
                       SizedBox(height: size.height * 0.0149),
                       Padding(
-                        padding:  EdgeInsets.only(right: size.width*0.052),
+                        padding: EdgeInsets.only(right: size.width * 0.052),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -609,7 +571,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                       ),
                       SizedBox(height: size.height * 0.0149),
                       Padding(
-                        padding:  EdgeInsets.only(right: size.width*0.052),
+                        padding: EdgeInsets.only(right: size.width * 0.052),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -642,8 +604,8 @@ class DoctorDetailsScreen extends StatelessWidget {
             ),
             SizedBox(height: size.height * 0.0298),
             SizedBox(
-              width: size.width*0.854,
-              height: size.height*0.0844,
+              width: size.width * 0.854,
+              height: size.height * 0.0844,
               child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
@@ -657,10 +619,10 @@ class DoctorDetailsScreen extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.access_alarm,
-                      size: size.height*0.0223,
+                      size: size.height * 0.0223,
                       color: Color(0XFFFFFFFF),
                     ),
-                    SizedBox(width: size.width*0.03125),
+                    SizedBox(width: size.width * 0.03125),
                     Text(
                       "Book Appointment",
                       style: TextStyle(

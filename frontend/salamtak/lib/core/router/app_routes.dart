@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:salamtak/data/models/doctors.dart';
 import 'package:salamtak/features/auth/views/login_screen.dart';
 import 'package:salamtak/features/auth/views/signup_screen.dart';
 import 'package:salamtak/features/auth/views/who_are_you_screen.dart';
@@ -39,7 +40,8 @@ class AppRoutes {
       case "/layout":
         return createRoute(screen: LayoutScreen());
       case "/doctor_details":
-        return createRoute(screen: DoctorDetailsScreen());
+        final doctor = settings.arguments as Doctors;
+        return createRoute(screen: DoctorDetailsScreen(doctor: doctor));
 
       default:
         return MaterialPageRoute(

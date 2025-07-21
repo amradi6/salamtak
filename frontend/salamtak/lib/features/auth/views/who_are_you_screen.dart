@@ -60,7 +60,7 @@ class WhoAreYouScreen extends StatelessWidget {
                   size: size,
                   text: "Sick",
                   onPressed: () {
-                    Navigator.pushNamed(context, "/layout");
+                    Navigator.pushNamed(context, "/Signup");
                   },
                 ),
                 SizedBox(height: size.height*0.039),
@@ -68,7 +68,7 @@ class WhoAreYouScreen extends StatelessWidget {
                   size: size,
                   text: "Doctor",
                   onPressed: () {
-                    Navigator.pushNamed(context, "/layout");
+                    Navigator.pushNamed(context, "/Signup");
                   },
                 ),
                 SizedBox(height: size.height*0.039),

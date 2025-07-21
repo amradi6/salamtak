@@ -31,14 +31,14 @@ class HomeScreen extends StatelessWidget {
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
         print("Current state: $state");
-        final popular = context.read<HomeCubit>().popularDoctors;
+        var popular = context.read<HomeCubit>().popularDoctors;
         print(popular);
         final feature = context.read<HomeCubit>().featureDoctors;
         print(feature);
         return Scaffold(
           backgroundColor: Color(0XFFFFFFFF),
           body: RefreshIndicator(
-            onRefresh: () async => context.read<HomeCubit>().popularDoctors,
+            onRefresh: () async => context.read<HomeCubit>().fetchPopularDoctors(),
             color: Colors.green,
             child: Stack(
               children: [
@@ -279,7 +279,7 @@ class HomeScreen extends StatelessWidget {
                                             onTap: () {
                                               Navigator.of(
                                                 context,
-                                              ).pushNamed("/doctor_details");
+                                              ).pushNamed("/doctor_details",arguments: doctor,);
                                             },
                                             size: size,
                                             image: doctor.image,
