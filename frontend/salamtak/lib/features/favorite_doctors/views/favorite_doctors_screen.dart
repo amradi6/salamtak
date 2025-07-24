@@ -183,6 +183,7 @@ class _FavoriteDoctorsScreenState extends State<FavoriteDoctorsScreen> {
                                 ],
                               ),
                               child: FavoriteDoctorsCards(
+                                id: doctor[index].id,
                                 isFavorite: doctor[index].isFavorite!,
                                 specialization: doctor[index].specialty,
                                 name: doctor[index].name,

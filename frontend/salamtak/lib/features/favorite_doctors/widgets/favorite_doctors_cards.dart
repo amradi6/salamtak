@@ -11,6 +11,7 @@ class FavoriteDoctorsCards extends StatelessWidget {
     required this.specialization,
     required this.isFavorite,
     required this.image,
+    required this.id,
   });
 
   final Size size;
@@ -18,6 +19,7 @@ class FavoriteDoctorsCards extends StatelessWidget {
   final String specialization;
   final String image;
   final bool isFavorite;
+  final int id;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +54,7 @@ class FavoriteDoctorsCards extends StatelessWidget {
                       child: IconButton(
                         onPressed: () {
                           context.read<FavoriteDoctorCubit>().toggleFavorite(
-                            name,
+                            id,
                           );
                           context
                               .read<FavoriteDoctorCubit>()

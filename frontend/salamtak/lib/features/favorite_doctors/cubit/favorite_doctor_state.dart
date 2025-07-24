@@ -13,3 +13,15 @@ final class DoctorFavoriteFilterState extends FavoriteDoctorState {
 
   DoctorFavoriteFilterState(this.filteredDoctors);
 }
+
+final class FavoriteDoctorLoading extends FavoriteDoctorState{}
+
+final class FavoriteDoctorSuccess extends FavoriteDoctorState{
+  List<Doctors> allDoctors = [];
+  FavoriteDoctorSuccess(this.allDoctors);
+}
+
+final class FavoriteDoctorError extends FavoriteDoctorState{
+  final String message;
+  FavoriteDoctorError(this.message);
+}

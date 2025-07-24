@@ -15,8 +15,10 @@ class ContainerForFindDoctors extends StatelessWidget {
     required this.numberOfPatients,
     required this.timeNextAvailable,
     required this.isFavourite,
+    required this.id,
   });
 
+  final int id;
   final Size size;
   final String image;
   final String nameDoctor;
@@ -141,7 +143,7 @@ class ContainerForFindDoctors extends StatelessWidget {
                       child: IconButton(
                         onPressed: () {
                           context.read<FavoriteDoctorCubit>().toggleFavorite(
-                            nameDoctor,
+                            id,
                           );
                         },
                         icon: Icon(

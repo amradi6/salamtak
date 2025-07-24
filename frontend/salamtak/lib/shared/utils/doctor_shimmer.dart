@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class PopularDoctorShimmer extends StatelessWidget {
-  const PopularDoctorShimmer({
+class DoctorShimmer extends StatelessWidget {
+  const DoctorShimmer({
     super.key,
     required this.size,
     required this.width,

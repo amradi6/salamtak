@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart' as http;
+import 'package:salamtak/data/models/doctors.dart';
 import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_state.dart';
 import 'package:salamtak/features/home/cubit/home__state.dart';
 
@@ -22,14 +26,14 @@ class FavoriteDoctorCubit extends Cubit<FavoriteDoctorState> {
 
   bool isSearching = false;
 
-  void toggleFavorite(String doctorName) {
+  void toggleFavorite(int id) {
     for (var doctor in allDoctors) {
-      if (doctor.name == doctorName) {
-        doctor.isFavorite = !doctor.isFavorite!;
+      if (doctor.id == id) {
+        doctor.isFavorite = !(doctor.isFavorite ?? false);
         break;
       }
     }
-    emit(FavoriteDoctorInitialState(List.from(favoriteDoctors)));
+    emit(FavoriteDoctorSuccess(allDoctors));
   }
 
   void filterFavoriteDoctors(String name) {
@@ -54,7 +58,7 @@ class FavoriteDoctorCubit extends Cubit<FavoriteDoctorState> {
     emit(FavoriteDoctorInitialState(favoriteDoctors));
   }
 
-  Future<void> clos(){
+  Future<void> clos() {
     controller.dispose();
     return super.close();
   }

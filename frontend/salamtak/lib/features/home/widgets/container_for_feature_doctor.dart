@@ -12,6 +12,7 @@ class ContainerForFeatureDoctor extends StatelessWidget {
     required this.nameDoctor,
     required this.price,
     required this.isFavourite,
+    required this.id,
   });
 
   final Size size;
@@ -19,8 +20,8 @@ class ContainerForFeatureDoctor extends StatelessWidget {
   final String image;
   final String nameDoctor;
   final double price;
+  final int id;
   final bool isFavourite;
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FavoriteDoctorCubit, FavoriteDoctorState>(
@@ -52,7 +53,7 @@ class ContainerForFeatureDoctor extends StatelessWidget {
                   IconButton(
                     onPressed: () {
                       context.read<FavoriteDoctorCubit>().toggleFavorite(
-                        nameDoctor,
+                        id,
                       );
                     },
                     icon: Icon(

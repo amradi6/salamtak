@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/core/constants/widgets/circle_for_bg.dart';
 import 'package:salamtak/core/constants/widgets/text_form_for_search.dart';
 import 'package:salamtak/features/auth/cubit/auth_cubit.dart';
-import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_cubit.dart';
-import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_state.dart';
 import 'package:salamtak/features/home/cubit/home__cubit.dart';
 import 'package:salamtak/features/home/cubit/home__state.dart';
 import 'package:salamtak/features/home/widgets/container_for_feature_doctor.dart';
@@ -261,7 +259,7 @@ class HomeScreen extends StatelessWidget {
                                         scrollDirection: Axis.horizontal,
                                         itemCount: 5,
                                         itemBuilder: (context, index) {
-                                          return PopularDoctorShimmer(
+                                          return DoctorShimmer(
                                             size: size,
                                             height: size.height * 0.327828138,
                                             width: size.width * 0.4947916,
@@ -349,7 +347,7 @@ class HomeScreen extends StatelessWidget {
                                         scrollDirection: Axis.horizontal,
                                         itemCount: 5,
                                         itemBuilder: (context, index) {
-                                          return PopularDoctorShimmer(
+                                          return DoctorShimmer(
                                             size: size,
                                             height: size.height * 0.2,
                                             width: size.width * 0.3,
@@ -357,23 +355,20 @@ class HomeScreen extends StatelessWidget {
                                         },
                                       );
                                     }
-                                    else if (state is DoctorSuccess && feature.isNotEmpty) {
-                                      return BlocBuilder<FavoriteDoctorCubit, FavoriteDoctorState>(
-                                        builder: (context, state) {
-                                          return ListView.builder(
-                                            scrollDirection: Axis.horizontal,
-                                            itemCount: feature.length,
-                                            itemBuilder: (context, index) {
-                                              final doctor = feature[index];
-                                              return ContainerForFeatureDoctor(
-                                                size: size,
-                                                totalRate: doctor.rating,
-                                                image: doctor.image,
-                                                nameDoctor: doctor.name,
-                                                price: doctor.price,
-                                                isFavourite: doctor.isFavorite!,
-                                              );
-                                            },
+                                    else if (((feature.isNotEmpty)&&state is ChangeTabState) ||(feature.isNotEmpty)&&state is DoctorSuccess) {
+                                      return ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: feature.length,
+                                        itemBuilder: (context, index) {
+                                          final doctor = feature[index];
+                                          return ContainerForFeatureDoctor(
+                                            size: size,
+                                            isFavourite: doctor.isFavorite!,
+                                            id: doctor.id,
+                                            totalRate: doctor.rating,
+                                            image: doctor.image,
+                                            nameDoctor: doctor.name,
+                                            price: doctor.price,
                                           );
                                         },
                                       );

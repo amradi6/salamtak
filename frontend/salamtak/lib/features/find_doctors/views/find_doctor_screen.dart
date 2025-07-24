@@ -8,6 +8,7 @@ import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_state.d
 import 'package:salamtak/features/find_doctors/cubit/find_doctor_cubit.dart';
 import 'package:salamtak/features/find_doctors/cubit/find_doctor_state.dart';
 import 'package:salamtak/features/find_doctors/widgets/container_for_search_doctors.dart';
+import 'package:salamtak/shared/utils/doctor_shimmer.dart';
 
 class FindDoctorScreen extends StatefulWidget {
   const FindDoctorScreen({super.key});
@@ -129,56 +130,88 @@ class _FindDoctorScreenState extends State<FindDoctorScreen> {
                   child: SizedBox(
                     height: size.height * 0.745,
                     width: size.width * 0.872,
-                    child: BlocBuilder<FindDoctorCubit, FindDoctorState>(
-                      builder: (context, state) {
-                        List<Doctors> doctors = [];
-                        if (state is FindDoctorInitialState) {
-                          doctors = state.allDoctors;
-                        } else if (state is DoctorFilterState) {
-                          doctors = state.filteredDoctors;
-                        }
-                        if (doctors.isEmpty) {
-                          return Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: size.width * 0.085,
-                              vertical: size.height * 0.074,
-                            ),
-                            child: Text(
-                              "No doctor found with this name",
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Color(0XFF333333),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          );
-                        }
-                        return BlocBuilder<
-                          FavoriteDoctorCubit,
-                          FavoriteDoctorState
-                        >(
-                          builder: (context, state) {
-                            return ListView.builder(
-                              itemCount: doctors.length,
+                    child: RefreshIndicator(
+                      onRefresh: () => context.read<FindDoctorCubit>().fetchAllDoctors(),
+                      color: Colors.green,
+                      backgroundColor: Colors.white,
+                      child: BlocBuilder<FindDoctorCubit, FindDoctorState>(
+                        builder: (context, state) {
+                          List<Doctors> doctors = [];
+                          if(state is FindDoctorLoad){
+                            return   ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              itemCount: 5,
                               itemBuilder: (context, index) {
-                                final doctor = doctors[index];
-                                return ContainerForFindDoctors(
-                                  size: size,
-                                  nameDoctor: doctor.name,
-                                  image: doctor.image,
-                                  doctorSpecialty: doctor.specialty,
-                                  numberOfPatients: doctor.numberOfPatients,
-                                  numberOfYearsOfExperience:
-                                      doctor.numberOfYearsOfExperience,
-                                  rate: doctor.rating,
-                                  timeNextAvailable: doctor.timeNextAvailable,
-                                  isFavourite: doctor.isFavorite!,
+                                return Padding(
+                                  padding:  EdgeInsets.only(bottom: size.height*0.0099),
+                                  child: DoctorShimmer(
+                                    size: size,
+                                    height: size.height * 0.2111,
+                                    width: size.width * 0.8723,
+                                  ),
                                 );
                               },
                             );
-                          },
-                        );
-                      },
+                          }
+
+                          else if (state is DoctorFilterState) {
+                            doctors = state.filteredDoctors;
+                          }
+
+                          else if (state is FindDoctorSuccess) {
+                            doctors = state.doctors.take(5).toList();
+                          }
+
+                          else if (state is FindDoctorError) {
+                            return Center(
+                              child: Text("Error: ${state.message}"),
+                            );
+                          }
+
+                          if (doctors.isEmpty) {
+                            return Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: size.width * 0.085,
+                                vertical: size.height * 0.074,
+                              ),
+                              child: Text(
+                                "No doctor found with this name",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Color(0XFF333333),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            );
+                          }
+                          return BlocBuilder<
+                            FavoriteDoctorCubit,
+                            FavoriteDoctorState
+                          >(
+                            builder: (context, state) {
+                              return ListView.builder(
+                                itemCount: doctors.length,
+                                itemBuilder: (context, index) {
+                                  final doctor = doctors[index];
+                                  return ContainerForFindDoctors(
+                                    size: size,
+                                    id: doctor.id,
+                                    nameDoctor: doctor.name,
+                                    image: doctor.image,
+                                    doctorSpecialty: doctor.specialty,
+                                    numberOfPatients: doctor.numberOfPatients,
+                                    numberOfYearsOfExperience:
+                                        doctor.numberOfYearsOfExperience,
+                                    rate: doctor.rating,
+                                    timeNextAvailable: doctor.timeNextAvailable,
+                                    isFavourite: doctor.isFavorite!,
+                                  );
+                                },
+                              );
+                            },
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),
