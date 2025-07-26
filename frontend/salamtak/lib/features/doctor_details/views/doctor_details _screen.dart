@@ -607,7 +607,9 @@ class DoctorDetailsScreen extends StatelessWidget {
               width: size.width * 0.854,
               height: size.height * 0.0844,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushReplacementNamed("/doctor_details_for_booking");
+                },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),

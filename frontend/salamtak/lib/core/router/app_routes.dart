@@ -3,7 +3,8 @@ import 'package:salamtak/data/models/doctors.dart';
 import 'package:salamtak/features/auth/views/login_screen.dart';
 import 'package:salamtak/features/auth/views/signup_screen.dart';
 import 'package:salamtak/features/auth/views/who_are_you_screen.dart';
-import 'package:salamtak/features/doctor_details/views/doctor_detiles_screen.dart';
+import 'package:salamtak/features/doctor_details/views/doctor_details _screen.dart';
+import 'package:salamtak/features/doctor_details/views/doctor_details_for_booking_screen.dart';
 import 'package:salamtak/features/favorite_doctors/views/favorite_doctors_screen.dart';
 import 'package:salamtak/features/find_doctors/views/find_doctor_screen.dart';
 import 'package:salamtak/features/home/views/home_screen.dart';
@@ -42,6 +43,8 @@ class AppRoutes {
       case "/doctor_details":
         final doctor = settings.arguments as Doctors;
         return createRoute(screen: DoctorDetailsScreen(doctor: doctor));
+      case "/doctor_details_for_booking":
+        return createRoute(screen: DoctorDetailsForBookingScreen());
 
       default:
         return MaterialPageRoute(
