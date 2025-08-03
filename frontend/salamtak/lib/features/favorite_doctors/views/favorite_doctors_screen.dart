@@ -154,8 +154,8 @@ class _FavoriteDoctorsScreenState extends State<FavoriteDoctorsScreen> {
 
                     return SingleChildScrollView(
                       child: SizedBox(
-                        width: size.width * 0.8723,
-                        height: size.height * 0.745,
+                        width: size.width * 0.388,
+                        height: size.height * 0.1968,
                         child: GridView.builder(
                           shrinkWrap: true,
                           padding: EdgeInsets.only(bottom: 80),
@@ -169,27 +169,13 @@ class _FavoriteDoctorsScreenState extends State<FavoriteDoctorsScreen> {
                                 childAspectRatio: 0.8888,
                               ),
                           itemBuilder: (context, index) {
-                            return Container(
-                              width: size.width * 0.468,
-                              decoration: BoxDecoration(
-                                color: Color(0XFFFFFFFF),
-                                borderRadius: BorderRadius.circular(6),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color(0X06000000),
-                                    blurRadius: 20,
-                                    offset: Offset(0, -1),
-                                  ),
-                                ],
-                              ),
-                              child: FavoriteDoctorsCards(
-                                id: doctor[index].id,
-                                isFavorite: doctor[index].isFavorite!,
-                                specialization: doctor[index].specialty,
-                                name: doctor[index].name,
-                                image: doctor[index].image,
-                                size: size,
-                              ),
+                            return FavoriteDoctorsCards(
+                              id: doctor[index].id,
+                              isFavorite: doctor[index].isFavorite!,
+                              specialization: doctor[index].specialty,
+                              name: doctor[index].name,
+                              image: doctor[index].image,
+                              size: size,
                             );
                           },
                         ),

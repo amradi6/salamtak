@@ -80,9 +80,12 @@ class AuthCubit extends Cubit<AuthState> {
         Uri.parse('https://mohammadhussien.pythonanywhere.com/api/auth/login/'),
         body: {'email': email, 'password': password},
       );
-      debugPrint('Response status: ${response.statusCode}');
-      debugPrint('Response body: ${response.body}');
       if (response.statusCode == 200 || response.statusCode == 201) {
+        final data = jsonDecode(response.body);
+        final token = data['key'];
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('authToken', token);
+        await prefs.setBool('tempLoggedIn', true);
         emit(LogInSuccess());
       } else {
         final errorData = jsonDecode(response.body);
@@ -104,6 +107,13 @@ class AuthCubit extends Cubit<AuthState> {
     } catch (e) {
       emit(LogInError('Unexpected error occurred. Please try again.'));
     }
+  }
+
+  Future<bool> isLoggedIn() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('authToken');
+
+    return token != null;
   }
 
   Future<void> saveDisplayName(String name) async {

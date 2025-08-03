@@ -1,14 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/core/constants/widgets/circle_for_bg.dart';
+import 'package:salamtak/features/auth/cubit/auth_cubit.dart';
 
 import '../widgets/custom_elevated_button.dart';
 
-class WhoAreYouScreen extends StatelessWidget {
+class WhoAreYouScreen extends StatefulWidget {
   const WhoAreYouScreen({super.key});
 
   @override
+  State<WhoAreYouScreen> createState() => _WhoAreYouScreenState();
+}
+
+class _WhoAreYouScreenState extends State<WhoAreYouScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _checkLoginStatus();
+  }
+
+  Future<void> _checkLoginStatus() async {
+    final authCubit = context.read<AuthCubit>();
+    final isLoggedIn = await authCubit.isLoggedIn();
+    if (isLoggedIn) {
+      Future.microtask(() {
+        Navigator.pushReplacementNamed(context, "/layout");
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final size=MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       body: Stack(
         children: [
@@ -21,7 +44,7 @@ class WhoAreYouScreen extends StatelessWidget {
             color: const Color(0x8461CEFF),
           ),
 
-           CircleForBg(
+          CircleForBg(
             size: size,
             width: size.width * 0.716145,
             height: size.width * 0.716145,
@@ -44,7 +67,7 @@ class WhoAreYouScreen extends StatelessWidget {
                     fontFamily: 'Rubik',
                   ),
                 ),
-                SizedBox(height: size.height*0.0186),
+                SizedBox(height: size.height * 0.0186),
                 Text(
                   "Please choose the method you want to \n use to access the application.",
                   textAlign: TextAlign.center,
@@ -55,7 +78,7 @@ class WhoAreYouScreen extends StatelessWidget {
                     fontFamily: 'Rubik',
                   ),
                 ),
-                SizedBox(height: size.height*0.0645),
+                SizedBox(height: size.height * 0.0645),
                 CustomElevatedButton(
                   size: size,
                   text: "Sick",
@@ -63,7 +86,7 @@ class WhoAreYouScreen extends StatelessWidget {
                     Navigator.pushNamed(context, "/Signup");
                   },
                 ),
-                SizedBox(height: size.height*0.039),
+                SizedBox(height: size.height * 0.039),
                 CustomElevatedButton(
                   size: size,
                   text: "Doctor",
@@ -71,7 +94,7 @@ class WhoAreYouScreen extends StatelessWidget {
                     Navigator.pushNamed(context, "/Signup");
                   },
                 ),
-                SizedBox(height: size.height*0.039),
+                SizedBox(height: size.height * 0.039),
                 CustomElevatedButton(
                   size: size,
                   text: "Laboratory",
