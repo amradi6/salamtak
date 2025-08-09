@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:salamtak/data/models/doctors.dart';
 import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_cubit.dart';
 import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_state.dart';
 
@@ -7,26 +8,17 @@ class FavoriteDoctorsCards extends StatelessWidget {
   const FavoriteDoctorsCards({
     super.key,
     required this.size,
-    required this.name,
-    required this.specialization,
-    required this.isFavorite,
-    required this.image,
-    required this.id,
+    required this.doctor,
   });
 
   final Size size;
-  final String name;
-  final String specialization;
-  final String image;
-  final bool isFavorite;
-  final int id;
+  final Doctors doctor;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FavoriteDoctorCubit, FavoriteDoctorState>(
       builder: (context, state) {
         return Container(
-          width: size.width * 0.468,
           decoration: BoxDecoration(
             color: Color(0XFFFFFFFF),
             borderRadius: BorderRadius.circular(6),
@@ -54,7 +46,7 @@ class FavoriteDoctorsCards extends StatelessWidget {
                       child: IconButton(
                         onPressed: () {
                           context.read<FavoriteDoctorCubit>().toggleFavorite(
-                            id,
+                            doctor,
                           );
                           context
                               .read<FavoriteDoctorCubit>()
@@ -63,7 +55,7 @@ class FavoriteDoctorsCards extends StatelessWidget {
                         },
                         icon: Icon(
                           Icons.favorite,
-                          color: isFavorite ? Colors.red : Colors.grey,
+                          color: doctor.isFavorite! ? Colors.red : Colors.grey,
                         ),
                         padding: EdgeInsets.zero,
                       ),
@@ -75,15 +67,15 @@ class FavoriteDoctorsCards extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(50)),
                 child: Image.asset(
-                  image,
-                  height: size.height * 0.1043,
-                  width: size.height * 0.1043,
+                  doctor.image,
+                  height: size.width * 0.2041,
+                  width: size.width * 0.2041,
                   fit: BoxFit.cover,
                 ),
               ),
               SizedBox(height: size.height * 0.0136),
               Text(
-                name,
+                doctor.name,
                 style: TextStyle(
                   fontSize: 15,
                   color: Color(0XFF333333),
@@ -93,7 +85,7 @@ class FavoriteDoctorsCards extends StatelessWidget {
               ),
               SizedBox(height: size.height * 0.00496),
               Text(
-                specialization,
+                doctor.specialty,
                 style: TextStyle(
                   fontSize: 12,
                   color: Color(0XFF0EBE7E),

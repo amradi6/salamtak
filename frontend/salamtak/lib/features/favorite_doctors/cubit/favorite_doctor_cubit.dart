@@ -1,20 +1,24 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart' as http;
+import 'package:salamtak/data/models/doctors.dart';
 import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_state.dart';
-import 'package:salamtak/features/home/cubit/home__state.dart';
 
 class FavoriteDoctorCubit extends Cubit<FavoriteDoctorState> {
-  FavoriteDoctorCubit()
-    : super(
-        FavoriteDoctorInitialState(
-          dummyDoctors.where((d) => d.isFavorite ?? false).toList(),
-        ),
-      );
+  FavoriteDoctorCubit() : super(FavoriteDoctorInitialState());
+
+  final List<Doctors> allDoctors = [];
 
   get favoriteDoctors =>
       allDoctors.where((d) => d.isFavorite ?? false).toList();
 
-  final allDoctors = dummyDoctors;
+  final Set<int> _favoriteIds = {};
+
+  final Set<int> _pendingChanges = {};
+
+  bool isFavorite(int id) => _favoriteIds.contains(id);
 
   final TextEditingController controller = TextEditingController();
 
@@ -22,20 +26,75 @@ class FavoriteDoctorCubit extends Cubit<FavoriteDoctorState> {
 
   bool isSearching = false;
 
-  void toggleFavorite(int id) {
-    for (var doctor in allDoctors) {
-      if (doctor.id == id) {
-        doctor.isFavorite = !(doctor.isFavorite ?? false);
-        break;
+  Future<void> syncFavoritesToServer() async {
+    if (_pendingChanges.isEmpty) return;
+
+    try {
+      final response = await http.post(
+        Uri.parse("https://mohammadhussien.pythonanywhere.com/changefavorite/"),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({"ids": _pendingChanges.toList()}),
+      );
+
+      if (response.statusCode == 200) {
+        _pendingChanges.clear();
       }
+      else {
+        print("Error:${response.statusCode}");
+      }
+    } catch (e) {
+      print("in catch block ${e.toString()}");
     }
+  }
+
+  Future<void> fetchAllDoctors() async {
+    emit(FavoriteDoctorLoading());
+
+    try {
+      final response = await http.get(
+        Uri.parse("https://mohammadhussien.pythonanywhere.com/getdoctors/"),
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = jsonDecode(response.body);
+
+        allDoctors.clear();
+        _favoriteIds.clear();
+
+        for (var item in data) {
+          final doctor = Doctors.fromMap(item);
+          allDoctors.add(doctor);
+
+          if (doctor.isFavorite!) {
+            _favoriteIds.add(doctor.id);
+          }
+        }
+        emit(FavoriteDoctorSuccess(allDoctors));
+      } else {
+        emit(FavoriteDoctorError("Failed to load doctors."));
+      }
+    } catch (e) {
+      emit(FavoriteDoctorError("An error occurred while connecting to the server."));
+    }
+  }
+
+  void toggleFavorite(Doctors doctor) {
+    if (_favoriteIds.contains(doctor.id)) {
+      _favoriteIds.remove(doctor.id);
+      doctor.isFavorite = false;
+    } else {
+      _favoriteIds.add(doctor.id);
+      doctor.isFavorite = true;
+    }
+
+    _pendingChanges.add(doctor.id);
     emit(FavoriteDoctorSuccess(allDoctors));
   }
 
   void filterFavoriteDoctors(String name) {
     isSearching = true;
     if (name.isEmpty) {
-      emit(FavoriteDoctorInitialState(favoriteDoctors));
+      emit(FavoriteDoctorInitialState());
     } else {
       final filteredList =
           favoriteDoctors
@@ -51,7 +110,7 @@ class FavoriteDoctorCubit extends Cubit<FavoriteDoctorState> {
 
   void resetFavorites() {
     isSearching = false;
-    emit(FavoriteDoctorInitialState(favoriteDoctors));
+    emit(FavoriteDoctorInitialState());
   }
 
   Future<void> clos() {

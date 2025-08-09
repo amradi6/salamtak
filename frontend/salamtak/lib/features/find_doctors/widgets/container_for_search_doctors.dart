@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:salamtak/data/models/doctors.dart';
 import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_cubit.dart';
 import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_state.dart';
 
@@ -7,27 +8,11 @@ class ContainerForFindDoctors extends StatelessWidget {
   const ContainerForFindDoctors({
     super.key,
     required this.size,
-    required this.image,
-    required this.nameDoctor,
-    required this.doctorSpecialty,
-    required this.numberOfYearsOfExperience,
-    required this.rate,
-    required this.numberOfPatients,
-    required this.timeNextAvailable,
-    required this.isFavourite,
-    required this.id,
+    required this.doctor,
   });
 
-  final int id;
   final Size size;
-  final String image;
-  final String nameDoctor;
-  final String doctorSpecialty;
-  final int numberOfYearsOfExperience;
-  final double rate;
-  final int numberOfPatients;
-  final String timeNextAvailable;
-  final bool isFavourite;
+  final Doctors doctor;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +40,7 @@ class ContainerForFindDoctors extends StatelessWidget {
                     ClipRRect(
                       borderRadius: BorderRadius.all(Radius.circular(4)),
                       child: Image.asset(
-                        image,
+                        doctor.image,
                         width: size.width * 0.239,
                         height: size.height * 0.108,
                         fit: BoxFit.contain,
@@ -67,7 +52,7 @@ class ContainerForFindDoctors extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            nameDoctor,
+                            doctor.name,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -79,7 +64,7 @@ class ContainerForFindDoctors extends StatelessWidget {
                           ),
                           SizedBox(height: size.height * 0.0012),
                           Text(
-                            doctorSpecialty,
+                            doctor.specialty,
                             style: TextStyle(
                               color: Color(0XFF0EBE7F),
                               fontFamily: "PT Sans",
@@ -89,7 +74,7 @@ class ContainerForFindDoctors extends StatelessWidget {
                           ),
                           SizedBox(height: size.height * 0.0049),
                           Text(
-                            "$numberOfYearsOfExperience Years experience ",
+                            "${doctor.numberOfYearsOfExperience} Years experience ",
                             style: TextStyle(
                               color: Color(0XFF677294),
                               fontFamily: "Rubik",
@@ -107,7 +92,7 @@ class ContainerForFindDoctors extends StatelessWidget {
                               ),
                               SizedBox(width: size.width * 0.0052),
                               Text(
-                                "$rate%",
+                                "${doctor.rating}%",
                                 style: TextStyle(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w300,
@@ -123,7 +108,7 @@ class ContainerForFindDoctors extends StatelessWidget {
                               ),
                               SizedBox(width: size.width * 0.0052),
                               Text(
-                                "$numberOfPatients Patient Stories",
+                                "${doctor.numberOfPatients} Patient Stories",
                                 style: TextStyle(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w300,
@@ -143,12 +128,12 @@ class ContainerForFindDoctors extends StatelessWidget {
                       child: IconButton(
                         onPressed: () {
                           context.read<FavoriteDoctorCubit>().toggleFavorite(
-                            id,
+                            doctor,
                           );
                         },
                         icon: Icon(
                           Icons.favorite,
-                          color: isFavourite ? Colors.red : Colors.grey,
+                          color: doctor.isFavorite! ? Colors.red : Colors.grey,
                         ),
                         padding: EdgeInsets.zero,
                       ),
@@ -175,7 +160,7 @@ class ContainerForFindDoctors extends StatelessWidget {
                           ),
                           SizedBox(height: size.height * 0.006),
                           Text(
-                            timeNextAvailable,
+                            doctor.timeNextAvailable,
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w300,

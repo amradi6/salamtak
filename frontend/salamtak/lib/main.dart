@@ -13,9 +13,9 @@ void main() async{
     MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => AuthCubit()),
-        BlocProvider(create: (_) => HomeCubit()..fetchPopularDoctors()),
+        BlocProvider(create: (_) => HomeCubit()),
         BlocProvider(create: (_) => FavoriteDoctorCubit()),
-        BlocProvider(create: (_) => FindDoctorCubit()..fetchAllDoctors()),
+        BlocProvider(create: (_) => FindDoctorCubit()),
       ],
       child: MyApp(),
     ),

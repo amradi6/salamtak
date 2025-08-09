@@ -23,7 +23,9 @@ class DoctorDetailsForBookingScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   color: Color(0XFFFFFFFF),
-                  boxShadow: [BoxShadow(color: Color(0XFF000000), blurRadius: 0.1)],
+                  boxShadow: [
+                    BoxShadow(color: Color(0XFF000000), blurRadius: 0.1),
+                  ],
                 ),
                 child: SingleChildScrollView(
                   child: Column(
@@ -51,7 +53,11 @@ class DoctorDetailsForBookingScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Divider(color: Colors.grey[300], thickness: 1, height: 20),
+                      Divider(
+                        color: Colors.grey[300],
+                        thickness: 1,
+                        height: 20,
+                      ),
                       SizedBox(height: size.height * 0.0198),
                       Padding(
                         padding: EdgeInsets.only(left: size.width * 0.0416),
@@ -80,7 +86,11 @@ class DoctorDetailsForBookingScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Divider(color: Colors.grey[300], thickness: 1, height: 20),
+                      Divider(
+                        color: Colors.grey[300],
+                        thickness: 1,
+                        height: 20,
+                      ),
                       Padding(
                         padding: EdgeInsets.only(
                           left: size.width * 0.0416,
@@ -93,7 +103,10 @@ class DoctorDetailsForBookingScreen extends StatelessWidget {
                             AnimatedRotation(
                               duration: Duration(milliseconds: 200),
                               turns: 0.0,
-                              child: Icon(Icons.play_arrow, color: Colors.green),
+                              child: Icon(
+                                Icons.play_arrow,
+                                color: Colors.green,
+                              ),
                             ),
                             SizedBox(width: size.width * 0.0208),
                             Text(
@@ -137,7 +150,8 @@ class DoctorDetailsForBookingScreen extends StatelessWidget {
                                               width: 2,
                                             ),
                                             shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(8),
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
                                             ),
                                           ),
                                           child: Text(
@@ -154,7 +168,10 @@ class DoctorDetailsForBookingScreen extends StatelessWidget {
                                       ],
                                     ),
                                     SizedBox(height: 12),
-                                    Divider(color: Colors.grey[300], thickness: 1),
+                                    Divider(
+                                      color: Colors.grey[300],
+                                      thickness: 1,
+                                    ),
                                   ],
                                 )
                                 : SizedBox.shrink(),
@@ -171,7 +188,10 @@ class DoctorDetailsForBookingScreen extends StatelessWidget {
                             AnimatedRotation(
                               duration: Duration(milliseconds: 200),
                               turns: 0.25,
-                              child: Icon(Icons.play_arrow, color: Colors.green),
+                              child: Icon(
+                                Icons.play_arrow,
+                                color: Colors.green,
+                              ),
                             ),
                             SizedBox(width: size.width * 0.0208),
                             Text(
@@ -215,7 +235,8 @@ class DoctorDetailsForBookingScreen extends StatelessWidget {
                                               width: 2,
                                             ),
                                             shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(8),
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
                                             ),
                                           ),
                                           child: Text(
@@ -232,7 +253,10 @@ class DoctorDetailsForBookingScreen extends StatelessWidget {
                                       ],
                                     ),
                                     SizedBox(height: 12),
-                                    Divider(color: Colors.grey[300], thickness: 1),
+                                    Divider(
+                                      color: Colors.grey[300],
+                                      thickness: 1,
+                                    ),
                                   ],
                                 )
                                 : SizedBox.shrink(),
@@ -249,7 +273,10 @@ class DoctorDetailsForBookingScreen extends StatelessWidget {
                             AnimatedRotation(
                               duration: Duration(milliseconds: 200),
                               turns: 0.25,
-                              child: Icon(Icons.play_arrow, color: Colors.green),
+                              child: Icon(
+                                Icons.play_arrow,
+                                color: Colors.green,
+                              ),
                             ),
                             SizedBox(width: size.width * 0.0208),
                             Text(
@@ -293,7 +320,8 @@ class DoctorDetailsForBookingScreen extends StatelessWidget {
                                               width: 2,
                                             ),
                                             shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(8),
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
                                             ),
                                           ),
                                           child: Text(
@@ -310,7 +338,10 @@ class DoctorDetailsForBookingScreen extends StatelessWidget {
                                       ],
                                     ),
                                     SizedBox(height: 12),
-                                    Divider(color: Colors.grey[300], thickness: 1),
+                                    Divider(
+                                      color: Colors.grey[300],
+                                      thickness: 1,
+                                    ),
                                   ],
                                 )
                                 : SizedBox.shrink(),
@@ -327,7 +358,10 @@ class DoctorDetailsForBookingScreen extends StatelessWidget {
                             AnimatedRotation(
                               duration: Duration(milliseconds: 200),
                               turns: 0.25,
-                              child: Icon(Icons.play_arrow, color: Colors.green),
+                              child: Icon(
+                                Icons.play_arrow,
+                                color: Colors.green,
+                              ),
                             ),
                             SizedBox(width: size.width * 0.0208),
                             Text(
@@ -373,7 +407,8 @@ class DoctorDetailsForBookingScreen extends StatelessWidget {
                                               width: 2,
                                             ),
                                             shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(8),
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
                                             ),
                                           ),
                                           child: Text(
@@ -390,7 +425,10 @@ class DoctorDetailsForBookingScreen extends StatelessWidget {
                                       ],
                                     ),
                                     SizedBox(height: 12),
-                                    Divider(color: Colors.grey[300], thickness: 1),
+                                    Divider(
+                                      color: Colors.grey[300],
+                                      thickness: 1,
+                                    ),
                                   ],
                                 )
                                 : SizedBox.shrink(),
@@ -407,7 +445,10 @@ class DoctorDetailsForBookingScreen extends StatelessWidget {
                             AnimatedRotation(
                               duration: Duration(milliseconds: 200),
                               turns: 0.25,
-                              child: Icon(Icons.play_arrow, color: Colors.green),
+                              child: Icon(
+                                Icons.play_arrow,
+                                color: Colors.green,
+                              ),
                             ),
                             SizedBox(width: size.width * 0.0208),
                             Text(
@@ -453,7 +494,8 @@ class DoctorDetailsForBookingScreen extends StatelessWidget {
                                               width: 2,
                                             ),
                                             shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(8),
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
                                             ),
                                           ),
                                           child: Text(
@@ -470,7 +512,10 @@ class DoctorDetailsForBookingScreen extends StatelessWidget {
                                       ],
                                     ),
                                     SizedBox(height: 12),
-                                    Divider(color: Colors.grey[300], thickness: 1),
+                                    Divider(
+                                      color: Colors.grey[300],
+                                      thickness: 1,
+                                    ),
                                   ],
                                 )
                                 : SizedBox.shrink(),
@@ -487,7 +532,10 @@ class DoctorDetailsForBookingScreen extends StatelessWidget {
                             AnimatedRotation(
                               duration: Duration(milliseconds: 200),
                               turns: 0.25,
-                              child: Icon(Icons.play_arrow, color: Colors.green),
+                              child: Icon(
+                                Icons.play_arrow,
+                                color: Colors.green,
+                              ),
                             ),
                             SizedBox(width: size.width * 0.0208),
                             Text(
@@ -533,7 +581,8 @@ class DoctorDetailsForBookingScreen extends StatelessWidget {
                                               width: 2,
                                             ),
                                             shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(8),
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
                                             ),
                                           ),
                                           child: Text(
@@ -550,7 +599,10 @@ class DoctorDetailsForBookingScreen extends StatelessWidget {
                                       ],
                                     ),
                                     SizedBox(height: 12),
-                                    Divider(color: Colors.grey[300], thickness: 1),
+                                    Divider(
+                                      color: Colors.grey[300],
+                                      thickness: 1,
+                                    ),
                                   ],
                                 )
                                 : SizedBox.shrink(),
@@ -567,7 +619,10 @@ class DoctorDetailsForBookingScreen extends StatelessWidget {
                             AnimatedRotation(
                               duration: Duration(milliseconds: 200),
                               turns: 0.25,
-                              child: Icon(Icons.play_arrow, color: Colors.green),
+                              child: Icon(
+                                Icons.play_arrow,
+                                color: Colors.green,
+                              ),
                             ),
                             SizedBox(width: size.width * 0.0208),
                             Text(
@@ -613,7 +668,8 @@ class DoctorDetailsForBookingScreen extends StatelessWidget {
                                               width: 2,
                                             ),
                                             shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(8),
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
                                             ),
                                           ),
                                           child: Text(
@@ -640,36 +696,44 @@ class DoctorDetailsForBookingScreen extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: size.height*0.0844,
-              width: size.width*0.85416,
-              child: ElevatedButton(onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0XFF10B981),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+              height: size.height * 0.0844,
+              width: size.width * 0.85416,
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0XFF10B981),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.calendar_today_sharp,color: Color(0XFFFFFFFF),size: size.height*0.0223,),
-                  SizedBox(width: size.width*0.03125),
-                  Text(
-                    "Book Appointment",
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontFamily: "Inter",
-                      fontWeight: FontWeight.w500,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.calendar_today_sharp,
                       color: Color(0XFFFFFFFF),
+                      size: size.height * 0.0223,
                     ),
-                  ),
-                ],
-              )),
+                    SizedBox(width: size.width * 0.03125),
+                    Text(
+                      "Book Appointment",
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontFamily: "Inter",
+                        fontWeight: FontWeight.w500,
+                        color: Color(0XFFFFFFFF),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            SizedBox(height: size.height*0.0211),
+            SizedBox(height: size.height * 0.0211),
             Divider(color: Colors.grey[300], thickness: 1),
             TextButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+              },
               label: Text(
                 "Close",
                 style: TextStyle(
@@ -679,12 +743,16 @@ class DoctorDetailsForBookingScreen extends StatelessWidget {
                   color: Color(0xFF4B5563),
                 ),
               ),
-              icon: Icon(Icons.close,size: size.height*0.0198,color: Colors.grey,),
+              icon: Icon(
+                Icons.close,
+                size: size.height * 0.0198,
+                color: Colors.grey,
+              ),
               style: TextButton.styleFrom(
                 foregroundColor: Colors.green.shade500,
               ),
             ),
-            SizedBox(height: size.height*0.04594),
+            SizedBox(height: size.height * 0.04594),
           ],
         ),
       ),

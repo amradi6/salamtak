@@ -195,16 +195,7 @@ class _FindDoctorScreenState extends State<FindDoctorScreen> {
                                   final doctor = doctors[index];
                                   return ContainerForFindDoctors(
                                     size: size,
-                                    id: doctor.id,
-                                    nameDoctor: doctor.name,
-                                    image: doctor.image,
-                                    doctorSpecialty: doctor.specialty,
-                                    numberOfPatients: doctor.numberOfPatients,
-                                    numberOfYearsOfExperience:
-                                        doctor.numberOfYearsOfExperience,
-                                    rate: doctor.rating,
-                                    timeNextAvailable: doctor.timeNextAvailable,
-                                    isFavourite: doctor.isFavorite!,
+                                    doctor: doctor,
                                   );
                                 },
                               );

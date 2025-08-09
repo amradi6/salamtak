@@ -28,15 +28,13 @@ class HomeScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
-        print("Current state: $state");
         var popular = context.read<HomeCubit>().popularDoctors;
-        print(popular);
         final feature = context.read<HomeCubit>().featureDoctors;
-        print(feature);
         return Scaffold(
           backgroundColor: Color(0XFFFFFFFF),
           body: RefreshIndicator(
-            onRefresh: () async => context.read<HomeCubit>().fetchPopularDoctors(),
+            onRefresh:
+                () async => context.read<HomeCubit>().fetchPopularDoctors(),
             color: Colors.green,
             child: Stack(
               children: [
@@ -266,8 +264,8 @@ class HomeScreen extends StatelessWidget {
                                           );
                                         },
                                       );
-                                    }
-                                    else if (state is PopularDoctorsSuccess || popular.isNotEmpty) {
+                                    } else if (state is PopularDoctorsSuccess ||
+                                        popular.isNotEmpty) {
                                       return ListView.builder(
                                         scrollDirection: Axis.horizontal,
                                         itemCount: popular.length,
@@ -275,9 +273,10 @@ class HomeScreen extends StatelessWidget {
                                           final doctor = popular[index];
                                           return ContainerForPopularDoctor(
                                             onTap: () {
-                                              Navigator.of(
-                                                context,
-                                              ).pushNamed("/doctor_details",arguments: doctor,);
+                                              Navigator.of(context).pushNamed(
+                                                "/doctor_details",
+                                                arguments: doctor,
+                                              );
                                             },
                                             size: size,
                                             image: doctor.image,
@@ -287,13 +286,11 @@ class HomeScreen extends StatelessWidget {
                                           );
                                         },
                                       );
-                                    }
-                                    else if (state is PopularDoctorsError) {
+                                    } else if (state is PopularDoctorsError) {
                                       return Center(
                                         child: Text("Error: ${state.message}"),
                                       );
-                                    }
-                                    else {
+                                    } else {
                                       return Center(child: Text("No Data"));
                                     }
                                   }(),
@@ -354,8 +351,10 @@ class HomeScreen extends StatelessWidget {
                                           );
                                         },
                                       );
-                                    }
-                                    else if (((feature.isNotEmpty)&&state is ChangeTabState) ||(feature.isNotEmpty)&&state is DoctorSuccess) {
+                                    } else if (((feature.isNotEmpty) &&
+                                            state is ChangeTabState) ||
+                                        (feature.isNotEmpty) &&
+                                            state is DoctorSuccess) {
                                       return ListView.builder(
                                         scrollDirection: Axis.horizontal,
                                         itemCount: feature.length,
@@ -363,42 +362,45 @@ class HomeScreen extends StatelessWidget {
                                           final doctor = feature[index];
                                           return ContainerForFeatureDoctor(
                                             size: size,
-                                            isFavourite: doctor.isFavorite!,
-                                            id: doctor.id,
-                                            totalRate: doctor.rating,
-                                            image: doctor.image,
-                                            nameDoctor: doctor.name,
-                                            price: doctor.price,
+                                            doctor: doctor,
                                           );
                                         },
                                       );
-                                    }
-                                    else if (feature.isEmpty && state is! DoctorSuccess && state is! DoctorError) {
+                                    } else if (feature.isEmpty &&
+                                        state is! DoctorSuccess &&
+                                        state is! DoctorError) {
                                       return Center(
                                         child: Text(
                                           "Please select a specialty to view doctors.",
-                                          style: TextStyle(fontSize: 16, color: Colors.grey),
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.grey,
+                                          ),
                                         ),
                                       );
-                                    }
-                                    else if (state is DoctorSuccess && feature.isEmpty) {
+                                    } else if (state is DoctorSuccess &&
+                                        feature.isEmpty) {
                                       return Center(
                                         child: Text(
                                           "No doctors available for the selected specialty.",
-                                          style: TextStyle(fontSize: 16, color: Colors.grey),
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.grey,
+                                          ),
                                         ),
                                       );
-                                    }
-                                    else if (state is DoctorError) {
+                                    } else if (state is DoctorError) {
                                       return Center(
                                         child: Text("Error: ${state.message}"),
                                       );
-                                    }
-                                    else {
+                                    } else {
                                       return Center(
                                         child: Text(
                                           "Please select a specialty to view doctors.",
-                                          style: TextStyle(fontSize: 16, color: Colors.grey),
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.grey,
+                                          ),
                                         ),
                                       );
                                     }

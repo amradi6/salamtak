@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/data/models/doctors.dart';
+import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_cubit.dart';
+import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_state.dart';
 
 class DoctorDetailsScreen extends StatelessWidget {
   const DoctorDetailsScreen({super.key, required this.doctor});
@@ -44,21 +47,30 @@ class DoctorDetailsScreen extends StatelessWidget {
                             child: Icon(Icons.arrow_back_ios_new),
                           ),
                         ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Container(
-                            width: size.height * 0.064,
-                            height: size.height * 0.064,
-                            decoration: BoxDecoration(
-                              color: Color(0XFFFFFFFF),
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            child: Icon(
-                              Icons.favorite,
-                              color:
-                                  doctor.isFavorite! ? Colors.red : Colors.grey,
-                            ),
-                          ),
+                        BlocBuilder<FavoriteDoctorCubit,FavoriteDoctorState>(
+                          builder: (context, state) {
+                            return IconButton(
+                              onPressed: () {
+                                context.read<FavoriteDoctorCubit>().toggleFavorite(
+                                  doctor,
+                                );
+                              },
+                              icon: Container(
+                                width: size.height * 0.064,
+                                height: size.height * 0.064,
+                                decoration: BoxDecoration(
+                                  color: Color(0XFFFFFFFF),
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child: Icon(
+                                  Icons.favorite,
+                                  color: context.read<FavoriteDoctorCubit>().isFavorite(doctor.id)
+                                      ? Colors.red
+                                      : Colors.grey,
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),

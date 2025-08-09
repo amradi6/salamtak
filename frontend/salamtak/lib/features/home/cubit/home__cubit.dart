@@ -9,7 +9,7 @@ import 'package:salamtak/features/home/cubit/home__state.dart';
 import 'package:salamtak/features/home/views/home_screen.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit() : super(HomeInitialState(dummyDoctors));
+  HomeCubit() : super(HomeInitialState());
 
   List<Doctors> popularDoctors = [];
 

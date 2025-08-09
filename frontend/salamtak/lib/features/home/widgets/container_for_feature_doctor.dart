@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:salamtak/data/models/doctors.dart';
 import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_cubit.dart';
 import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_state.dart';
 
@@ -7,21 +8,11 @@ class ContainerForFeatureDoctor extends StatelessWidget {
   const ContainerForFeatureDoctor({
     super.key,
     required this.size,
-    required this.totalRate,
-    required this.image,
-    required this.nameDoctor,
-    required this.price,
-    required this.isFavourite,
-    required this.id,
+    required this.doctor,
   });
 
   final Size size;
-  final double totalRate;
-  final String image;
-  final String nameDoctor;
-  final double price;
-  final int id;
-  final bool isFavourite;
+  final Doctors doctor;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FavoriteDoctorCubit, FavoriteDoctorState>(
@@ -53,20 +44,22 @@ class ContainerForFeatureDoctor extends StatelessWidget {
                   IconButton(
                     onPressed: () {
                       context.read<FavoriteDoctorCubit>().toggleFavorite(
-                        id,
+                        doctor,
                       );
                     },
                     icon: Icon(
                       Icons.favorite,
                       size: 18,
-                      color: isFavourite ? Colors.red : Colors.grey,
+                      color: context.read<FavoriteDoctorCubit>().isFavorite(doctor.id)
+                          ? Colors.red
+                          : Colors.grey,
                     ),
                   ),
                   SizedBox(width: size.width * 0.05),
                   Icon(Icons.star, color: Colors.amber, size: 15),
                   SizedBox(width: size.width * 0.0078),
                   Text(
-                    totalRate.toString(),
+                    doctor.rating.toString(),
                     style: TextStyle(
                       fontSize: 10,
                       fontFamily: "Rubik",
@@ -79,7 +72,7 @@ class ContainerForFeatureDoctor extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(40)),
                 child: Image.asset(
-                  image,
+                  doctor.image,
                   width: size.width * 0.140625,
                   height: size.width * 0.140625,
                   fit: BoxFit.cover,
@@ -87,7 +80,7 @@ class ContainerForFeatureDoctor extends StatelessWidget {
               ),
               SizedBox(height: size.height * 0.00372),
               Text(
-                nameDoctor,
+                doctor.name,
                 style: TextStyle(
                   color: Color(0XFF333333),
                   fontSize: 12,
@@ -99,7 +92,7 @@ class ContainerForFeatureDoctor extends StatelessWidget {
               ),
               SizedBox(height: size.height * 0.0037),
               Text(
-                "\$ $price/ hours",
+                "\$ ${doctor.price}/ hours",
                 style: TextStyle(
                   color: Color(0XFF333333),
                   fontSize: 9,
