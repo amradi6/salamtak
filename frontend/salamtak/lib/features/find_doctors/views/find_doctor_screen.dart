@@ -28,6 +28,12 @@ class _FindDoctorScreenState extends State<FindDoctorScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    context.read<FavoriteDoctorCubit>().fetchAllDoctors();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
@@ -136,7 +142,10 @@ class _FindDoctorScreenState extends State<FindDoctorScreen> {
                       backgroundColor: Colors.white,
                       child: BlocBuilder<FindDoctorCubit, FindDoctorState>(
                         builder: (context, state) {
-                          List<Doctors> doctors = [];
+                          print("State:$state");
+                          List<Doctors> doctors = context
+                              .watch<FavoriteDoctorCubit>()
+                              .allDoctors;
                           if(state is FindDoctorLoad){
                             return   ListView.builder(
                               scrollDirection: Axis.vertical,

@@ -133,7 +133,7 @@ class ContainerForFindDoctors extends StatelessWidget {
                         },
                         icon: Icon(
                           Icons.favorite,
-                          color: doctor.isFavorite! ? Colors.red : Colors.grey,
+                          color: context.read<FavoriteDoctorCubit>().isFavorite(doctor.id) ? Colors.red : Colors.grey,
                         ),
                         padding: EdgeInsets.zero,
                       ),

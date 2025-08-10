@@ -15,7 +15,6 @@ class FavoriteDoctorCubit extends Cubit<FavoriteDoctorState> {
       allDoctors.where((d) => d.isFavorite ?? false).toList();
 
   final Set<int> _favoriteIds = {};
-
   final Set<int> _pendingChanges = {};
 
   bool isFavorite(int id) => _favoriteIds.contains(id);
@@ -49,7 +48,6 @@ class FavoriteDoctorCubit extends Cubit<FavoriteDoctorState> {
 
   Future<void> fetchAllDoctors() async {
     emit(FavoriteDoctorLoading());
-
     try {
       final response = await http.get(
         Uri.parse("https://mohammadhussien.pythonanywhere.com/getdoctors/"),

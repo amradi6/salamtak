@@ -167,16 +167,15 @@ class _FavoriteDoctorsScreenState extends State<FavoriteDoctorsScreen> {
                                     bottom: size.height * 0.018279,
                                   ),
                                   child: DoctorShimmer(
-                                    height: size.height*0.1749,
-                                    width: size.width*0.437,
+                                    height: size.height * 0.1749,
+                                    width: size.width * 0.437,
                                     size: size,
                                   ),
                                 ),
                               ),
                             ),
                           );
-                        }
-                        else if (state is DoctorFavoriteFilterState) {
+                        } else if (state is DoctorFavoriteFilterState) {
                           doctor = state.filteredDoctors;
                         }
                         if (doctor.isEmpty) {
@@ -203,18 +202,19 @@ class _FavoriteDoctorsScreenState extends State<FavoriteDoctorsScreen> {
                             ),
                           );
                         }
-                        print(doctor);
                         return GridView.builder(
                           shrinkWrap: true,
-                          physics: AlwaysScrollableScrollPhysics(),
-                          padding: EdgeInsets.only(bottom: size.height*0.0929),
+                          physics: ScrollPhysics(),
+                          padding: EdgeInsets.only(
+                            bottom: size.height * 0.0929,
+                          ),
                           itemCount: doctor.length,
                           gridDelegate:
                               SliverGridDelegateWithMaxCrossAxisExtent(
                                 maxCrossAxisExtent: size.width * 0.43753,
                                 mainAxisSpacing: size.height * 0.019,
                                 crossAxisSpacing: size.height * 0.019,
-                                childAspectRatio: 0.944,
+                                childAspectRatio: 0.888,
                               ),
                           itemBuilder: (context, index) {
                             return FavoriteDoctorsCards(

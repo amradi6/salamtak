@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:salamtak/data/models/doctors.dart';
@@ -47,6 +46,4 @@ class FindDoctorCubit extends Cubit<FindDoctorState> {
   void resetDoctors() {
     emit(FindDoctorSuccess(allDoctors));
   }
-
-
 }
