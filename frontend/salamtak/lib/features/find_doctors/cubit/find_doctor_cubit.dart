@@ -1,30 +1,31 @@
-import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart' as http;
 import 'package:salamtak/data/models/doctors.dart';
+import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_cubit.dart';
 import 'package:salamtak/features/find_doctors/cubit/find_doctor_state.dart';
 
 class FindDoctorCubit extends Cubit<FindDoctorState> {
+
   List<Doctors> allDoctors = [];
 
   FindDoctorCubit() : super(FindDoctorInitialState());
 
-  Future<void> fetchAllDoctors() async {
+  Future<void> fetchAllDoctorsForFind(BuildContext context) async {
     emit(FindDoctorLoad());
-    try{
-      final response = await http.get(Uri.parse('https://mohammadhussien.pythonanywhere.com/getdoctors/'));
-      if(response.statusCode == 200){
-        final List<dynamic> data = json.decode(response.body);
-        allDoctors = data.map((e) => Doctors.fromMap(e)).toList();
-        emit(FindDoctorSuccess(allDoctors));
+    await Future.delayed(Duration(seconds: 1));
+    final favoriteCubit = context.read<FavoriteDoctorCubit>();
+
+    if (favoriteCubit.allDoctors.isEmpty) {
+      await favoriteCubit.fetchAllDoctors();
     }
-      else {
-        emit(FindDoctorError("Failed to connect to server"));
-      }
-    }
-    catch(e){
-      emit(FindDoctorError(e.toString()));
-    }
+
+    allDoctors =
+        favoriteCubit.allDoctors.map((doctor) {
+          doctor.isFavorite = favoriteCubit.isFavorite(doctor.id);
+          return doctor;
+        }).toList();
+
+    emit(FindDoctorSuccess(allDoctors));
   }
 
   void filterDoctors(String name) {

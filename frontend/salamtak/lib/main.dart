@@ -15,7 +15,10 @@ void main() async{
         BlocProvider(create: (_) => AuthCubit()),
         BlocProvider(create: (_) => HomeCubit()..fetchPopularDoctors()),
         BlocProvider(create: (_) => FavoriteDoctorCubit()),
-        BlocProvider(create: (_) => FindDoctorCubit()),
+        BlocProvider(
+          create: (ctx) => FindDoctorCubit()
+            ..fetchAllDoctorsForFind(ctx),
+        ),
       ],
       child: MyApp(),
     ),

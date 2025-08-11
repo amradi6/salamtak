@@ -21,3 +21,12 @@ final class FavoriteDoctorError extends FavoriteDoctorState{
   final String message;
   FavoriteDoctorError(this.message);
 }
+
+final class SyncFavoritesToServerLoading extends FavoriteDoctorState{}
+
+final class SyncFavoritesToServerSuccess extends FavoriteDoctorState{}
+
+final class SyncFavoritesToServerError extends FavoriteDoctorState{
+  final String message;
+  SyncFavoritesToServerError(this.message);
+}

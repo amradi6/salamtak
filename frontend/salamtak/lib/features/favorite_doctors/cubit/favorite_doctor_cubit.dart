@@ -14,10 +14,10 @@ class FavoriteDoctorCubit extends Cubit<FavoriteDoctorState> {
   get favoriteDoctors =>
       allDoctors.where((d) => d.isFavorite ?? false).toList();
 
-  final Set<int> _favoriteIds = {};
+  final Set<int> favoriteIds = {};
   final Set<int> _pendingChanges = {};
 
-  bool isFavorite(int id) => _favoriteIds.contains(id);
+  bool isFavorite(int id) => favoriteIds.contains(id);
 
   final TextEditingController controller = TextEditingController();
 
@@ -26,6 +26,7 @@ class FavoriteDoctorCubit extends Cubit<FavoriteDoctorState> {
   bool isSearching = false;
 
   Future<void> syncFavoritesToServer() async {
+    emit(SyncFavoritesToServerLoading());
     if (_pendingChanges.isEmpty) return;
 
     try {
@@ -37,12 +38,12 @@ class FavoriteDoctorCubit extends Cubit<FavoriteDoctorState> {
 
       if (response.statusCode == 200) {
         _pendingChanges.clear();
-      }
-      else {
-        print("Error:${response.statusCode}");
+        emit(SyncFavoritesToServerSuccess());
+      } else {
+       emit(SyncFavoritesToServerError("Error:${response.statusCode}"));
       }
     } catch (e) {
-      print("in catch block ${e.toString()}");
+      emit(SyncFavoritesToServerError("in catch block ${e.toString()}"));
     }
   }
 
@@ -57,31 +58,36 @@ class FavoriteDoctorCubit extends Cubit<FavoriteDoctorState> {
         final List<dynamic> data = jsonDecode(response.body);
 
         allDoctors.clear();
-        _favoriteIds.clear();
+        favoriteIds.clear();
 
         for (var item in data) {
           final doctor = Doctors.fromMap(item);
           allDoctors.add(doctor);
 
           if (doctor.isFavorite!) {
-            _favoriteIds.add(doctor.id);
+            favoriteIds.add(doctor.id);
           }
         }
         emit(FavoriteDoctorSuccess(allDoctors));
-      } else {
+      }
+      else {
         emit(FavoriteDoctorError("Failed to load doctors."));
       }
     } catch (e) {
-      emit(FavoriteDoctorError("An error occurred while connecting to the server."));
+      emit(
+        FavoriteDoctorError(
+          "An error occurred while connecting to the server.",
+        ),
+      );
     }
   }
 
   void toggleFavorite(Doctors doctor) {
-    if (_favoriteIds.contains(doctor.id)) {
-      _favoriteIds.remove(doctor.id);
+    if (favoriteIds.contains(doctor.id)) {
+      favoriteIds.remove(doctor.id);
       doctor.isFavorite = false;
     } else {
-      _favoriteIds.add(doctor.id);
+      favoriteIds.add(doctor.id);
       doctor.isFavorite = true;
     }
 

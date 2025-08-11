@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/core/constants/widgets/circle_for_bg.dart';
 import 'package:salamtak/core/constants/widgets/text_form_for_search.dart';
 import 'package:salamtak/data/models/doctors.dart';
-import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_cubit.dart';
-import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_state.dart';
 import 'package:salamtak/features/find_doctors/cubit/find_doctor_cubit.dart';
 import 'package:salamtak/features/find_doctors/cubit/find_doctor_state.dart';
 import 'package:salamtak/features/find_doctors/widgets/container_for_search_doctors.dart';
@@ -25,12 +23,6 @@ class _FindDoctorScreenState extends State<FindDoctorScreen> {
   void dispose() {
     controller.dispose();
     super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    context.read<FavoriteDoctorCubit>().fetchAllDoctors();
   }
 
   @override
@@ -133,18 +125,16 @@ class _FindDoctorScreenState extends State<FindDoctorScreen> {
                 ),
                 SizedBox(height: size.height * 0.0298),
                 SingleChildScrollView(
-                  child: SizedBox(
-                    height: size.height * 0.745,
-                    width: size.width * 0.872,
-                    child: RefreshIndicator(
-                      onRefresh: () => context.read<FindDoctorCubit>().fetchAllDoctors(),
-                      color: Colors.green,
-                      backgroundColor: Colors.white,
+                  child: RefreshIndicator(
+                    onRefresh: () => context.read<FindDoctorCubit>().fetchAllDoctorsForFind(context),
+                    color: Colors.green,
+                    child: SizedBox(
+                      height: size.height * 0.745,
+                      width: size.width * 0.872,
                       child: BlocBuilder<FindDoctorCubit, FindDoctorState>(
                         builder: (context, state) {
-                          print("State:$state");
                           List<Doctors> doctors = context
-                              .watch<FavoriteDoctorCubit>()
+                              .watch<FindDoctorCubit>()
                               .allDoctors;
                           if(state is FindDoctorLoad){
                             return   ListView.builder(
@@ -178,35 +168,30 @@ class _FindDoctorScreenState extends State<FindDoctorScreen> {
                           }
 
                           if (doctors.isEmpty) {
-                            return Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: size.width * 0.085,
-                                vertical: size.height * 0.074,
-                              ),
-                              child: Text(
-                                "No doctor found with this name",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Color(0XFF333333),
-                                  fontWeight: FontWeight.bold,
+                            return ListView(
+                              children: [Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: size.width * 0.085,
+                                  vertical: size.height * 0.074,
                                 ),
-                              ),
+                                child: Text(
+                                  "No doctor found with this name",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Color(0XFF333333),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              )],
                             );
                           }
-                          return BlocBuilder<
-                            FavoriteDoctorCubit,
-                            FavoriteDoctorState
-                          >(
-                            builder: (context, state) {
-                              return ListView.builder(
-                                itemCount: doctors.length,
-                                itemBuilder: (context, index) {
-                                  final doctor = doctors[index];
-                                  return ContainerForFindDoctors(
-                                    size: size,
-                                    doctor: doctor,
-                                  );
-                                },
+                          return ListView.builder(
+                            itemCount: doctors.length,
+                            itemBuilder: (context, index) {
+                              final doctor = doctors[index];
+                              return ContainerForFindDoctors(
+                                size: size,
+                                doctor: doctor,
                               );
                             },
                           );
