@@ -3,7 +3,7 @@ import 'package:salamtak/data/models/doctors.dart';
 import 'package:salamtak/features/auth/views/login_screen.dart';
 import 'package:salamtak/features/auth/views/signup_screen.dart';
 import 'package:salamtak/features/auth/views/who_are_you_screen.dart';
-import 'package:salamtak/features/doctor_details/views/doctor_details _screen.dart';
+import 'package:salamtak/features/doctor_details/views/doctor_details_screen.dart';
 import 'package:salamtak/features/doctor_details/views/doctor_details_for_booking_screen.dart';
 import 'package:salamtak/features/favorite_doctors/views/favorite_doctors_screen.dart';
 import 'package:salamtak/features/find_doctors/views/find_doctor_screen.dart';

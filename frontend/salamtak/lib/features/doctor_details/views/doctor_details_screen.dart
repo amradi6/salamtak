@@ -1,13 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/data/models/doctors.dart';
+import 'package:salamtak/features/doctor_details/cubit/doctor_details_cubit.dart';
+import 'package:salamtak/features/doctor_details/cubit/doctor_details_state.dart';
 import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_cubit.dart';
 import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_state.dart';
 
-class DoctorDetailsScreen extends StatelessWidget {
+class DoctorDetailsScreen extends StatefulWidget {
   const DoctorDetailsScreen({super.key, required this.doctor});
 
   final Doctors doctor;
+
+  @override
+  State<DoctorDetailsScreen> createState() => _DoctorDetailsScreenState();
+}
+
+class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<DoctorDetailsCubit>().getAvailability(widget.doctor.id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,13 +60,13 @@ class DoctorDetailsScreen extends StatelessWidget {
                             child: Icon(Icons.arrow_back_ios_new),
                           ),
                         ),
-                        BlocBuilder<FavoriteDoctorCubit,FavoriteDoctorState>(
+                        BlocBuilder<FavoriteDoctorCubit, FavoriteDoctorState>(
                           builder: (context, state) {
                             return IconButton(
                               onPressed: () {
-                                context.read<FavoriteDoctorCubit>().toggleFavorite(
-                                  doctor,
-                                );
+                                context
+                                    .read<FavoriteDoctorCubit>()
+                                    .toggleFavorite(widget.doctor);
                               },
                               icon: Container(
                                 width: size.height * 0.064,
@@ -64,9 +77,12 @@ class DoctorDetailsScreen extends StatelessWidget {
                                 ),
                                 child: Icon(
                                   Icons.favorite,
-                                  color: context.read<FavoriteDoctorCubit>().isFavorite(doctor.id)
-                                      ? Colors.red
-                                      : Colors.grey,
+                                  color:
+                                      context
+                                              .read<FavoriteDoctorCubit>()
+                                              .isFavorite(widget.doctor.id)
+                                          ? Colors.red
+                                          : Colors.grey,
                                 ),
                               ),
                             );
@@ -83,7 +99,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                       height: size.height * 0.1986,
                       child: CircleAvatar(
                         radius: 60,
-                        backgroundImage: AssetImage(doctor.image),
+                        backgroundImage: AssetImage(widget.doctor.image),
                       ),
                     ),
                   ),
@@ -94,7 +110,7 @@ class DoctorDetailsScreen extends StatelessWidget {
             Column(
               children: [
                 Text(
-                  "DR.${doctor.name}",
+                  "DR.${widget.doctor.name}",
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
@@ -104,7 +120,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                 ),
                 SizedBox(height: size.height * 0.0024),
                 Text(
-                  doctor.specialty,
+                  widget.doctor.specialty,
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w400,
@@ -123,7 +139,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                     ),
                     SizedBox(width: size.width * 0.0078),
                     Text(
-                      "${doctor.rating} (124 reviews)",
+                      "${widget.doctor.rating} (124 reviews)",
                       style: TextStyle(
                         fontFamily: "Inter",
                         fontWeight: FontWeight.w400,
@@ -171,7 +187,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                               ),
                               SizedBox(height: size.height * 0.00869),
                               Text(
-                                "${doctor.consultation} mins",
+                                "${widget.doctor.consultation} min's",
                                 style: TextStyle(
                                   fontFamily: "Inter",
                                   fontWeight: FontWeight.w600,
@@ -204,7 +220,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                               ),
                               SizedBox(height: size.height * 0.00869),
                               Text(
-                                "\$${doctor.price}",
+                                "\$${widget.doctor.price}",
                                 style: TextStyle(
                                   fontFamily: "Inter",
                                   fontWeight: FontWeight.w600,
@@ -241,7 +257,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                               ),
                               SizedBox(width: size.width * 0.041),
                               Text(
-                                "${doctor.phoneNumber}",
+                                "${widget.doctor.phoneNumber}",
                                 style: TextStyle(
                                   fontFamily: "Inter",
                                   fontWeight: FontWeight.w400,
@@ -270,7 +286,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                               SizedBox(width: size.width * 0.041),
                               Expanded(
                                 child: Text(
-                                  doctor.email!,
+                                  widget.doctor.email!,
                                   softWrap: true,
                                   maxLines: 2,
                                   style: TextStyle(
@@ -301,7 +317,7 @@ class DoctorDetailsScreen extends StatelessWidget {
                               ),
                               SizedBox(width: size.width * 0.041),
                               Text(
-                                doctor.address!,
+                                widget.doctor.address!,
                                 style: TextStyle(
                                   fontFamily: "Inter",
                                   fontWeight: FontWeight.w400,
@@ -344,29 +360,34 @@ class DoctorDetailsScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: size.height * 0.02483),
-                      if (doctor.services != null && doctor.services!.isNotEmpty) ...[
-                        ...doctor.services!.map((service) => Padding(
-                          padding: EdgeInsets.only(bottom: size.height * 0.0149),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.circle,
-                                size: size.height * 0.0149,
-                                color: Color(0XFF10B981),
-                              ),
-                              SizedBox(width: size.width * 0.02083),
-                              Text(
-                                service,
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: "Inter",
-                                  color: Color(0XFF374151),
+                      if (widget.doctor.services != null &&
+                          widget.doctor.services!.isNotEmpty) ...[
+                        ...widget.doctor.services!.map(
+                          (service) => Padding(
+                            padding: EdgeInsets.only(
+                              bottom: size.height * 0.0149,
+                            ),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.circle,
+                                  size: size.height * 0.0149,
+                                  color: Color(0XFF10B981),
                                 ),
-                              ),
-                            ],
+                                SizedBox(width: size.width * 0.02083),
+                                Text(
+                                  service,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: "Inter",
+                                    color: Color(0XFF374151),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        )),
+                        ),
                       ] else ...[
                         Row(
                           children: [
@@ -389,7 +410,6 @@ class DoctorDetailsScreen extends StatelessWidget {
                         ),
                       ],
                       SizedBox(height: size.height * 0.02484),
-
                     ],
                   ),
                 ),
@@ -398,220 +418,82 @@ class DoctorDetailsScreen extends StatelessWidget {
             SizedBox(height: size.height * 0.0298),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: size.width * 0.0416),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  color: Color(0XFFFFFFFF),
-                  boxShadow: [BoxShadow(color: Colors.black, blurRadius: 0.1)],
-                ),
-                child: Padding(
-                  padding: EdgeInsets.only(left: size.width * 0.052),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: size.height * 0.02483),
-                      Text(
-                        "Working Hours",
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: "Inter",
-                          color: Color(0XFF000000),
-                        ),
+              child: BlocBuilder<DoctorDetailsCubit, DoctorDetailsState>(
+                builder: (BuildContext context, DoctorDetailsState state) {
+                  if (state is GetAvailabilityLoading) {
+                    return Center(child: CircularProgressIndicator(color: Colors.green));
+                  }
+                  else if (state is GetAvailabilitySuccess) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: Color(0XFFFFFFFF),
+                        boxShadow: [
+                          BoxShadow(color: Colors.black, blurRadius: 0.1),
+                        ],
                       ),
-                      SizedBox(height: size.height * 0.0235),
-                      Padding(
-                        padding: EdgeInsets.only(right: size.width * 0.052),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          left: size.width * 0.052,
+                          // bottom: size.height * 0.0298,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            SizedBox(height: size.height * 0.02483),
                             Text(
-                              "Sunday",
+                              "Working Hours",
                               style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400,
+                                fontSize: 17,
+                                fontWeight: FontWeight.w600,
                                 fontFamily: "Inter",
-                                color: Color(0XFF4B5563),
+                                color: Color(0XFF000000),
                               ),
                             ),
-                            Text(
-                              "Closed",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: "Inter",
-                                color: Color(0XFF1F2937),
-                              ),
-                            ),
+                            SizedBox(height: size.height * 0.0235),
+                            ...state.workingHours.map((day) {
+                              return Padding(
+                                padding: EdgeInsets.only(
+                                  right: size.width * 0.052,
+                                    bottom: size.height * 0.0298,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      day["day"]!,
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400,
+                                        fontFamily: "Inter",
+                                        color: Color(0XFF4B5563),
+                                      ),
+                                    ),
+                                    Text(
+                                      day['start'] != null && day['end'] != null
+                                          ? "${day['start']!.substring(0, 5)} - ${day['end']!.substring(0, 5)}"
+                                          : "Closed",
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                        fontFamily: "Inter",
+                                        color: Color(0XFF1F2937),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }),
                           ],
                         ),
                       ),
-                      SizedBox(height: size.height * 0.0149),
-                      Padding(
-                        padding: EdgeInsets.only(right: size.width * 0.052),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Monday",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: "Inter",
-                                color: Color(0XFF4B5563),
-                              ),
-                            ),
-                            Text(
-                              "09:00 - 16:00",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: "Inter",
-                                color: Color(0XFF1F2937),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: size.height * 0.0149),
-                      Padding(
-                        padding: EdgeInsets.only(right: size.width * 0.052),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Tuesday",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: "Inter",
-                                color: Color(0XFF4B5563),
-                              ),
-                            ),
-                            Text(
-                              "Closed",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: "Inter",
-                                color: Color(0XFF1F2937),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: size.height * 0.0149),
-                      Padding(
-                        padding: EdgeInsets.only(right: size.width * 0.052),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Wednesday",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: "Inter",
-                                color: Color(0XFF4B5563),
-                              ),
-                            ),
-                            Text(
-                              "09:00 - 16:00",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: "Inter",
-                                color: Color(0XFF1F2937),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: size.height * 0.0149),
-                      Padding(
-                        padding: EdgeInsets.only(right: size.width * 0.052),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Thursday",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: "Inter",
-                                color: Color(0XFF4B5563),
-                              ),
-                            ),
-                            Text(
-                              "Closed",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: "Inter",
-                                color: Color(0XFF1F2937),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: size.height * 0.0149),
-                      Padding(
-                        padding: EdgeInsets.only(right: size.width * 0.052),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Friday",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: "Inter",
-                                color: Color(0XFF4B5563),
-                              ),
-                            ),
-                            Text(
-                              "Closed",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: "Inter",
-                                color: Color(0XFF1F2937),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: size.height * 0.0149),
-                      Padding(
-                        padding: EdgeInsets.only(right: size.width * 0.052),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Saturday",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: "Inter",
-                                color: Color(0XFF4B5563),
-                              ),
-                            ),
-                            Text(
-                              "09:00 - 16:00",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: "Inter",
-                                color: Color(0XFF1F2937),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: size.height * 0.0149),
-                    ],
-                  ),
-                ),
+                    );
+                  }
+                  else {
+                    return Text("No data available");
+                  }
+                },
               ),
             ),
             SizedBox(height: size.height * 0.0298),
@@ -620,7 +502,9 @@ class DoctorDetailsScreen extends StatelessWidget {
               height: size.height * 0.0844,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pushReplacementNamed("/doctor_details_for_booking");
+                  Navigator.of(
+                    context,
+                  ).pushNamed("/doctor_details_for_booking");
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(

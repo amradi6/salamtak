@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/features/auth/cubit/auth_cubit.dart';
+import 'package:salamtak/features/doctor_details/cubit/doctor_details_cubit.dart';
 import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_cubit.dart';
 import 'package:salamtak/features/find_doctors/cubit/find_doctor_cubit.dart';
 import 'package:salamtak/features/home/cubit/home__cubit.dart';
@@ -16,9 +17,10 @@ void main() async{
         BlocProvider(create: (_) => HomeCubit()..fetchPopularDoctors()),
         BlocProvider(create: (_) => FavoriteDoctorCubit()),
         BlocProvider(
-          create: (ctx) => FindDoctorCubit()
-            ..fetchAllDoctorsForFind(ctx),
+          create: (context) => FindDoctorCubit()
+            ..fetchAllDoctorsForFind(context),
         ),
+        BlocProvider(create: (_) => DoctorDetailsCubit(),)
       ],
       child: MyApp(),
     ),

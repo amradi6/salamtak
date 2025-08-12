@@ -40,8 +40,6 @@ class AuthCubit extends Cubit<AuthState> {
         },
       );
 
-      debugPrint('Response status: ${response.statusCode}');
-      debugPrint('Response body: ${response.body}');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final data = jsonDecode(response.body);
