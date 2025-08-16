@@ -8,19 +8,16 @@ import 'package:salamtak/features/home/cubit/home__cubit.dart';
 
 import 'core/router/app_routes.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
     MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => AuthCubit()),
-        BlocProvider(create: (_) => HomeCubit()..fetchPopularDoctors()),
+        BlocProvider(create: (_) => HomeCubit()),
         BlocProvider(create: (_) => FavoriteDoctorCubit()),
-        BlocProvider(
-          create: (context) => FindDoctorCubit()
-            ..fetchAllDoctorsForFind(context),
-        ),
-        BlocProvider(create: (_) => DoctorDetailsCubit(),)
+        BlocProvider(create: (_) => FindDoctorCubit()),
+        BlocProvider(create: (_) => DoctorDetailsCubit()),
       ],
       child: MyApp(),
     ),

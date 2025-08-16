@@ -20,6 +20,7 @@ class _FavoriteDoctorsScreenState extends State<FavoriteDoctorsScreen> {
   void initState() {
     super.initState();
     Future.microtask(() {
+      if (!mounted) return;
       context.read<FavoriteDoctorCubit>().syncFavoritesToServer();
       context.read<FavoriteDoctorCubit>().fetchAllDoctors();
     });
@@ -65,18 +66,6 @@ class _FavoriteDoctorsScreenState extends State<FavoriteDoctorsScreen> {
                   children: [
                     Row(
                       children: [
-                        Container(
-                          width: size.width * 0.078,
-                          height: size.width * 0.078,
-                          decoration: BoxDecoration(
-                            color: Color(0XFFFFFFFF),
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          ),
-                          child: Icon(
-                            Icons.arrow_back_ios_new,
-                            color: Color(0XFF677294),
-                          ),
-                        ),
                         SizedBox(width: size.width * 0.049),
                         Text(
                           "Favourite Doctors",

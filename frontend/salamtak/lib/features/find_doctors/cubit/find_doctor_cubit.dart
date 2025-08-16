@@ -12,8 +12,10 @@ class FindDoctorCubit extends Cubit<FindDoctorState> {
 
   Future<void> fetchAllDoctorsForFind(BuildContext context) async {
     emit(FindDoctorLoad());
-    await Future.delayed(Duration(seconds: 1));
+
     final favoriteCubit = context.read<FavoriteDoctorCubit>();
+
+    await Future.delayed(Duration(seconds: 1));
 
     if (favoriteCubit.allDoctors.isEmpty) {
       await favoriteCubit.fetchAllDoctors();

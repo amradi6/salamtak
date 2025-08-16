@@ -15,6 +15,7 @@ class FavoriteDoctorCubit extends Cubit<FavoriteDoctorState> {
       allDoctors.where((d) => d.isFavorite ?? false).toList();
 
   final Set<int> favoriteIds = {};
+
   final Set<int> _pendingChanges = {};
 
   bool isFavorite(int id) => favoriteIds.contains(id);

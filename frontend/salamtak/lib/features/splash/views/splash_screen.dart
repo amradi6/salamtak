@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/core/constants/widgets/circle_for_bg.dart';
+import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_cubit.dart';
+import 'package:salamtak/features/find_doctors/cubit/find_doctor_cubit.dart';
+import 'package:salamtak/features/home/cubit/home__cubit.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -11,11 +15,15 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
+    super.initState();
+    final navigator = Navigator.of(context);
     Future.delayed(
       Duration(seconds: 2),
-      () => Navigator.pushReplacementNamed(context, '/onboarding1'),
+          () => navigator.pushReplacementNamed('/onboarding1'),
     );
-    super.initState();
+    context.read<HomeCubit>().fetchPopularDoctors();
+    context.read<FavoriteDoctorCubit>().fetchAllDoctors();
+    context.read<FindDoctorCubit>().fetchAllDoctorsForFind(context);
   }
 
   @override
