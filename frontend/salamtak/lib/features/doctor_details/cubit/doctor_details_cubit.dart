@@ -43,4 +43,34 @@ class DoctorDetailsCubit extends Cubit<DoctorDetailsState> {
       emit(GetAvailabilityError("Error : ${e.toString()}"));
     }
   }
+
+  Future<void> getAppointmentsAvailability(int doctorId)async{
+    emit(GetAppointmentsAvailabilityLoading());
+    try{
+      final response=await http.get(
+        Uri.parse("https://mohammadhussien.pythonanywhere.com/availabilities/$doctorId/"),
+      );
+      if(response.statusCode==200){
+        final data=jsonDecode(response.body);
+        print(data);
+        final availability = data;
+        print(availability);
+        List<dynamic> availabilityList = availability.map((item) {
+          return {
+            "week_day": item['week_day'],
+            "available_slots": item['available_slots'],
+          };
+        }).toList();
+
+        emit(GetAppointmentsAvailabilitySuccess(availabilityList));
+      }
+      else{
+        emit(GetAppointmentsAvailabilityError("Error Fetching Data"));
+      }
+    }
+    catch(e){
+      print('Exception caught: $e');
+      emit(GetAppointmentsAvailabilityError("Error: ${e.toString()}"));
+    }
+  }
 }

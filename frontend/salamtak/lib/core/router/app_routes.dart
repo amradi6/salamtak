@@ -44,7 +44,8 @@ class AppRoutes {
         final doctor = settings.arguments as Doctors;
         return createRoute(screen: DoctorDetailsScreen(doctor: doctor));
       case "/doctor_details_for_booking":
-        return createRoute(screen: DoctorDetailsForBookingScreen());
+        final doctor = settings.arguments as Doctors;
+        return createRoute(screen: DoctorDetailsForBookingScreen(doctor: doctor));
 
       default:
         return MaterialPageRoute(

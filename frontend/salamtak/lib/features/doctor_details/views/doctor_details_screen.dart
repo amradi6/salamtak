@@ -504,7 +504,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                 onPressed: () {
                   Navigator.of(
                     context,
-                  ).pushNamed("/doctor_details_for_booking");
+                  ).pushNamed("/doctor_details_for_booking",arguments: widget.doctor);
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
