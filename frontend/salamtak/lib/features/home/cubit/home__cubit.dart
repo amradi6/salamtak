@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:salamtak/data/models/doctors.dart';
+import 'package:salamtak/features/booked_doctors/views/booked_doctors_screen.dart';
 import 'package:salamtak/features/favorite_doctors/views/favorite_doctors_screen.dart';
 import 'package:salamtak/features/home/cubit/home__state.dart';
 import 'package:salamtak/features/home/views/home_screen.dart';
@@ -20,7 +21,7 @@ class HomeCubit extends Cubit<HomeState> {
   final List<Widget> screens = [
     HomeScreen(),
     FavoriteDoctorsScreen(),
-    Center(child: Text("Booking Screen Placeholder")),
+    BookedDoctorsScreen(),
     Center(child: Text("Chat Screen Placeholder")),
   ];
 

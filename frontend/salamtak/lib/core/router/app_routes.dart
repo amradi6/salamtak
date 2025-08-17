@@ -3,6 +3,7 @@ import 'package:salamtak/data/models/doctors.dart';
 import 'package:salamtak/features/auth/views/login_screen.dart';
 import 'package:salamtak/features/auth/views/signup_screen.dart';
 import 'package:salamtak/features/auth/views/who_are_you_screen.dart';
+import 'package:salamtak/features/booked_doctors/views/booked_doctors_screen.dart';
 import 'package:salamtak/features/doctor_details/views/doctor_details_screen.dart';
 import 'package:salamtak/features/doctor_details/views/doctor_details_for_booking_screen.dart';
 import 'package:salamtak/features/favorite_doctors/views/favorite_doctors_screen.dart';
@@ -45,14 +46,18 @@ class AppRoutes {
         return createRoute(screen: DoctorDetailsScreen(doctor: doctor));
       case "/doctor_details_for_booking":
         final doctor = settings.arguments as Doctors;
-        return createRoute(screen: DoctorDetailsForBookingScreen(doctor: doctor));
+        return createRoute(
+          screen: DoctorDetailsForBookingScreen(doctor: doctor),
+        );
+      case "/booked_doctors":
+        return createRoute(screen: BookedDoctorsScreen());
 
       default:
         return MaterialPageRoute(
           builder:
               (_) => const Scaffold(
-            body: Center(child: Text('404 - Page not found')),
-          ),
+                body: Center(child: Text('404 - Page not found')),
+              ),
         );
     }
   }

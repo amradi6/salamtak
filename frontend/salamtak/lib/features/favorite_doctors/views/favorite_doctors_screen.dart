@@ -64,19 +64,15 @@ class _FavoriteDoctorsScreenState extends State<FavoriteDoctorsScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        SizedBox(width: size.width * 0.049),
-                        Text(
-                          "Favourite Doctors",
-                          style: TextStyle(
-                            color: Color(0XFF222222),
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: "Rubik",
-                          ),
-                        ),
-                      ],
+                    SizedBox(width: size.width * 0.16771),
+                    Text(
+                      "Favourite Doctors",
+                      style: TextStyle(
+                        color: Color(0XFF222222),
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: "Rubik",
+                      ),
                     ),
                     SizedBox(height: size.height * 0.042),
                     Form(
