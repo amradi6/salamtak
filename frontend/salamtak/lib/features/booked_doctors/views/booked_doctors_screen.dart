@@ -55,7 +55,7 @@ class BookedDoctorsScreen extends StatelessWidget {
                         BoxShadow(
                           color: Colors.black38,
                           blurRadius: 2,
-                          offset: Offset(0,1),
+                          offset: Offset(0, 1),
                         ),
                       ],
                       borderRadius: BorderRadius.circular(16),
@@ -110,15 +110,19 @@ class BookedDoctorsScreen extends StatelessWidget {
                                   SizedBox(height: size.height * 0.0164),
                                   Row(
                                     children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0XFFECFDF5),
-                                          borderRadius: BorderRadius.circular(50),
-                                        ),
-                                        child: Icon(
-                                          Icons.calendar_today_sharp,
-                                          color: Color(0XFF10B981),
-                                          size: size.width * 0.0291,
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(50),
+                                        child: Container(
+                                          width: size.width * 0.0680,
+                                          height: size.width * 0.0680,
+                                          decoration: BoxDecoration(
+                                            color: Color(0XFFECFDF5),
+                                          ),
+                                          child: Icon(
+                                            Icons.calendar_today_sharp,
+                                            color: Color(0XFF10B981),
+                                            size: 16,
+                                          ),
                                         ),
                                       ),
                                       SizedBox(width: size.width * 0.01944),
@@ -136,15 +140,19 @@ class BookedDoctorsScreen extends StatelessWidget {
                                   SizedBox(height: size.height * 0.0164),
                                   Row(
                                     children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0XFFECFDF5),
-                                          borderRadius: BorderRadius.circular(50),
-                                        ),
-                                        child: Icon(
-                                          Icons.access_alarm,
-                                          color: Color(0XFF10B981),
-                                          size: size.width * 0.0291,
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(50),
+                                        child: Container(
+                                          width: size.width * 0.0680,
+                                          height: size.width * 0.0680,
+                                          decoration: BoxDecoration(
+                                            color: Color(0XFFECFDF5),
+                                          ),
+                                          child: Icon(
+                                            Icons.alarm,
+                                            color: Color(0XFF10B981),
+                                            size: 16,
+                                          ),
                                         ),
                                       ),
                                       SizedBox(width: size.width * 0.01944),
@@ -166,15 +174,19 @@ class BookedDoctorsScreen extends StatelessWidget {
                           SizedBox(height: size.height * 0.017499),
                           Row(
                             children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Color(0XFFECFDF5),
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                child: Icon(
-                                  Icons.location_on,
-                                  color: Color(0XFF10B981),
-                                  size: size.width * 0.0291,
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(50),
+                                child: Container(
+                                  width: size.width * 0.0680,
+                                  height: size.width * 0.0680,
+                                  decoration: BoxDecoration(
+                                    color: Color(0XFFECFDF5),
+                                  ),
+                                  child: Icon(
+                                    Icons.location_on_outlined,
+                                    color: Color(0XFF10B981),
+                                    size: 16,
+                                  ),
                                 ),
                               ),
                               SizedBox(width: size.width * 0.01944),
@@ -272,7 +284,7 @@ class BookedDoctorsScreen extends StatelessWidget {
                         BoxShadow(
                           color: Colors.black38,
                           blurRadius: 2,
-                          offset: Offset(0,1),
+                          offset: Offset(0, 1),
                         ),
                       ],
                       borderRadius: BorderRadius.circular(16),
@@ -327,15 +339,19 @@ class BookedDoctorsScreen extends StatelessWidget {
                                   SizedBox(height: size.height * 0.0164),
                                   Row(
                                     children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0XFFECFDF5),
-                                          borderRadius: BorderRadius.circular(50),
-                                        ),
-                                        child: Icon(
-                                          Icons.calendar_today_sharp,
-                                          color: Color(0XFF10B981),
-                                          size: size.width * 0.0291,
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(50),
+                                        child: Container(
+                                          width: size.width * 0.0680,
+                                          height: size.width * 0.0680,
+                                          decoration: BoxDecoration(
+                                            color: Color(0XFFECFDF5),
+                                          ),
+                                          child: Icon(
+                                            Icons.calendar_today_sharp,
+                                            color: Color(0XFF10B981),
+                                            size: 16,
+                                          ),
                                         ),
                                       ),
                                       SizedBox(width: size.width * 0.01944),
@@ -353,15 +369,19 @@ class BookedDoctorsScreen extends StatelessWidget {
                                   SizedBox(height: size.height * 0.0164),
                                   Row(
                                     children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0XFFECFDF5),
-                                          borderRadius: BorderRadius.circular(50),
-                                        ),
-                                        child: Icon(
-                                          Icons.access_alarm,
-                                          color: Color(0XFF10B981),
-                                          size: size.width * 0.0291,
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(50),
+                                        child: Container(
+                                          width: size.width * 0.0680,
+                                          height: size.width * 0.0680,
+                                          decoration: BoxDecoration(
+                                            color: Color(0XFFECFDF5),
+                                          ),
+                                          child: Icon(
+                                            Icons.alarm,
+                                            color: Color(0XFF10B981),
+                                            size: 16,
+                                          ),
                                         ),
                                       ),
                                       SizedBox(width: size.width * 0.01944),
@@ -383,15 +403,19 @@ class BookedDoctorsScreen extends StatelessWidget {
                           SizedBox(height: size.height * 0.017499),
                           Row(
                             children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Color(0XFFECFDF5),
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                child: Icon(
-                                  Icons.location_on,
-                                  color: Color(0XFF10B981),
-                                  size: size.width * 0.0291,
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(50),
+                                child: Container(
+                                  width: size.width * 0.0680,
+                                  height: size.width * 0.0680,
+                                  decoration: BoxDecoration(
+                                    color: Color(0XFFECFDF5),
+                                  ),
+                                  child: Icon(
+                                    Icons.location_on_outlined,
+                                    color: Color(0XFF10B981),
+                                    size: 16,
+                                  ),
                                 ),
                               ),
                               SizedBox(width: size.width * 0.01944),
@@ -489,7 +513,7 @@ class BookedDoctorsScreen extends StatelessWidget {
                         BoxShadow(
                           color: Colors.black38,
                           blurRadius: 2,
-                          offset: Offset(0,1),
+                          offset: Offset(0, 1),
                         ),
                       ],
                       borderRadius: BorderRadius.circular(16),
@@ -544,15 +568,19 @@ class BookedDoctorsScreen extends StatelessWidget {
                                   SizedBox(height: size.height * 0.0164),
                                   Row(
                                     children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0XFFECFDF5),
-                                          borderRadius: BorderRadius.circular(50),
-                                        ),
-                                        child: Icon(
-                                          Icons.calendar_today_sharp,
-                                          color: Color(0XFF10B981),
-                                          size: size.width * 0.0291,
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(50),
+                                        child: Container(
+                                          width: size.width * 0.0680,
+                                          height: size.width * 0.0680,
+                                          decoration: BoxDecoration(
+                                            color: Color(0XFFECFDF5),
+                                          ),
+                                          child: Icon(
+                                            Icons.calendar_today_sharp,
+                                            color: Color(0XFF10B981),
+                                            size: 16,
+                                          ),
                                         ),
                                       ),
                                       SizedBox(width: size.width * 0.01944),
@@ -570,15 +598,19 @@ class BookedDoctorsScreen extends StatelessWidget {
                                   SizedBox(height: size.height * 0.0164),
                                   Row(
                                     children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0XFFECFDF5),
-                                          borderRadius: BorderRadius.circular(50),
-                                        ),
-                                        child: Icon(
-                                          Icons.access_alarm,
-                                          color: Color(0XFF10B981),
-                                          size: size.width * 0.0291,
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(50),
+                                        child: Container(
+                                          width: size.width * 0.0680,
+                                          height: size.width * 0.0680,
+                                          decoration: BoxDecoration(
+                                            color: Color(0XFFECFDF5),
+                                          ),
+                                          child: Icon(
+                                            Icons.alarm,
+                                            color: Color(0XFF10B981),
+                                            size: 16,
+                                          ),
                                         ),
                                       ),
                                       SizedBox(width: size.width * 0.01944),
@@ -600,15 +632,19 @@ class BookedDoctorsScreen extends StatelessWidget {
                           SizedBox(height: size.height * 0.017499),
                           Row(
                             children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Color(0XFFECFDF5),
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                child: Icon(
-                                  Icons.location_on,
-                                  color: Color(0XFF10B981),
-                                  size: size.width * 0.0291,
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(50),
+                                child: Container(
+                                  width: size.width * 0.0680,
+                                  height: size.width * 0.0680,
+                                  decoration: BoxDecoration(
+                                    color: Color(0XFFECFDF5),
+                                  ),
+                                  child: Icon(
+                                    Icons.location_on_outlined,
+                                    color: Color(0XFF10B981),
+                                    size: 16,
+                                  ),
                                 ),
                               ),
                               SizedBox(width: size.width * 0.01944),
@@ -706,7 +742,7 @@ class BookedDoctorsScreen extends StatelessWidget {
                         BoxShadow(
                           color: Colors.black38,
                           blurRadius: 2,
-                          offset: Offset(0,1),
+                          offset: Offset(0, 1),
                         ),
                       ],
                       borderRadius: BorderRadius.circular(16),
@@ -761,15 +797,19 @@ class BookedDoctorsScreen extends StatelessWidget {
                                   SizedBox(height: size.height * 0.0164),
                                   Row(
                                     children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0XFFECFDF5),
-                                          borderRadius: BorderRadius.circular(50),
-                                        ),
-                                        child: Icon(
-                                          Icons.calendar_today_sharp,
-                                          color: Color(0XFF10B981),
-                                          size: size.width * 0.0291,
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(50),
+                                        child: Container(
+                                          width: size.width * 0.0680,
+                                          height: size.width * 0.0680,
+                                          decoration: BoxDecoration(
+                                            color: Color(0XFFECFDF5),
+                                          ),
+                                          child: Icon(
+                                            Icons.calendar_today_sharp,
+                                            color: Color(0XFF10B981),
+                                            size: 16,
+                                          ),
                                         ),
                                       ),
                                       SizedBox(width: size.width * 0.01944),
@@ -787,15 +827,19 @@ class BookedDoctorsScreen extends StatelessWidget {
                                   SizedBox(height: size.height * 0.0164),
                                   Row(
                                     children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0XFFECFDF5),
-                                          borderRadius: BorderRadius.circular(50),
-                                        ),
-                                        child: Icon(
-                                          Icons.access_alarm,
-                                          color: Color(0XFF10B981),
-                                          size: size.width * 0.0291,
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(50),
+                                        child: Container(
+                                          width: size.width * 0.0680,
+                                          height: size.width * 0.0680,
+                                          decoration: BoxDecoration(
+                                            color: Color(0XFFECFDF5),
+                                          ),
+                                          child: Icon(
+                                            Icons.alarm,
+                                            color: Color(0XFF10B981),
+                                            size: 16,
+                                          ),
                                         ),
                                       ),
                                       SizedBox(width: size.width * 0.01944),
@@ -817,15 +861,19 @@ class BookedDoctorsScreen extends StatelessWidget {
                           SizedBox(height: size.height * 0.017499),
                           Row(
                             children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Color(0XFFECFDF5),
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                child: Icon(
-                                  Icons.location_on,
-                                  color: Color(0XFF10B981),
-                                  size: size.width * 0.0291,
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(50),
+                                child: Container(
+                                  width: size.width * 0.0680,
+                                  height: size.width * 0.0680,
+                                  decoration: BoxDecoration(
+                                    color: Color(0XFFECFDF5),
+                                  ),
+                                  child: Icon(
+                                    Icons.location_on_outlined,
+                                    color: Color(0XFF10B981),
+                                    size: 16,
+                                  ),
                                 ),
                               ),
                               SizedBox(width: size.width * 0.01944),
@@ -915,7 +963,7 @@ class BookedDoctorsScreen extends StatelessWidget {
                     ),
                   ),
 
-                  SizedBox(height: size.height*0.10937),
+                  SizedBox(height: size.height * 0.10937),
                 ],
               ),
             ),
