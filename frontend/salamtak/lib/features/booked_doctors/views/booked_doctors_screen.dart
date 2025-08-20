@@ -77,7 +77,7 @@ class BookedDoctorsScreen extends StatelessWidget {
                                     Radius.circular(50),
                                   ),
                                   child: Image.asset(
-                                    "assets/images/AmrAdi.jpg",
+                                    "assets/images/doctor.png",
                                     height: size.width * 0.15556,
                                     width: size.width * 0.15556,
                                     fit: BoxFit.cover,
@@ -306,7 +306,7 @@ class BookedDoctorsScreen extends StatelessWidget {
                                     Radius.circular(50),
                                   ),
                                   child: Image.asset(
-                                    "assets/images/AmrAdi.jpg",
+                                    "assets/images/doctor.png",
                                     height: size.width * 0.15556,
                                     width: size.width * 0.15556,
                                     fit: BoxFit.cover,
@@ -535,7 +535,7 @@ class BookedDoctorsScreen extends StatelessWidget {
                                     Radius.circular(50),
                                   ),
                                   child: Image.asset(
-                                    "assets/images/AmrAdi.jpg",
+                                    "assets/images/doctor.png",
                                     height: size.width * 0.15556,
                                     width: size.width * 0.15556,
                                     fit: BoxFit.cover,
@@ -764,7 +764,7 @@ class BookedDoctorsScreen extends StatelessWidget {
                                     Radius.circular(50),
                                   ),
                                   child: Image.asset(
-                                    "assets/images/AmrAdi.jpg",
+                                    "assets/images/doctor.png",
                                     height: size.width * 0.15556,
                                     width: size.width * 0.15556,
                                     fit: BoxFit.cover,

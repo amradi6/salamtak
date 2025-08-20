@@ -24,8 +24,3 @@ class LogInError extends AuthState{
   final String message;
   LogInError(this.message);
 }
-
-class GoogleError extends AuthState{
-  final String message;
-  GoogleError(this.message);
-}

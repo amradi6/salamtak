@@ -38,7 +38,7 @@ class Doctors {
     return Doctors(
       id: map['id'],
       email: user['email']??"",
-      image: map['photo'] ?? "assets/images/doctor1.png",
+      image: map['photo'] ?? "assets/images/doctor.png",
       name: user['username'] ?? "User Name",
       specialty: map['sepciality'] ?? '',
       rating: (map['rating'] as num?)?.toDouble() ?? 0.0,
