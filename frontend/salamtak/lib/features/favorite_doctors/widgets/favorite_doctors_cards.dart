@@ -66,7 +66,7 @@ class FavoriteDoctorsCards extends StatelessWidget {
               SizedBox(height: size.height * 0.0186),
               ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(50)),
-                child: Image.asset(
+                child: Image.network(
                   doctor.image,
                   height: size.width * 0.2041,
                   width: size.width * 0.2041,

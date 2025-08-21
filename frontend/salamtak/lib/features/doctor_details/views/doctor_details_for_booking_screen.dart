@@ -168,7 +168,7 @@ class DoctorDetailsForBookingScreen extends StatelessWidget {
                               height: size.height * 0.059,
                               child: CircleAvatar(
                                 radius: 50,
-                                backgroundImage: AssetImage(
+                                backgroundImage: NetworkImage(
                                   doctor.image,
                                 ),
                               ),

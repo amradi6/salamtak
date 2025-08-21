@@ -99,7 +99,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                       height: size.height * 0.1986,
                       child: CircleAvatar(
                         radius: 60,
-                        backgroundImage: AssetImage(widget.doctor.image),
+                        backgroundImage: NetworkImage(widget.doctor.image),
                       ),
                     ),
                   ),

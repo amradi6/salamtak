@@ -39,7 +39,7 @@ class ContainerForPopularDoctor extends StatelessWidget {
                 top: Radius.circular(12),
                 bottom: Radius.circular(2),
               ),
-              child: Image.asset(
+              child: Image.network(
                 image,
                 width: size.width * 0.4947916,
                 height: size.height * 0.2235191,

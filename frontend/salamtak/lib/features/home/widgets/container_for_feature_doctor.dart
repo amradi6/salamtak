@@ -71,7 +71,7 @@ class ContainerForFeatureDoctor extends StatelessWidget {
               SizedBox(height: size.height * 0.002483),
               ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(40)),
-                child: Image.asset(
+                child: Image.network(
                   doctor.image,
                   width: size.width * 0.140625,
                   height: size.width * 0.140625,

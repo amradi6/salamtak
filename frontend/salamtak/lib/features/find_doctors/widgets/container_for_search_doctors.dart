@@ -39,7 +39,7 @@ class ContainerForFindDoctors extends StatelessWidget {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.all(Radius.circular(4)),
-                      child: Image.asset(
+                      child: Image.network(
                         doctor.image,
                         width: size.width * 0.239,
                         height: size.height * 0.108,
