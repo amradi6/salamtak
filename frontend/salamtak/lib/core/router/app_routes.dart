@@ -13,7 +13,7 @@ import 'package:salamtak/features/home/views/layout_screen.dart';
 import 'package:salamtak/features/onboarding/views/onboarding_screen_01.dart';
 import 'package:salamtak/features/onboarding/views/onboarding_screen_02.dart';
 import 'package:salamtak/features/onboarding/views/onboarding_screen_03.dart';
-import 'package:salamtak/features/profiel/views/profiel.dart';
+import 'package:salamtak/features/profiel/views/profiel_screen.dart';
 import 'package:salamtak/shared/utils/create_route.dart';
 import '../../features/splash/views/splash_screen.dart';
 
@@ -53,7 +53,7 @@ class AppRoutes {
       case "/booked_doctors":
         return createRoute(screen: BookedDoctorsScreen());
       case "/profiel":
-        return createRoute(screen: Profiel());
+        return createRoute(screen: ProfielScreen());
       default:
         return MaterialPageRoute(
           builder:

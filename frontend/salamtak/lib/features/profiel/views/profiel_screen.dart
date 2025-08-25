@@ -5,15 +5,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:salamtak/features/auth/cubit/auth_cubit.dart';
+import 'package:salamtak/features/profiel/widgets/build_alert_warning.dart';
 
-class Profiel extends StatefulWidget {
-  const Profiel({super.key});
+class ProfielScreen extends StatefulWidget {
+  const ProfielScreen({super.key});
 
   @override
-  State<Profiel> createState() => _ProfielState();
+  State<ProfielScreen> createState() => _ProfielScreenState();
 }
 
-class _ProfielState extends State<Profiel> with TickerProviderStateMixin {
+class _ProfielScreenState extends State<ProfielScreen> with TickerProviderStateMixin {
   bool isPersonalExpanded = false;
   bool isFamilyExpanded = false;
   late AnimationController _personalController;
@@ -28,13 +29,12 @@ class _ProfielState extends State<Profiel> with TickerProviderStateMixin {
         sourcePath: pickedFile.path,
         uiSettings: [
           AndroidUiSettings(
-            toolbarTitle: 'قص الصورة',
+            toolbarTitle: 'Edit Image',
             toolbarColor: Colors.green,
             toolbarWidgetColor: Colors.white,
             hideBottomControls: true,
-            // يخفي خيارات extra
             initAspectRatio: CropAspectRatioPreset.square,
-            lockAspectRatio: false, // 🔑 هنا المستخدم يحدد بنفسه
+            lockAspectRatio: false,
           ),
         ],
       );
@@ -50,6 +50,9 @@ class _ProfielState extends State<Profiel> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      buildAlertWarning(context);
+    });
     _personalController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 200),

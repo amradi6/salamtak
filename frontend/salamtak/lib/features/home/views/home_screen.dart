@@ -120,7 +120,8 @@ class HomeScreen extends StatelessWidget {
                               SizedBox(width: size.width * 0.18489583),
                               CircleAvatar(
                                 radius: 30,
-                                child: Icon(Icons.person),
+                                backgroundColor: Colors.white,
+                                child: Icon(Icons.person,color: Colors.green,),
                               ),
                             ],
                           ),

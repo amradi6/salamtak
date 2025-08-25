@@ -192,7 +192,8 @@ class DoctorDetailsForBookingScreen extends StatelessWidget {
                         height: 20,
                       ),
                       SizedBox(
-                        height: size.height * 1.06748,
+                        height: size.height*0.54686,
+                        //height: size.height * 1.06748,
                         child: ListView.builder(
                           itemCount: 7,
                           itemBuilder: (context, index) {

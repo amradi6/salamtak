@@ -7,6 +7,7 @@ import 'package:salamtak/features/find_doctors/cubit/find_doctor_cubit.dart';
 import 'package:salamtak/features/home/cubit/home__cubit.dart';
 
 import 'core/router/app_routes.dart';
+import 'features/profiel/cubit/profiel_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +19,7 @@ void main() async {
         BlocProvider(create: (_) => FavoriteDoctorCubit()),
         BlocProvider(create: (_) => FindDoctorCubit()),
         BlocProvider(create: (_) => DoctorDetailsCubit()),
+        BlocProvider(create: (_) => ProfielCubit()),
       ],
       child: MyApp(),
     ),

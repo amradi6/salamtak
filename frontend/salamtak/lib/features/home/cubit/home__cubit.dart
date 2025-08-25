@@ -8,7 +8,7 @@ import 'package:salamtak/features/booked_doctors/views/booked_doctors_screen.dar
 import 'package:salamtak/features/favorite_doctors/views/favorite_doctors_screen.dart';
 import 'package:salamtak/features/home/cubit/home__state.dart';
 import 'package:salamtak/features/home/views/home_screen.dart';
-import 'package:salamtak/features/profiel/views/profiel.dart';
+import 'package:salamtak/features/profiel/views/profiel_screen.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(HomeInitialState());
@@ -23,7 +23,7 @@ class HomeCubit extends Cubit<HomeState> {
     HomeScreen(),
     FavoriteDoctorsScreen(),
     BookedDoctorsScreen(),
-    Profiel(),
+    ProfielScreen(),
   ];
 
   void changeTab(int index) {
