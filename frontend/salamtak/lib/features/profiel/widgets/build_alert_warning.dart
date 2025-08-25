@@ -38,7 +38,9 @@ Future buildAlertWarning(BuildContext context,) {
           ),
         ),
         actions: [
-          TextButton(onPressed: () {}, child: Text(
+          TextButton(onPressed: () {
+            Navigator.pushNamed(context, "/medical_questionnaire_screen");
+          }, child: Text(
               "OK",
             style: TextStyle(
               color: Colors.green,
