@@ -1,111 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/data/models/doctors.dart';
+import 'package:salamtak/features/doctor_details/cubit/doctor_details_cubit.dart';
+import 'package:salamtak/features/doctor_details/cubit/doctor_details_state.dart';
+import 'package:salamtak/shared/utils/doctor_shimmer.dart';
 
-class DoctorDetailsForBookingScreen extends StatelessWidget {
+class DoctorDetailsForBookingScreen extends StatefulWidget {
   const DoctorDetailsForBookingScreen({super.key, required this.doctor});
 
   final Doctors doctor;
 
   @override
-  Widget build(BuildContext context) {
-    List<Map<String, Object>> availabilities = [
-      {
-        "week_day": 6,
-        "available_slots": [
-          {
-            "id": 143,
-            "date": "2025-08-17",
-            "start_time": "10:00:00",
-            "end_time": "10:30:00",
-          },
-          {
-            "id": 146,
-            "date": "2025-08-17",
-            "start_time": "10:30:00",
-            "end_time": "11:00:00",
-          },
-          {
-            "id": 147,
-            "date": "2025-08-17",
-            "start_time": "11:00:00",
-            "end_time": "11:30:00",
-          },
-        ],
-      },
-      {
-        "week_day": 5,
-        "available_slots": [
-          {
-            "id": 143,
-            "date": "2025-08-18",
-            "start_time": "10:00:00",
-            "end_time": "10:30:00",
-          },
-          {
-            "id": 146,
-            "date": "2025-08-18",
-            "start_time": "10:30:00",
-            "end_time": "11:00:00",
-          },
-        ],
-      },
-      {
-        "week_day": 4,
-        "available_slots": [
-          {
-            "id": 143,
-            "date": "2025-08-19",
-            "start_time": "10:00:00",
-            "end_time": "10:30:00",
-          }
-        ],
-      },
-      {
-        "week_day": 3,
-        "available_slots": [
-          {
-            "id": 147,
-            "date": "2025-08-20",
-            "start_time": "11:00:00",
-            "end_time": "11:30:00",
-          },
-        ],
-      },
-      {
-        "week_day": 2,
-        "available_slots": [
-          {
-            "id": 143,
-            "date": "2025-08-21",
-            "start_time": "10:00:00",
-            "end_time": "10:30:00",
-          }
-        ],
-      },
-      {
-        "week_day": 1,
-        "available_slots": [
-          {
-            "id": 143,
-            "date": "2025-08-22",
-            "start_time": "10:00:00",
-            "end_time": "10:30:00",
-          },
-        ],
-      },
-      {
-        "week_day": 0,
-        "available_slots": [
-          {
-            "id": 143,
-            "date": "2025-08-23",
-            "start_time": "10:00:00",
-            "end_time": "10:30:00",
-          },
-        ],
-      },
-    ];
+  State<DoctorDetailsForBookingScreen> createState() =>
+      _DoctorDetailsForBookingScreenState();
+}
 
+class _DoctorDetailsForBookingScreenState
+    extends State<DoctorDetailsForBookingScreen> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<DoctorDetailsCubit>().getAppointmentsAvailability(
+      widget.doctor.id,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Color(0XFFF9FAFB),
@@ -169,13 +90,13 @@ class DoctorDetailsForBookingScreen extends StatelessWidget {
                               child: CircleAvatar(
                                 radius: 50,
                                 backgroundImage: NetworkImage(
-                                  doctor.image,
+                                  widget.doctor.image,
                                 ),
                               ),
                             ),
                             SizedBox(width: size.width * 0.03125),
                             Text(
-                              "Dr. ${doctor.name}",
+                              "Dr. ${widget.doctor.name}",
                               style: TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.w600,
@@ -192,25 +113,63 @@ class DoctorDetailsForBookingScreen extends StatelessWidget {
                         height: 20,
                       ),
                       SizedBox(
-                        height: size.height*0.54686,
-                        //height: size.height * 1.06748,
-                        child: ListView.builder(
-                          itemCount: 7,
-                          itemBuilder: (context, index) {
-                            var dayData = availabilities[index];
+                        height: size.height * 0.54686,
+                        child: BlocBuilder<
+                          DoctorDetailsCubit,
+                          DoctorDetailsState
+                        >(
+                          builder: (
+                            BuildContext context,
+                            DoctorDetailsState state,
+                          ) {
+                            if (state is GetAppointmentsAvailabilitySuccess) {
+                              final List availabilities = state.availability;
+                              return ListView.builder(
+                                itemCount: availabilities.length,
+                                itemBuilder: (context, index) {
+                                  Map<String, dynamic> dayData =
+                                      availabilities[index];
+                                  List slots =
+                                      dayData["available_slots"] as List;
+                                  List<String> times =
+                                      slots.map((slot) {
+                                        return (slot["start_time"] as String)
+                                            .substring(0, 5);
+                                      }).toList();
+                                  String weekDay = dayData["week_day"];
+                                  String dateLabel = "";
+                                  if (slots.isNotEmpty &&
+                                      slots.first["date"] != null) {
+                                    dateLabel = slots.first["date"] as String;
+                                  } else {
+                                    dateLabel = "No Date";
+                                  }
+                                  return AvailableTimesForDoctors(
+                                    size: size,
+                                    date: "$weekDay , $dateLabel",
+                                    times: times,
+                                  );
+                                },
+                              );
+                            } else if (state
+                                is GetAppointmentsAvailabilityLoading) {
+                              return DoctorShimmer(
+                                size: size,
+                                width: 351.4,
+                                height: 660,
+                              );
+                            }
 
-                            var slots = dayData["available_slots"] as List;
-
-                            List<String> times = slots.map((slot) {
-                              return (slot["start_time"] as String).substring(0, 5);
-                            }).toList();
-
-                            String dateLabel = slots.first["date"];
-
-                            return AvailableTimesForDoctors(
-                              size: size,
-                              date: dateLabel,
-                              times: times,
+                            return Center(
+                              child: Text(
+                                "Error Fetching Data",
+                                style: TextStyle(
+                                  fontFamily: "Rubik",
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 20,
+                                  color: Colors.black87,
+                                ),
+                              ),
                             );
                           },
                         ),
@@ -330,13 +289,15 @@ class _AvailableTimesForDoctorsState extends State<AvailableTimesForDoctors> {
                   child: Icon(Icons.play_arrow, color: Colors.green),
                 ),
                 SizedBox(width: widget.size.width * 0.0208),
-                Text(
-                  widget.date,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: "Inter",
-                    color: Color(0XFF000000),
+                Expanded(
+                  child: Text(
+                    widget.date,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "Inter",
+                      color: Color(0XFF000000),
+                    ),
                   ),
                 ),
                 SizedBox(width: widget.size.width * 0.151),

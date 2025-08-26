@@ -52,16 +52,13 @@ class DoctorDetailsCubit extends Cubit<DoctorDetailsState> {
       );
       if(response.statusCode==200){
         final data=jsonDecode(response.body);
-        print(data);
         final availability = data;
-        print(availability);
         List<dynamic> availabilityList = availability.map((item) {
           return {
             "week_day": item['week_day'],
             "available_slots": item['available_slots'],
           };
         }).toList();
-
         emit(GetAppointmentsAvailabilitySuccess(availabilityList));
       }
       else{
@@ -69,7 +66,6 @@ class DoctorDetailsCubit extends Cubit<DoctorDetailsState> {
       }
     }
     catch(e){
-      print('Exception caught: $e');
       emit(GetAppointmentsAvailabilityError("Error: ${e.toString()}"));
     }
   }
