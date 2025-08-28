@@ -21,7 +21,20 @@ class GetAppointmentsAvailabilityError extends DoctorDetailsState{
   GetAppointmentsAvailabilityError(this.message);
 }
 
-class GetAppointmentsAvailabilitySuccess extends DoctorDetailsState{
-  final List<dynamic> availability;
-  GetAppointmentsAvailabilitySuccess( this.availability);
+class GetAppointmentsAvailabilitySuccess extends DoctorDetailsState{}
+
+class AppointmentSelected extends DoctorDetailsState {
+  final String date;
+  final String time;
+  final int slotId;
+  AppointmentSelected({required this.date, required this.time, required this.slotId});
+}
+
+class AddBookingSuccess extends DoctorDetailsState{}
+
+class AddBookingLoading extends DoctorDetailsState{}
+
+class AddBookingError extends DoctorDetailsState{
+  final String message;
+  AddBookingError(this.message);
 }

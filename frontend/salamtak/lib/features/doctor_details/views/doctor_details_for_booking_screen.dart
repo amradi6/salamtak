@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/data/models/doctors.dart';
 import 'package:salamtak/features/doctor_details/cubit/doctor_details_cubit.dart';
 import 'package:salamtak/features/doctor_details/cubit/doctor_details_state.dart';
+import 'package:salamtak/features/doctor_details/utils/thank_you_alert.dart';
+import 'package:salamtak/features/doctor_details/widgets/available_times_for_doctors.dart';
 import 'package:salamtak/shared/utils/doctor_shimmer.dart';
 
 class DoctorDetailsForBookingScreen extends StatefulWidget {
@@ -122,15 +124,20 @@ class _DoctorDetailsForBookingScreenState
                             BuildContext context,
                             DoctorDetailsState state,
                           ) {
-                            if (state is GetAppointmentsAvailabilitySuccess) {
-                              final List availabilities = state.availability;
+                            if (state is GetAppointmentsAvailabilitySuccess ||
+                                state is AppointmentSelected) {
+                              final List availabilities =
+                                  context
+                                      .read<DoctorDetailsCubit>()
+                                      .availabilityList;
                               return ListView.builder(
                                 itemCount: availabilities.length,
                                 itemBuilder: (context, index) {
                                   Map<String, dynamic> dayData =
                                       availabilities[index];
-                                  List slots =
-                                      dayData["available_slots"] as List;
+                                  List<Map<String, dynamic>> slots =
+                                      (dayData["available_slots"] as List)
+                                          .cast<Map<String, dynamic>>();
                                   List<String> times =
                                       slots.map((slot) {
                                         return (slot["start_time"] as String)
@@ -147,6 +154,7 @@ class _DoctorDetailsForBookingScreenState
                                   return AvailableTimesForDoctors(
                                     size: size,
                                     date: "$weekDay , $dateLabel",
+                                    slots: slots,
                                     times: times,
                                   );
                                 },
@@ -158,19 +166,21 @@ class _DoctorDetailsForBookingScreenState
                                 width: 351.4,
                                 height: 660,
                               );
-                            }
-
-                            return Center(
-                              child: Text(
-                                "Error Fetching Data",
-                                style: TextStyle(
-                                  fontFamily: "Rubik",
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 20,
-                                  color: Colors.black87,
+                            } else if (state
+                                is GetAppointmentsAvailabilityError) {
+                              return Center(
+                                child: Text(
+                                  state.message,
+                                  style: TextStyle(
+                                    fontFamily: "Rubik",
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 20,
+                                    color: Colors.black87,
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
+                            }
+                            return SizedBox();
                           },
                         ),
                       ),
@@ -179,38 +189,53 @@ class _DoctorDetailsForBookingScreenState
                 ),
               ),
             ),
-            SizedBox(
-              height: size.height * 0.0844,
-              width: size.width * 0.85416,
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0XFF10B981),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.calendar_today_sharp,
-                      color: Color(0XFFFFFFFF),
-                      size: size.height * 0.0223,
-                    ),
-                    SizedBox(width: size.width * 0.03125),
-                    Text(
-                      "Book Appointment",
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontFamily: "Inter",
-                        fontWeight: FontWeight.w500,
-                        color: Color(0XFFFFFFFF),
+            BlocBuilder<DoctorDetailsCubit, DoctorDetailsState>(
+              builder: (context, state) {
+                return SizedBox(
+                  height: size.height * 0.0844,
+                  width: size.width * 0.85416,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      final state = context.read<DoctorDetailsCubit>().state;
+                      if (state is AppointmentSelected) {
+                        thankYouAlert(
+                          context,
+                          doctor: widget.doctor,
+                          month: state.date,
+                          selectedTime: state.time,
+                          slotId: state.slotId,
+                        );
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0XFF10B981),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                  ],
-                ),
-              ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.calendar_today_sharp,
+                          color: Color(0XFFFFFFFF),
+                          size: size.height * 0.0223,
+                        ),
+                        SizedBox(width: size.width * 0.03125),
+                        Text(
+                          "Book Appointment",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontFamily: "Inter",
+                            fontWeight: FontWeight.w500,
+                            color: Color(0XFFFFFFFF),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
             SizedBox(height: size.height * 0.0211),
             Divider(color: Colors.grey[300], thickness: 1),
@@ -239,140 +264,6 @@ class _DoctorDetailsForBookingScreenState
             SizedBox(height: size.height * 0.04594),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class AvailableTimesForDoctors extends StatefulWidget {
-  const AvailableTimesForDoctors({
-    super.key,
-    required this.size,
-    required this.date,
-    required this.times,
-  });
-
-  final Size size;
-  final String date;
-  final List<String> times;
-
-  @override
-  State<AvailableTimesForDoctors> createState() =>
-      _AvailableTimesForDoctorsState();
-}
-
-class _AvailableTimesForDoctorsState extends State<AvailableTimesForDoctors> {
-  bool isOpen = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap:
-          () => setState(() {
-            isOpen = !isOpen;
-          }),
-      child: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.only(
-              left: widget.size.width * 0.0416,
-              top: widget.size.height * 0.01986,
-              right: widget.size.width * 0.0416,
-              bottom: widget.size.height * 0.0298,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                AnimatedRotation(
-                  duration: Duration(milliseconds: 200),
-                  turns: isOpen ? 0.25 : 0.0,
-                  child: Icon(Icons.play_arrow, color: Colors.green),
-                ),
-                SizedBox(width: widget.size.width * 0.0208),
-                Expanded(
-                  child: Text(
-                    widget.date,
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      fontFamily: "Inter",
-                      color: Color(0XFF000000),
-                    ),
-                  ),
-                ),
-                SizedBox(width: widget.size.width * 0.151),
-                Text(
-                  widget.times.isEmpty
-                      ? "No appointments \n available"
-                      : "${widget.times.length} slots available",
-                  style: TextStyle(
-                    color: Color(0XFF6B7280),
-                    fontSize: 11,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: "Inter",
-                  ),
-                ),
-              ],
-            ),
-          ),
-          AnimatedSize(
-            duration: Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-            child:
-                isOpen
-                    ? Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(
-                            left: widget.size.width * 0.0388,
-                          ),
-                          child: Wrap(
-                            spacing: widget.size.height * 0.0087,
-                            runSpacing: widget.size.height * 0.0087,
-                            children:
-                                widget.times.map((time) {
-                                  return SizedBox(
-                                    width: widget.size.width * 0.2268,
-                                    height: widget.size.height * 0.0459,
-                                    child: OutlinedButton(
-                                      onPressed: () {},
-                                      style: OutlinedButton.styleFrom(
-                                        side: BorderSide(
-                                          color: Color(0xFF059669),
-                                          width: 2,
-                                        ),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            8,
-                                          ),
-                                        ),
-                                      ),
-                                      child: Text(
-                                        time,
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                          fontFamily: "Inter",
-                                          color: Color(0XFF059669),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }).toList(),
-                          ),
-                        ),
-                        SizedBox(height: 12),
-                        Divider(color: Colors.grey[300], thickness: 1),
-                      ],
-                    )
-                    : Column(
-                      children: [
-                        SizedBox.shrink(),
-                        Divider(color: Colors.grey[300], thickness: 1),
-                      ],
-                    ),
-          ),
-        ],
       ),
     );
   }

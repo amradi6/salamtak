@@ -5,68 +5,107 @@ import 'package:http/http.dart' as http;
 import 'package:salamtak/features/doctor_details/cubit/doctor_details_state.dart';
 
 class DoctorDetailsCubit extends Cubit<DoctorDetailsState> {
-  DoctorDetailsCubit():super(DoctorDetailsInitial());
+  DoctorDetailsCubit() : super(DoctorDetailsInitial());
 
-  Future<void> getAvailability(int id)async{
+  String? selectedDate;
+
+  String? selectedTime;
+
+  List<dynamic> availabilityList = [];
+
+  Future<void> getAvailability(int id) async {
     emit(GetAvailabilityLoading());
-    try{
-      final response=await http.get(Uri.parse('https://mohammadhussien.pythonanywhere.com/getdoctor/$id/'));
-      if(response.statusCode==200){
-        final data=jsonDecode(response.body);
+    try {
+      final response = await http.get(
+        Uri.parse('https://mohammadhussien.pythonanywhere.com/getdoctor/$id/'),
+      );
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
         final availability = data['availability'];
-        List<String> allDays = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+        List<String> allDays = [
+          'Saturday',
+          'Sunday',
+          'Monday',
+          'Tuesday',
+          'Wednesday',
+          'Thursday',
+          'Friday',
+        ];
         final availabilityMap = {
-          for (var day in availability) day['week_day'] : {
-            'start': day['start_time'],
-            'end': day['end_time'],
-          } };
-        final workingHours = allDays.map((day) {
-          if (availabilityMap.containsKey(day)) {
-            return {
-              'day': day,
-              'start': availabilityMap[day]!['start'],
-              'end': availabilityMap[day]!['end'],
-            };
-          } else {
-            return {
-              'day': day,
-              'start': null,
-              'end': null,
-            };
-          }
-        }).toList();
+          for (var day in availability)
+            day['week_day']: {
+              'start': day['start_time'],
+              'end': day['end_time'],
+            },
+        };
+        final workingHours =
+            allDays.map((day) {
+              if (availabilityMap.containsKey(day)) {
+                return {
+                  'day': day,
+                  'start': availabilityMap[day]!['start'],
+                  'end': availabilityMap[day]!['end'],
+                };
+              } else {
+                return {'day': day, 'start': null, 'end': null};
+              }
+            }).toList();
         emit(GetAvailabilitySuccess(workingHours));
-      }else{
+      } else {
         emit(GetAvailabilityError("Error Fetching Data"));
       }
-    }catch(e){
+    } catch (e) {
       emit(GetAvailabilityError("Error : ${e.toString()}"));
     }
   }
 
-  Future<void> getAppointmentsAvailability(int doctorId)async{
+  Future<void> getAppointmentsAvailability(int doctorId) async {
     emit(GetAppointmentsAvailabilityLoading());
-    try{
-      final response=await http.get(
-        Uri.parse("https://mohammadhussien.pythonanywhere.com/availabilities/$doctorId/"),
+    try {
+      final response = await http.get(
+        Uri.parse(
+          "https://mohammadhussien.pythonanywhere.com/availabilities/$doctorId/",
+        ),
       );
-      if(response.statusCode==200){
-        final data=jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
         final availability = data;
-        List<dynamic> availabilityList = availability.map((item) {
-          return {
-            "week_day": item['week_day'],
-            "available_slots": item['available_slots'],
-          };
-        }).toList();
-        emit(GetAppointmentsAvailabilitySuccess(availabilityList));
-      }
-      else{
+        availabilityList =
+            availability.map((item) {
+              return {
+                "week_day": item['week_day'],
+                "available_slots": item['available_slots'],
+              };
+            }).toList();
+        emit(GetAppointmentsAvailabilitySuccess());
+      } else {
         emit(GetAppointmentsAvailabilityError("Error Fetching Data"));
       }
-    }
-    catch(e){
+    } catch (e) {
       emit(GetAppointmentsAvailabilityError("Error: ${e.toString()}"));
+    }
+  }
+
+  void selectAppointment(String date, String time ,int slotId) {
+    selectedDate = date;
+    selectedTime = time;
+    emit(AppointmentSelected(date: date, time: time,slotId: slotId));
+  }
+
+  Future<void> addBooking({required int doctorId, required int slotId, required int patientId}) async{
+    emit(AddBookingLoading());
+    try{
+      final response=await http.post(
+        Uri.parse("https://mohammadhussien.pythonanywhere.com/$doctorId/$slotId/$patientId/"),
+        headers: {"Content-Type": "application/json"},
+      );
+      if(response.statusCode==200){
+        emit(AddBookingSuccess());
+      }else{
+        emit(AddBookingError("Failed Fetch Data"));
+      }
+    }catch(e){
+      emit(AddBookingError(e.toString()));
     }
   }
 }
