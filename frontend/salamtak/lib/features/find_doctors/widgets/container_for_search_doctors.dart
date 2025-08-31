@@ -133,7 +133,12 @@ class ContainerForFindDoctors extends StatelessWidget {
                         },
                         icon: Icon(
                           Icons.favorite,
-                          color: context.read<FavoriteDoctorCubit>().isFavorite(doctor.id) ? Colors.red : Colors.grey,
+                          color:
+                              context.read<FavoriteDoctorCubit>().isFavorite(
+                                    doctor.id,
+                                  )
+                                  ? Colors.red
+                                  : Colors.grey,
                         ),
                         padding: EdgeInsets.zero,
                       ),
@@ -147,10 +152,10 @@ class ContainerForFindDoctors extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(left: 10),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "Next Available ",
+                            "Consultation",
                             style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w300,
@@ -160,7 +165,7 @@ class ContainerForFindDoctors extends StatelessWidget {
                           ),
                           SizedBox(height: size.height * 0.006),
                           Text(
-                            doctor.timeNextAvailable,
+                            "${doctor.consultation.toString()} min",
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w300,
@@ -171,12 +176,18 @@ class ContainerForFindDoctors extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(width: size.width * 0.2135),
+                    Spacer(),
                     SizedBox(
                       width: size.width * 0.291,
                       height: size.height * 0.0422,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(
+                            context,
+                            "/doctor_details_for_booking",
+                            arguments: doctor,
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0XFF0EBE7F),
                           shape: RoundedRectangleBorder(
