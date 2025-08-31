@@ -124,15 +124,6 @@ class _ProfielScreenState extends State<ProfielScreen> with TickerProviderStateM
                           ),
                         );
                       },
-                      // child: Text(
-                      //   "AmrAdi",
-                      //   style: TextStyle(
-                      //     fontSize: 17,
-                      //     fontWeight: FontWeight.w700,
-                      //     fontFamily: "Rubik",
-                      //     color: Color(0XFF111827),
-                      //   ),
-                      // ),
                     ),
                     SizedBox(height: size.height * 0.0076),
                     Text(

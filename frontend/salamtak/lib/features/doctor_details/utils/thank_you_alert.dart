@@ -66,66 +66,88 @@ Future thankYouAlert(
         actions: [
           SizedBox(
             width: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                BlocBuilder<DoctorDetailsCubit, DoctorDetailsState>(
-                  builder: (BuildContext context, state) {
-                    if (state is AppointmentSelected) {
-                      int selectedSlotId = state.slotId;
-                      context.read<DoctorDetailsCubit>().addBooking(
-                        doctorId: doctor.id,
-                        slotId: selectedSlotId,
-                        patientId: 8,
-                      );
-                    }
-                    return SizedBox(
-                      width: size.width * 0.71706,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          context.read<DoctorDetailsCubit>().addBooking(
-                            doctorId: doctor.id,
-                            slotId: slotId,
-                            patientId: 8,
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(6),
+            child: BlocConsumer<DoctorDetailsCubit, DoctorDetailsState>(
+              listener: (context, state) {
+                if (state is AddBookingSuccess) {
+                  Navigator.pop(context);
+                  context
+                      .read<DoctorDetailsCubit>()
+                      .getAppointmentsAvailability(doctor.id);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("The operation was completed successfully"),
+                      showCloseIcon: true,
+                    ),
+                  );
+                }
+                if (state is AddBookingError) {
+                  Navigator.pop(context);
+                  context
+                      .read<DoctorDetailsCubit>()
+                      .getAppointmentsAvailability(doctor.id);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("${state.message} Please try again"),
+                      showCloseIcon: true,
+                    ),
+                  );
+                }
+              },
+              builder: (BuildContext context, state) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    if (state is AddBookingLoading)
+                      LinearProgressIndicator(color: Colors.black),
+
+                    if (state is AppointmentSelected)
+                      SizedBox(
+                        width: size.width * 0.71706,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            context.read<DoctorDetailsCubit>().addBooking(
+                              doctorId: doctor.id,
+                              slotId: slotId,
+                              patientId: 3,
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            backgroundColor: Color(0XFF0EBE7F),
                           ),
-                          backgroundColor: Color(0XFF0EBE7F),
-                        ),
-                        child: Text(
-                          "Done",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: "Rubik",
+                          child: Text(
+                            "Done",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: "Rubik",
+                            ),
                           ),
                         ),
                       ),
-                    );
-                  },
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    context
-                        .read<DoctorDetailsCubit>()
-                        .getAppointmentsAvailability(doctor.id);
-                  },
-                  child: Text(
-                    "Edit your appointment",
-                    style: TextStyle(
-                      fontFamily: "Rubik",
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                      color: Color(0XFF677294),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        context
+                            .read<DoctorDetailsCubit>()
+                            .getAppointmentsAvailability(doctor.id);
+                      },
+                      child: Text(
+                        "Edit your appointment",
+                        style: TextStyle(
+                          fontFamily: "Rubik",
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14,
+                          color: Color(0XFF677294),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ],
+                  ],
+                );
+              },
             ),
           ),
         ],

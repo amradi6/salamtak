@@ -421,9 +421,10 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
               child: BlocBuilder<DoctorDetailsCubit, DoctorDetailsState>(
                 builder: (BuildContext context, DoctorDetailsState state) {
                   if (state is GetAvailabilityLoading) {
-                    return Center(child: CircularProgressIndicator(color: Colors.green));
-                  }
-                  else if (state is GetAvailabilitySuccess) {
+                    return Center(
+                      child: LinearProgressIndicator(color: Colors.green),
+                    );
+                  } else if (state is GetAvailabilitySuccess) {
                     return Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
@@ -455,7 +456,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                               return Padding(
                                 padding: EdgeInsets.only(
                                   right: size.width * 0.052,
-                                    bottom: size.height * 0.0298,
+                                  bottom: size.height * 0.0298,
                                 ),
                                 child: Row(
                                   mainAxisAlignment:
@@ -489,8 +490,9 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                         ),
                       ),
                     );
-                  }
-                  else {
+                  } else if (state is GetAvailabilityError) {
+                    return Text(state.message);
+                  } else {
                     return Text("No data available");
                   }
                 },
@@ -502,9 +504,10 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
               height: size.height * 0.0844,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.of(
-                    context,
-                  ).pushNamed("/doctor_details_for_booking",arguments: widget.doctor);
+                  Navigator.of(context).pushNamed(
+                    "/doctor_details_for_booking",
+                    arguments: widget.doctor,
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(

@@ -241,7 +241,12 @@ class _DoctorDetailsForBookingScreenState
             Divider(color: Colors.grey[300], thickness: 1),
             TextButton.icon(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pop(
+                  context,
+                  context.read<DoctorDetailsCubit>().getAvailability(
+                    widget.doctor.id,
+                  ),
+                );
               },
               label: Text(
                 "Close",

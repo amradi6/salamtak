@@ -86,25 +86,32 @@ class DoctorDetailsCubit extends Cubit<DoctorDetailsState> {
     }
   }
 
-  void selectAppointment(String date, String time ,int slotId) {
+  void selectAppointment(String date, String time, int slotId) {
     selectedDate = date;
     selectedTime = time;
-    emit(AppointmentSelected(date: date, time: time,slotId: slotId));
+    emit(AppointmentSelected(date: date, time: time, slotId: slotId));
   }
 
-  Future<void> addBooking({required int doctorId, required int slotId, required int patientId}) async{
+  Future<void> addBooking({
+    required int doctorId,
+    required int slotId,
+    required int patientId,
+  }) async {
     emit(AddBookingLoading());
-    try{
-      final response=await http.post(
-        Uri.parse("https://mohammadhussien.pythonanywhere.com/$doctorId/$slotId/$patientId/"),
+    try {
+      final response = await http.post(
+        Uri.parse(
+          "https://mohammadhussien.pythonanywhere.com/booking/$doctorId/$slotId/$patientId/",
+        ),
         headers: {"Content-Type": "application/json"},
       );
-      if(response.statusCode==200){
+      if (response.statusCode == 200 || response.statusCode == 201) {
         emit(AddBookingSuccess());
-      }else{
+        await getAppointmentsAvailability(doctorId);
+      } else {
         emit(AddBookingError("Failed Fetch Data"));
       }
-    }catch(e){
+    } catch (e) {
       emit(AddBookingError(e.toString()));
     }
   }

@@ -24,7 +24,7 @@ class _WhoAreYouScreenState extends State<WhoAreYouScreen> {
     final isLoggedIn = await authCubit.isLoggedIn();
     if (isLoggedIn) {
       Future.microtask(() {
-        if(!mounted) return;
+        if (!mounted) return;
         Navigator.pushReplacementNamed(context, "/layout");
       });
     }

@@ -47,7 +47,10 @@ class _SignupScreenState extends State<SignupScreen> {
       builder: (context, state) {
         if (state is SingUpLoading) {
           return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
+            body: Center(child: CircularProgressIndicator(
+              color: Colors.green,
+              backgroundColor: Colors.white,
+            ),),
           );
         }
         return Scaffold(

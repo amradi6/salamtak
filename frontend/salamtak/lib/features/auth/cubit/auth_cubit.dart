@@ -40,7 +40,6 @@ class AuthCubit extends Cubit<AuthState> {
         },
       );
 
-
       if (response.statusCode == 200 || response.statusCode == 201) {
         final data = jsonDecode(response.body);
         final usernameFromApi = data['username'] ?? username;
