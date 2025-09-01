@@ -126,23 +126,27 @@ class _FindDoctorScreenState extends State<FindDoctorScreen> {
                 SizedBox(height: size.height * 0.0298),
                 SingleChildScrollView(
                   child: RefreshIndicator(
-                    onRefresh: () => context.read<FindDoctorCubit>().fetchAllDoctorsForFind(context),
+                    onRefresh:
+                        () => context
+                            .read<FindDoctorCubit>()
+                            .fetchAllDoctorsForFind(context),
                     color: Colors.green,
                     child: SizedBox(
                       height: size.height * 0.745,
                       width: size.width * 0.872,
                       child: BlocBuilder<FindDoctorCubit, FindDoctorState>(
                         builder: (context, state) {
-                          List<Doctors> doctors = context
-                              .watch<FindDoctorCubit>()
-                              .allDoctors;
-                          if(state is FindDoctorLoad){
-                            return   ListView.builder(
+                          List<Doctors> doctors =
+                              context.watch<FindDoctorCubit>().allDoctors;
+                          if (state is FindDoctorLoad) {
+                            return ListView.builder(
                               scrollDirection: Axis.vertical,
                               itemCount: 5,
                               itemBuilder: (context, index) {
                                 return Padding(
-                                  padding:  EdgeInsets.only(bottom: size.height*0.0099),
+                                  padding: EdgeInsets.only(
+                                    bottom: size.height * 0.0099,
+                                  ),
                                   child: DoctorShimmer(
                                     size: size,
                                     height: size.height * 0.2111,
@@ -151,17 +155,11 @@ class _FindDoctorScreenState extends State<FindDoctorScreen> {
                                 );
                               },
                             );
-                          }
-
-                          else if (state is DoctorFilterState) {
+                          } else if (state is DoctorFilterState) {
                             doctors = state.filteredDoctors;
-                          }
-
-                          else if (state is FindDoctorSuccess) {
+                          } else if (state is FindDoctorSuccess) {
                             doctors = state.doctors.take(5).toList();
-                          }
-
-                          else if (state is FindDoctorError) {
+                          } else if (state is FindDoctorError) {
                             return Center(
                               child: Text("Error: ${state.message}"),
                             );
@@ -169,20 +167,22 @@ class _FindDoctorScreenState extends State<FindDoctorScreen> {
 
                           if (doctors.isEmpty) {
                             return ListView(
-                              children: [Padding(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: size.width * 0.085,
-                                  vertical: size.height * 0.074,
-                                ),
-                                child: Text(
-                                  "No doctor found with this name",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: Color(0XFF333333),
-                                    fontWeight: FontWeight.bold,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: size.width * 0.085,
+                                    vertical: size.height * 0.074,
+                                  ),
+                                  child: Text(
+                                    "No doctor found with this name",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Color(0XFF333333),
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
-                              )],
+                              ],
                             );
                           }
                           return ListView.builder(

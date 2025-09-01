@@ -43,7 +43,7 @@ class ContainerForFindDoctors extends StatelessWidget {
                         doctor.image,
                         width: size.width * 0.239,
                         height: size.height * 0.108,
-                        fit: BoxFit.contain,
+                        fit: BoxFit.cover,
                       ),
                     ),
                     SizedBox(width: size.width * 0.03645),

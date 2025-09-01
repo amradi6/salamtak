@@ -34,10 +34,14 @@ class HomeCubit extends Cubit<HomeState> {
   Future<void> fetchPopularDoctors() async {
     emit(PopularDoctorsLoading());
     try {
-      final response = await http.get(Uri.parse('https://mohammadhussien.pythonanywhere.com/getpopulardoctors/'));
+      final response = await http.get(
+        Uri.parse(
+          'https://mohammadhussien.pythonanywhere.com/getpopulardoctors/',
+        ),
+      );
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
-           popularDoctors = data.map((e) => Doctors.fromMap(e)).toList();
+        popularDoctors = data.map((e) => Doctors.fromMap(e)).toList();
         emit(PopularDoctorsSuccess(popularDoctors));
       } else {
         emit(PopularDoctorsError("Error Fetching Data"));
@@ -51,7 +55,7 @@ class HomeCubit extends Cubit<HomeState> {
     emit(DoctorLoading());
 
     final url = Uri.parse(
-        'https://mohammadhussien.pythonanywhere.com/getsepcialitydoctors/$speciality/',
+      'https://mohammadhussien.pythonanywhere.com/getsepcialitydoctors/$speciality/',
     );
 
     try {
@@ -59,7 +63,7 @@ class HomeCubit extends Cubit<HomeState> {
 
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
-         featureDoctors = data.map((e) => Doctors.fromMap(e)).toList();
+        featureDoctors = data.map((e) => Doctors.fromMap(e)).toList();
         emit(DoctorSuccess(featureDoctors));
       } else {
         emit(DoctorError("Failed to fetch data: ${response.statusCode}"));

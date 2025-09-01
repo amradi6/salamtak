@@ -235,7 +235,12 @@ class HomeScreen extends StatelessWidget {
                                         ),
                                       ),
                                       TextButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          Navigator.pushNamed(
+                                            context,
+                                            "/popular_screen",
+                                          );
+                                        },
                                         child: Text(
                                           "See all>",
                                           style: TextStyle(
