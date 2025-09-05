@@ -192,6 +192,7 @@ class _FindDoctorScreenState extends State<FindDoctorScreen> {
                               return ContainerForFindDoctors(
                                 size: size,
                                 doctor: doctor,
+                                onTap: () => Navigator.pushNamed(context, "/doctor_details",arguments: doctor),
                               );
                             },
                           );

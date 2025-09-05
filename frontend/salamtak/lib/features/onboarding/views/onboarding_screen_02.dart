@@ -36,7 +36,7 @@ class OnboardingScreen02 extends StatelessWidget {
               SizedBox(height: size.height * 0.01365),
               CustomHintText(
                 text:
-                    "Contrary to popular belief, Lorem Ipsum is not \n simply random text. It has roots in a piece of it \n over 2000 years old.",
+                    "Compare profiles, specialties, and reviews to select the right doctor for your needs.",
               ),
               SizedBox(height: size.height * 0.06457),
               CustomElevatedButton(

@@ -36,7 +36,7 @@ class HomeCubit extends Cubit<HomeState> {
     try {
       final response = await http.get(
         Uri.parse(
-          'https://mohammadhussien.pythonanywhere.com/getpopulardoctors/',
+          'https://mohammadhussien.pythonanywhere.com/getallpopulardoctors/',
         ),
       );
       if (response.statusCode == 200) {
@@ -55,7 +55,7 @@ class HomeCubit extends Cubit<HomeState> {
     emit(DoctorLoading());
 
     final url = Uri.parse(
-      'https://mohammadhussien.pythonanywhere.com/getsepcialitydoctors/$speciality/',
+      'https://mohammadhussien.pythonanywhere.com/getallsepcialitydoctors/$speciality/',
     );
 
     try {

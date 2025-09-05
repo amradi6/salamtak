@@ -32,38 +32,27 @@ class FavoriteDoctorsCards extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Padding(
-                padding: EdgeInsets.only(
-                  right: size.width * 0.065,
-                  top: size.height * 0.0105,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    SizedBox(
-                      width: size.width * 0.0436,
-                      height: size.height * 0.0186,
-                      child: IconButton(
-                        onPressed: () {
-                          context.read<FavoriteDoctorCubit>().toggleFavorite(
-                            doctor,
-                          );
-                          context
-                              .read<FavoriteDoctorCubit>()
-                              .controller
-                              .clear();
-                        },
-                        icon: Icon(
-                          Icons.favorite,
-                          color: doctor.isFavorite! ? Colors.red : Colors.grey,
-                        ),
-                        padding: EdgeInsets.zero,
-                      ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      context.read<FavoriteDoctorCubit>().toggleFavorite(
+                        doctor,
+                      );
+                      context
+                          .read<FavoriteDoctorCubit>()
+                          .controller
+                          .clear();
+                    },
+                    icon: Icon(
+                      Icons.favorite,
+                      color: doctor.isFavorite! ? Colors.red : Colors.grey,
                     ),
-                  ],
-                ),
+                    padding: EdgeInsets.zero,
+                  ),
+                ],
               ),
-              SizedBox(height: size.height * 0.0186),
               ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(50)),
                 child: Image.network(

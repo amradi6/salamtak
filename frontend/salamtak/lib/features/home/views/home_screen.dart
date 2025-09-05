@@ -274,7 +274,7 @@ class HomeScreen extends StatelessWidget {
                                         popular.isNotEmpty) {
                                       return ListView.builder(
                                         scrollDirection: Axis.horizontal,
-                                        itemCount: popular.length,
+                                        itemCount: 5,
                                         itemBuilder: (context, index) {
                                           final doctor = popular[index];
                                           return ContainerForPopularDoctor(
@@ -326,18 +326,6 @@ class HomeScreen extends StatelessWidget {
                                           color: Color(0XFF333333),
                                         ),
                                       ),
-                                      TextButton(
-                                        onPressed: () {},
-                                        child: Text(
-                                          "See all>",
-                                          style: TextStyle(
-                                            fontFamily: "Rubik",
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w200,
-                                            color: Color(0XFF677294),
-                                          ),
-                                        ),
-                                      ),
                                     ],
                                   ),
                                 ),
@@ -369,6 +357,7 @@ class HomeScreen extends StatelessWidget {
                                           return ContainerForFeatureDoctor(
                                             size: size,
                                             doctor: doctor,
+                                            onTap: () => Navigator.pushNamed(context, "/doctor_details",arguments: doctor),
                                           );
                                         },
                                       );

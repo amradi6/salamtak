@@ -25,6 +25,7 @@ class _PopularScreenState extends State<PopularScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Color(0XFFFFFFFF),
       body: Stack(
         children: [
           CircleForBg(
@@ -80,7 +81,7 @@ class _PopularScreenState extends State<PopularScreen> {
                 ),
                 SizedBox(height: size.height * 0.0422),
                 SizedBox(
-                  height: size.height * 0.745,
+                  height: size.height*0.76561,
                   width: size.width * 0.872,
                   child: BlocBuilder<HomeCubit, HomeState>(
                     builder: (context, state) {
@@ -103,6 +104,7 @@ class _PopularScreenState extends State<PopularScreen> {
                                 child: ContainerForFindDoctors(
                                   size: size,
                                   doctor: doctor,
+                                  onTap: () => Navigator.pushNamed(context, "/doctor_details",arguments: doctor),
                                 ),
                               );
                             },
