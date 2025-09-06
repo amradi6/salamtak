@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:salamtak/features/booked_doctors/cubit/booked_doctors_cubit.dart';
 
 class ContainerForBooked extends StatelessWidget {
   const ContainerForBooked({
@@ -183,7 +185,9 @@ class ContainerForBooked extends StatelessWidget {
                     Row(
                       children: [
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.read<BookedDoctorsCubit>().makePhoneCall(phone.toString());
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color(0XFFECFDF5),
                             shape: RoundedRectangleBorder(

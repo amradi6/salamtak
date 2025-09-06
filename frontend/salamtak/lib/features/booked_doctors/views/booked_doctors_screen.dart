@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/core/constants/widgets/circle_for_bg.dart';
+import 'package:salamtak/features/auth/cubit/auth_cubit.dart';
 import 'package:salamtak/features/booked_doctors/cubit/booked_doctors_cubit.dart';
 import 'package:salamtak/features/booked_doctors/cubit/booked_doctors_state.dart';
 import 'package:salamtak/features/booked_doctors/widgets/container_for_booked.dart';
+import 'package:salamtak/shared/utils/doctor_shimmer.dart';
 
 class BookedDoctorsScreen extends StatefulWidget {
   const BookedDoctorsScreen({super.key});
@@ -15,7 +17,10 @@ class BookedDoctorsScreen extends StatefulWidget {
 class _BookedDoctorsScreenState extends State<BookedDoctorsScreen> {
   @override
   void initState() {
-    context.read<BookedDoctorsCubit>().getUpcomingBookings(3);
+    Future.microtask(() async {
+    final patientId = await context.read<AuthCubit>().patientId;
+    context.read<BookedDoctorsCubit>().getUpcomingBookings(patientId);
+    });
     super.initState();
   }
 
@@ -65,7 +70,17 @@ class _BookedDoctorsScreenState extends State<BookedDoctorsScreen> {
                   child: BlocBuilder<BookedDoctorsCubit, BookedDoctorsState>(
                     builder: (context, state) {
                       if (state is UpcomingBookingLoading) {
-                        return Center(child: CircularProgressIndicator());
+                        return SingleChildScrollView(
+                          child: Column(
+                            children:
+                              List.generate(5, (index) {
+                                return Padding(
+                                  padding:  EdgeInsets.only(bottom: size.height * 0.017499),
+                                  child: DoctorShimmer(size: size, width: size.width*0.894506, height: size.height*0.425462),
+                                );
+                              },),
+                          ),
+                        );
                       } else if (state is UpcomingBookingSuccess) {
                         List<dynamic> bookings = state.bookings;
                         return SingleChildScrollView(

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:salamtak/features/auth/cubit/auth_cubit.dart';
+import 'package:salamtak/features/profiel/cubit/profiel_cubit.dart';
 import 'package:salamtak/features/profiel/widgets/build_alert_warning.dart';
 
 class ProfielScreen extends StatefulWidget {
@@ -14,7 +15,8 @@ class ProfielScreen extends StatefulWidget {
   State<ProfielScreen> createState() => _ProfielScreenState();
 }
 
-class _ProfielScreenState extends State<ProfielScreen> with TickerProviderStateMixin {
+class _ProfielScreenState extends State<ProfielScreen>
+    with TickerProviderStateMixin {
   bool isPersonalExpanded = false;
   bool isFamilyExpanded = false;
   late AnimationController _personalController;
@@ -74,6 +76,16 @@ class _ProfielScreenState extends State<ProfielScreen> with TickerProviderStateM
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {
+              context.read<ProfielCubit>().logout(context);
+            },
+            icon: Icon(Icons.logout),
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -88,34 +100,33 @@ class _ProfielScreenState extends State<ProfielScreen> with TickerProviderStateM
                 width: double.infinity,
                 child: Column(
                   children: [
-                  GestureDetector(
-                  onTap: _pickImage,
-                  child: Container(
-                    height: size.width * 0.23334,
-                    width: size.width * 0.23334,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        width: 5,
-                        color: Colors.black12,
+                    GestureDetector(
+                      onTap: _pickImage,
+                      child: Container(
+                        height: size.width * 0.23334,
+                        width: size.width * 0.23334,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(width: 5, color: Colors.black12),
+                        ),
+                        child: ClipOval(
+                          child:
+                              _imageFile != null
+                                  ? Image.file(_imageFile!, fit: BoxFit.cover)
+                                  : Icon(
+                                    Icons.person,
+                                    size: 50,
+                                    color: Colors.green,
+                                  ),
+                        ),
                       ),
                     ),
-                    child: ClipOval(
-                      child: _imageFile != null ? Image.file(
-                        _imageFile!,
-                        fit: BoxFit.cover,
-                      )
-                          : Icon(Icons.person, size: 50, color: Colors
-                          .green,),
-                    ),
-                  ),
-                  ),
                     SizedBox(height: size.height * 0.01749),
                     FutureBuilder(
-                      future: context.read<AuthCubit>().displayName,
+                      future: context.read<AuthCubit>().fetchPatientName(),
                       builder: (context, snapshot) {
                         return Text(
-                          snapshot.data??"User",
+                          snapshot.data ?? "User",
                           style: TextStyle(
                             fontSize: 17,
                             fontWeight: FontWeight.w700,
@@ -123,8 +134,7 @@ class _ProfielScreenState extends State<ProfielScreen> with TickerProviderStateM
                             color: Color(0XFF111827),
                           ),
                         );
-                      },
-                    ),
+                      }),
                     SizedBox(height: size.height * 0.0076),
                     Text(
                       "sarah.anderson@email.com",

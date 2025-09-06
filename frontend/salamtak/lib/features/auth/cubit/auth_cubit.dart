@@ -83,8 +83,10 @@ class AuthCubit extends Cubit<AuthState> {
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('authToken', token);
         await prefs.setBool('tempLoggedIn', true);
+        await prefs.setInt('patientId', data['role_id']);
         emit(LogInSuccess());
-      } else {
+      }
+      else {
         final errorData = jsonDecode(response.body);
         String errorMessage = 'LogIn failed.';
 
@@ -118,8 +120,24 @@ class AuthCubit extends Cubit<AuthState> {
     await prefs.setString('displayName', displayName);
   }
 
-  Future<String> get displayName async {
+  Future<String?> fetchPatientName() async {
+    int Id=await patientId;
+    final response = await http.get(
+      Uri.parse('https://mohammadhussien.pythonanywhere.com/getpatient/$Id/'),
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      final user=data["user"];
+      return user["username"];
+    } else {
+      return "User";
+    }
+  }
+
+
+  Future<int> get patientId async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('displayName') ?? 'User';
+    return prefs.getInt('patientId')!;
   }
 }

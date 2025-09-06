@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/data/models/doctors.dart';
+import 'package:salamtak/features/auth/cubit/auth_cubit.dart';
 import 'package:salamtak/features/doctor_details/cubit/doctor_details_cubit.dart';
 import 'package:salamtak/features/doctor_details/cubit/doctor_details_state.dart';
 
@@ -104,11 +105,11 @@ Future thankYouAlert(
                       SizedBox(
                         width: size.width * 0.71706,
                         child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async{
                             context.read<DoctorDetailsCubit>().addBooking(
                               doctorId: doctor.id,
                               slotId: slotId,
-                              patientId: 3,
+                              patientId: await context.read<AuthCubit>().patientId
                             );
                           },
                           style: ElevatedButton.styleFrom(

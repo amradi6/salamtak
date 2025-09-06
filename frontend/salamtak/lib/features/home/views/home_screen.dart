@@ -87,7 +87,7 @@ class HomeScreen extends StatelessWidget {
                                 children: [
                                   FutureBuilder(
                                     future:
-                                        context.read<AuthCubit>().displayName,
+                                        context.read<AuthCubit>().fetchPatientName(),
                                     builder:
                                         (context, snapshot) => Text(
                                           "Hi ${snapshot.data}",
@@ -111,8 +111,8 @@ class HomeScreen extends StatelessWidget {
                                       fontFamily: "Rubik",
                                       color: Color(0XFFFFFFFF),
                                       decoration:
-                                          TextDecoration
-                                              .none, // Removed underline
+                                      TextDecoration
+                                          .none, // Removed underline
                                     ),
                                   ),
                                 ],
