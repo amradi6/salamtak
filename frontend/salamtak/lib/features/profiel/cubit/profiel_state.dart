@@ -23,7 +23,8 @@ class ProfileUploadError extends ProfileState {
 
 class FetchPatientSuccess extends ProfileState {
   final String? photoUrl;
-  FetchPatientSuccess({this.photoUrl});
+  final String? email;
+  FetchPatientSuccess({this.photoUrl,this.email});
 }
 
 class FetchPatientLoad extends ProfileState{}

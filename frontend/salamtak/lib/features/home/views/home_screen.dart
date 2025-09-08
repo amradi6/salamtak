@@ -38,7 +38,17 @@ class HomeScreen extends StatelessWidget {
           backgroundColor: Color(0XFFFFFFFF),
           body: RefreshIndicator(
             onRefresh:
-                () async => context.read<HomeCubit>().fetchPopularDoctors(),
+                () async {
+              final authCubit = context.read<AuthCubit>();
+              final profielCubit = context.read<ProfielCubit>();
+              final homeCubit = context.read<HomeCubit>();
+              final patientId = await authCubit.patientId;
+              await Future.wait([
+                homeCubit.fetchPopularDoctors(),
+                profielCubit.fetchPatient(patientId),
+                authCubit.fetchPatientName(),
+              ]);
+            },
             color: Colors.green,
             child: Stack(
               children: [

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/core/constants/widgets/circle_for_bg.dart';
+import 'package:salamtak/features/auth/cubit/auth_cubit.dart';
 import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_cubit.dart';
 import 'package:salamtak/features/find_doctors/cubit/find_doctor_cubit.dart';
 import 'package:salamtak/features/home/cubit/home__cubit.dart';
+import 'package:salamtak/features/profiel/cubit/profiel_cubit.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -24,6 +26,9 @@ class _SplashScreenState extends State<SplashScreen> {
     context.read<HomeCubit>().fetchPopularDoctors();
     context.read<FavoriteDoctorCubit>().fetchAllDoctors();
     context.read<FindDoctorCubit>().fetchAllDoctorsForFind(context);
+    final cubit = context.read<ProfielCubit>();
+    final patientId = context.read<AuthCubit>().patientId;
+    Future.microtask(() async=> cubit.fetchPatient(await patientId));
   }
 
   @override

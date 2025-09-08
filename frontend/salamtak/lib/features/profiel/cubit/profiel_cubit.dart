@@ -99,11 +99,12 @@ class ProfielCubit extends Cubit<ProfileState> {
         'https://mohammadhussien.pythonanywhere.com/getpatient/$patientId/',
       );
       final response = await http.get(uri);
-
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         final photoUrl = data['photo'];
-        emit(FetchPatientSuccess(photoUrl: photoUrl));
+        final user =data['user'];
+        final email=user['email'];
+        emit(FetchPatientSuccess(photoUrl: photoUrl,email: email));
       } else {
         emit(ProfileUploadError(
             'Error fetching patient: ${response.statusCode}'));

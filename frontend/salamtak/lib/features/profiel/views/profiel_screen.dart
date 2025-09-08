@@ -157,14 +157,42 @@ class _ProfielScreenState extends State<ProfielScreen>
                           }
                         }),
                     SizedBox(height: size.height * 0.0076),
-                    Text(
-                      "sarah.anderson@email.com",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontFamily: "Inter",
-                        fontSize: 11.9,
-                        color: Color(0XFF6B7280),
-                      ),
+                    BlocBuilder<ProfielCubit,ProfileState>(
+                      builder: (context, state) {
+                        if(state is FetchPatientSuccess &&  state.email != null) {
+                          return Text(
+                            state.email!,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontFamily: "Inter",
+                              fontSize: 11.9,
+                              color: Color(0XFF6B7280),
+                            ),
+                          );
+                        }
+                        else if(state is FetchPatientLoad){
+                          return Text(
+                            "Loading...",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontFamily: "Inter",
+                              fontSize: 11.9,
+                              color: Color(0XFF6B7280),
+                            ),
+                          );
+                        }
+                        else{
+                         return Text(
+                            "Error",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontFamily: "Inter",
+                              fontSize: 11.9,
+                              color: Color(0XFF6B7280),
+                            ),
+                          );
+                        }
+                      },
                     ),
                   ],
                 ),
