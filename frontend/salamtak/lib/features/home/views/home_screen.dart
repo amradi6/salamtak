@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/core/constants/widgets/circle_for_bg.dart';
@@ -8,6 +10,8 @@ import 'package:salamtak/features/home/cubit/home__state.dart';
 import 'package:salamtak/features/home/widgets/container_for_feature_doctor.dart';
 import 'package:salamtak/features/home/widgets/container_for_popular_doctor.dart';
 import 'package:salamtak/features/home/widgets/custom_icons_for_classification.dart .dart';
+import 'package:salamtak/features/profiel/cubit/profiel_cubit.dart';
+import 'package:salamtak/features/profiel/cubit/profiel_state.dart';
 import 'package:salamtak/shared/utils/doctor_shimmer.dart';
 
 class NoGlowScrollBehavior extends ScrollBehavior {
@@ -86,21 +90,53 @@ class HomeScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   FutureBuilder(
-                                    future:
-                                        context.read<AuthCubit>().fetchPatientName(),
-                                    builder:
-                                        (context, snapshot) => Text(
-                                          "Hi ${snapshot.data}",
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w200,
-                                            fontFamily: "Rubik",
-                                            color: Color(0XFFFAFAFA),
-                                            decoration:
-                                                TextDecoration
-                                                    .none, // Removed underline
-                                          ),
-                                        ),
+                                      future:
+                                      context
+                                          .read<AuthCubit>()
+                                          .fetchPatientName(),
+                                      builder:
+                                          (context, snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return Text(
+                                            "Loading...",
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w200,
+                                              fontFamily: "Rubik",
+                                              color: Color(0XFFFAFAFA),
+                                              decoration: TextDecoration.none,
+                                            ),
+                                          );
+                                        }
+                                        else if (snapshot.hasError) {
+                                          return Text(
+                                            "Error",
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w200,
+                                              fontFamily: "Rubik",
+                                              color: Color(0XFFFAFAFA),
+                                              decoration: TextDecoration.none,
+                                            ),
+                                          );
+                                        }
+                                        else {
+                                          return Text(
+                                            "Hi ${snapshot.data}",
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w200,
+                                              fontFamily: "Rubik",
+                                              color: Color(0XFFFAFAFA),
+                                              decoration:
+                                              TextDecoration
+                                                  .none, // Removed underline
+                                            ),
+                                          );
+                                        }
+                                      }
+
                                   ),
                                   SizedBox(height: size.height * 0.0074506),
                                   Text(
@@ -118,11 +154,42 @@ class HomeScreen extends StatelessWidget {
                                 ],
                               ),
                               SizedBox(width: size.width * 0.18489583),
-                              CircleAvatar(
-                                radius: 30,
-                                backgroundColor: Colors.white,
-                                child: Icon(Icons.person, color: Colors.green),
-                              ),
+                              BlocBuilder<ProfielCubit, ProfileState>(
+                                builder: (context, state) {
+                                  String? photoUrl;
+                                  File? localImage;
+
+                                  if (state is ProfileImagePicked) {
+                                    localImage = state.imageFile;
+                                  } else if (state is FetchPatientSuccess) {
+                                    photoUrl = state.photoUrl;
+                                  }
+
+                                  return Container(
+                                    height: size.width * 0.14584,
+                                    width: size.width * 0.14584,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                          width: 5, color: Colors.black12),
+                                    ),
+                                    child: ClipOval(
+                                      child: localImage != null
+                                          ? Image.file(
+                                          localImage, fit: BoxFit.cover)
+                                          : (photoUrl != null
+                                          ? Image.network(
+                                          photoUrl, fit: BoxFit.cover)
+                                          : Icon(
+                                        Icons.person,
+                                        color: Colors.green,
+                                      )),
+                                    ),
+                                  );
+                                },
+                              )
+
                             ],
                           ),
                         ),
@@ -130,7 +197,7 @@ class HomeScreen extends StatelessWidget {
                         GestureDetector(
                           onTap:
                               () =>
-                                  Navigator.pushNamed(context, "/find_doctor"),
+                              Navigator.pushNamed(context, "/find_doctor"),
                           child: AbsorbPointer(
                             child: TextFormForSearch(
                               size: size,

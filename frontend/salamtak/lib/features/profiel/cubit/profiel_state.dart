@@ -20,3 +20,15 @@ class ProfileUploadError extends ProfileState {
   final String error;
   ProfileUploadError(this.error);
 }
+
+class FetchPatientSuccess extends ProfileState {
+  final String? photoUrl;
+  FetchPatientSuccess({this.photoUrl});
+}
+
+class FetchPatientLoad extends ProfileState{}
+
+class FetchPatientError extends ProfileState{
+  final String error;
+  FetchPatientError(this.error);
+}

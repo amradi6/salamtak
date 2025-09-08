@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/features/auth/cubit/auth_cubit.dart';
@@ -70,52 +72,90 @@ class _ProfielScreenState extends State<ProfielScreen>
                 width: double.infinity,
                 child: Column(
                   children: [
-                    BlocBuilder<ProfielCubit,ProfileState>(
+                    BlocBuilder<ProfielCubit, ProfileState>(
                       builder: (context, state) {
                         final cubit = context.read<ProfielCubit>();
+                        String? photoUrl;
+                        File? localImage;
+                        if (state is ProfileImagePicked) {
+                          localImage = state.imageFile;
+                        } else if (state is FetchPatientSuccess) {
+                          photoUrl = state.photoUrl;
+                        }
                         return GestureDetector(
-                          onTap: () async{
-                            cubit.pickImage();
-                            await cubit.pickImage();
-                            if (cubit.imageFile != null) {
-                              cubit.uploadImage(await context.read<AuthCubit>().patientId);
-                            }
-                          },
-                          child: Container(
-                            height: size.width * 0.23334,
-                            width: size.width * 0.23334,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(width: 5, color: Colors.black12),
-                            ),
-                            child: ClipOval(
-                              child:
-                              cubit.imageFile != null
-                                  ? Image.file(cubit.imageFile!, fit: BoxFit.cover)
-                                  : Icon(
-                                Icons.person,
-                                size: 50,
-                                color: Colors.green,
+                            onTap: () async {
+                              await cubit.pickImage();
+                              if (cubit.imageFile != null) {
+                                cubit.uploadImage(await context
+                                    .read<AuthCubit>()
+                                    .patientId);
+                                await cubit.fetchPatient(await context
+                                    .read<AuthCubit>()
+                                    .patientId);
+                              }
+                            },
+                            child: Container(
+                              height: size.width * 0.23334,
+                              width: size.width * 0.23334,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                    width: 5, color: Colors.black12),
                               ),
-                            ),
-                          ),
-                        );
+                              child: ClipOval(
+                                child: localImage != null
+                                    ? Image.file(localImage, fit: BoxFit.cover)
+                                    : (photoUrl != null
+                                    ? Image.network(photoUrl, fit: BoxFit.cover)
+                                    : Icon(
+                                  Icons.person,
+                                  size: 50,
+                                  color: Colors.green,
+                                )),
+                              ),
+
+                            ));
                       },
                     ),
                     SizedBox(height: size.height * 0.01749),
                     FutureBuilder(
-                      future: context.read<AuthCubit>().fetchPatientName(),
-                      builder: (context, snapshot) {
-                        return Text(
-                          snapshot.data ?? "User",
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w700,
-                            fontFamily: "Rubik",
-                            color: Color(0XFF111827),
-                          ),
-                        );
-                      }),
+                        future: context.read<AuthCubit>().fetchPatientName(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Text(
+                              "Loading...",
+                              style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.w700,
+                                fontFamily: "Rubik",
+                                color: Color(0XFF111827),
+                              ),
+                            );
+                          }
+                          else if (snapshot.hasError) {
+                            return Text(
+                              "Error",
+                              style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.w700,
+                                fontFamily: "Rubik",
+                                color: Color(0XFF111827),
+                              ),
+                            );
+                          }
+                          else {
+                            return Text(
+                              snapshot.data ?? "User",
+                              style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.w700,
+                                fontFamily: "Rubik",
+                                color: Color(0XFF111827),
+                              ),
+                            );
+                          }
+                        }),
                     SizedBox(height: size.height * 0.0076),
                     Text(
                       "sarah.anderson@email.com",

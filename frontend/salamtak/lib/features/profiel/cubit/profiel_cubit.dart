@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -27,30 +28,34 @@ class ProfielCubit extends Cubit<ProfileState> {
   }
 
   Future<void> pickImage() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      final croppedFile = await ImageCropper().cropImage(
-        sourcePath: pickedFile.path,
-        uiSettings: [
-          AndroidUiSettings(
-            toolbarTitle: 'Edit Image',
-            toolbarColor: Colors.green,
-            toolbarWidgetColor: Colors.white,
-            hideBottomControls: true,
-            initAspectRatio: CropAspectRatioPreset.square,
-            lockAspectRatio: false,
-          ),
-        ],
-      );
+    try {
+      final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+      if (pickedFile == null) return;
+        final croppedFile = await ImageCropper().cropImage(
+          sourcePath: pickedFile.path,
+          uiSettings: [
+            AndroidUiSettings(
+              toolbarTitle: 'Edit Image',
+              toolbarColor: Colors.green,
+              toolbarWidgetColor: Colors.white,
+              hideBottomControls: true,
+              initAspectRatio: CropAspectRatioPreset.square,
+              lockAspectRatio: false,
+            ),
+          ],
+        );
 
-      if (croppedFile != null) {
-        _imageFile = File(croppedFile.path);
-        emit(ProfileImagePicked(_imageFile!));
-      }
+        if (croppedFile != null) {
+          _imageFile = File(croppedFile.path);
+          emit(ProfileImagePicked(_imageFile!));
+        }
+    }catch(e){
+      print('Error picking or cropping image: $e');
     }
   }
 
   Future<void> uploadImage(int patientId) async {
+    print(_imageFile);
     if (_imageFile == null) return;
     emit(ProfileUploading());
 
@@ -84,6 +89,27 @@ class ProfielCubit extends Cubit<ProfileState> {
       }
     } catch (e) {
       emit(ProfileUploadError(e.toString()));
+    }
+  }
+
+  Future<void> fetchPatient(int patientId) async {
+    emit(FetchPatientLoad());
+    try {
+      final uri = Uri.parse(
+        'https://mohammadhussien.pythonanywhere.com/getpatient/$patientId/',
+      );
+      final response = await http.get(uri);
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final photoUrl = data['photo'];
+        emit(FetchPatientSuccess(photoUrl: photoUrl));
+      } else {
+        emit(ProfileUploadError(
+            'Error fetching patient: ${response.statusCode}'));
+      }
+    } catch (e) {
+      emit(FetchPatientError(e.toString()));
     }
   }
 }
