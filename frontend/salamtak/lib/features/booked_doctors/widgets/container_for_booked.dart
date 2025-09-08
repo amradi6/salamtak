@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:salamtak/features/auth/cubit/auth_cubit.dart';
 import 'package:salamtak/features/booked_doctors/cubit/booked_doctors_cubit.dart';
 
 class ContainerForBooked extends StatelessWidget {
@@ -13,6 +14,7 @@ class ContainerForBooked extends StatelessWidget {
     required this.time,
     required this.address,
     required this.phone,
+    required this.bookingId,
   });
 
   final Size size;
@@ -23,6 +25,7 @@ class ContainerForBooked extends StatelessWidget {
   final String time;
   final String address;
   final int phone;
+  final int bookingId;
 
   @override
   Widget build(BuildContext context) {
@@ -224,7 +227,9 @@ class ContainerForBooked extends StatelessWidget {
                     Row(
                       children: [
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            context.read<BookedDoctorsCubit>().deleteBooking(bookingId,await context.read<AuthCubit>().patientId);
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color(0XFFFEF2F2),
                             shape: RoundedRectangleBorder(

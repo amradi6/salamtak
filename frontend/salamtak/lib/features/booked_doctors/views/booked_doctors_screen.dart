@@ -69,6 +69,7 @@ class _BookedDoctorsScreenState extends State<BookedDoctorsScreen> {
                 Expanded(
                   child: BlocBuilder<BookedDoctorsCubit, BookedDoctorsState>(
                     builder: (context, state) {
+                      print(state);
                       if (state is UpcomingBookingLoading) {
                         return SingleChildScrollView(
                           child: Column(
@@ -89,8 +90,10 @@ class _BookedDoctorsScreenState extends State<BookedDoctorsScreen> {
                                 bookings.map((booking) {
                                   final doctor = booking["doctor"];
                                   final user = doctor["user"];
+                                  final bookingId=booking["id"];
                                   return ContainerForBooked(
                                     size: size,
+                                    bookingId: bookingId,
                                     photo: doctor["photo"],
                                     name: user["username"],
                                     specialty: doctor["sepciality"],

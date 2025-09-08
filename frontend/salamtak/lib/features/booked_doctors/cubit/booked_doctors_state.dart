@@ -13,3 +13,11 @@ final class UpcomingBookingError extends BookedDoctorsState{
   final String message;
   UpcomingBookingError(this.message);
 }
+
+
+final class deleteBookingLoading extends BookedDoctorsState{}
+
+final class deleteBookingError extends BookedDoctorsState{
+  final String error;
+  deleteBookingError(this.error);
+}

@@ -1,15 +1,22 @@
-class ProfielState {}
+import 'dart:io';
 
-final class ProfielInitialState extends ProfielState {}
+class ProfileState {}
 
-final class LoadImageProfiel extends ProfielState{
-  final String? profileImagePath;
+final class ProfielInitialState extends ProfileState {}
 
-  LoadImageProfiel({this.profileImagePath});
+class ProfileImagePicked extends ProfileState {
+  final File imageFile;
+  ProfileImagePicked(this.imageFile);
+}
 
-  LoadImageProfiel copyWith({String? profileImagePath}) {
-    return LoadImageProfiel(
-      profileImagePath: profileImagePath ?? this.profileImagePath,
-    );
-  }
+class ProfileUploading extends ProfileState {}
+
+class ProfileUploaded extends ProfileState {
+  final dynamic response;
+  ProfileUploaded(this.response);
+}
+
+class ProfileUploadError extends ProfileState {
+  final String error;
+  ProfileUploadError(this.error);
 }

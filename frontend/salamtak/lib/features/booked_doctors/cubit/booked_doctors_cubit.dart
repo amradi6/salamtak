@@ -28,10 +28,7 @@ class BookedDoctorsCubit extends Cubit<BookedDoctorsState> {
   }
 
   Future<void> makePhoneCall(String phoneNumber) async {
-    final Uri launchUri = Uri(
-      scheme: 'tel',
-      path: phoneNumber,
-    );
+    final Uri launchUri = Uri(scheme: 'tel', path: phoneNumber);
     if (await canLaunchUrl(launchUri)) {
       await launchUrl(launchUri);
     } else {
@@ -39,4 +36,24 @@ class BookedDoctorsCubit extends Cubit<BookedDoctorsState> {
     }
   }
 
+  Future<void> deleteBooking(int bookId, int patientId) async {
+    emit(deleteBookingLoading());
+    try {
+      final url = Uri.parse(
+        "https://mohammadhussien.pythonanywhere.com/cancel-booking/$bookId/",
+      );
+      final response = await http.delete(url);
+      if (response.statusCode == 200) {
+        await getUpcomingBookings(patientId);
+      } else {
+        emit(
+          deleteBookingError(
+            "Failed to cancel booking: ${response.statusCode}",
+          ),
+        );
+      }
+    } catch (e) {
+      emit(deleteBookingError("Error : ${e.toString()}"));
+    }
+  }
 }

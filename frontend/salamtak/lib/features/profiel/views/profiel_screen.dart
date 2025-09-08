@@ -1,11 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:salamtak/features/auth/cubit/auth_cubit.dart';
 import 'package:salamtak/features/profiel/cubit/profiel_cubit.dart';
+import 'package:salamtak/features/profiel/cubit/profiel_state.dart';
 import 'package:salamtak/features/profiel/widgets/build_alert_warning.dart';
 
 class ProfielScreen extends StatefulWidget {
@@ -21,33 +18,6 @@ class _ProfielScreenState extends State<ProfielScreen>
   bool isFamilyExpanded = false;
   late AnimationController _personalController;
   late AnimationController _familyController;
-  File? _imageFile;
-  final ImagePicker _picker = ImagePicker();
-
-  Future<void> _pickImage() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      final croppedFile = await ImageCropper().cropImage(
-        sourcePath: pickedFile.path,
-        uiSettings: [
-          AndroidUiSettings(
-            toolbarTitle: 'Edit Image',
-            toolbarColor: Colors.green,
-            toolbarWidgetColor: Colors.white,
-            hideBottomControls: true,
-            initAspectRatio: CropAspectRatioPreset.square,
-            lockAspectRatio: false,
-          ),
-        ],
-      );
-
-      if (croppedFile != null) {
-        setState(() {
-          _imageFile = File(croppedFile.path);
-        });
-      }
-    }
-  }
 
   @override
   void initState() {
@@ -100,26 +70,37 @@ class _ProfielScreenState extends State<ProfielScreen>
                 width: double.infinity,
                 child: Column(
                   children: [
-                    GestureDetector(
-                      onTap: _pickImage,
-                      child: Container(
-                        height: size.width * 0.23334,
-                        width: size.width * 0.23334,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(width: 5, color: Colors.black12),
-                        ),
-                        child: ClipOval(
-                          child:
-                              _imageFile != null
-                                  ? Image.file(_imageFile!, fit: BoxFit.cover)
+                    BlocBuilder<ProfielCubit,ProfileState>(
+                      builder: (context, state) {
+                        final cubit = context.read<ProfielCubit>();
+                        return GestureDetector(
+                          onTap: () async{
+                            cubit.pickImage();
+                            await cubit.pickImage();
+                            if (cubit.imageFile != null) {
+                              cubit.uploadImage(await context.read<AuthCubit>().patientId);
+                            }
+                          },
+                          child: Container(
+                            height: size.width * 0.23334,
+                            width: size.width * 0.23334,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(width: 5, color: Colors.black12),
+                            ),
+                            child: ClipOval(
+                              child:
+                              cubit.imageFile != null
+                                  ? Image.file(cubit.imageFile!, fit: BoxFit.cover)
                                   : Icon(
-                                    Icons.person,
-                                    size: 50,
-                                    color: Colors.green,
-                                  ),
-                        ),
-                      ),
+                                Icons.person,
+                                size: 50,
+                                color: Colors.green,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
                     ),
                     SizedBox(height: size.height * 0.01749),
                     FutureBuilder(
