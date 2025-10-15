@@ -40,6 +40,7 @@ class CustomIconsForClassification extends StatelessWidget {
                   image,
                   width: size.width * 0.0859375,
                   height: size.height * 0.04631814,
+                  color: Colors.white,
                 ),
               ),
             ),

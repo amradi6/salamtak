@@ -37,8 +37,7 @@ class HomeScreen extends StatelessWidget {
         return Scaffold(
           backgroundColor: Color(0XFFFFFFFF),
           body: RefreshIndicator(
-            onRefresh:
-                () async {
+            onRefresh: () async {
               final authCubit = context.read<AuthCubit>();
               final profielCubit = context.read<ProfielCubit>();
               final homeCubit = context.read<HomeCubit>();
@@ -46,7 +45,6 @@ class HomeScreen extends StatelessWidget {
               await Future.wait([
                 homeCubit.fetchPopularDoctors(),
                 profielCubit.fetchPatient(patientId),
-                authCubit.fetchPatientName(),
               ]);
             },
             color: Colors.green,
@@ -99,54 +97,17 @@ class HomeScreen extends StatelessWidget {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  FutureBuilder(
-                                      future:
-                                      context
-                                          .read<AuthCubit>()
-                                          .fetchPatientName(),
-                                      builder:
-                                          (context, snapshot) {
-                                        if (snapshot.connectionState ==
-                                            ConnectionState.waiting) {
-                                          return Text(
-                                            "Loading...",
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w200,
-                                              fontFamily: "Rubik",
-                                              color: Color(0XFFFAFAFA),
-                                              decoration: TextDecoration.none,
-                                            ),
-                                          );
-                                        }
-                                        else if (snapshot.hasError) {
-                                          return Text(
-                                            "Error",
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w200,
-                                              fontFamily: "Rubik",
-                                              color: Color(0XFFFAFAFA),
-                                              decoration: TextDecoration.none,
-                                            ),
-                                          );
-                                        }
-                                        else {
-                                          return Text(
-                                            "Hi ${snapshot.data}",
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w200,
-                                              fontFamily: "Rubik",
-                                              color: Color(0XFFFAFAFA),
-                                              decoration:
-                                              TextDecoration
-                                                  .none, // Removed underline
-                                            ),
-                                          );
-                                        }
-                                      }
-
+                                  Text(
+                                    "Hi ${context.read<ProfielCubit>().name}",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w200,
+                                      fontFamily: "Rubik",
+                                      color: Color(0XFFFAFAFA),
+                                      decoration:
+                                          TextDecoration
+                                              .none,
+                                    ),
                                   ),
                                   SizedBox(height: size.height * 0.0074506),
                                   Text(
@@ -157,8 +118,8 @@ class HomeScreen extends StatelessWidget {
                                       fontFamily: "Rubik",
                                       color: Color(0XFFFFFFFF),
                                       decoration:
-                                      TextDecoration
-                                          .none, // Removed underline
+                                          TextDecoration
+                                              .none,
                                     ),
                                   ),
                                 ],
@@ -182,24 +143,30 @@ class HomeScreen extends StatelessWidget {
                                       color: Colors.white,
                                       shape: BoxShape.circle,
                                       border: Border.all(
-                                          width: 5, color: Colors.black12),
+                                        width: 5,
+                                        color: Colors.black12,
+                                      ),
                                     ),
                                     child: ClipOval(
-                                      child: localImage != null
-                                          ? Image.file(
-                                          localImage, fit: BoxFit.cover)
-                                          : (photoUrl != null
-                                          ? Image.network(
-                                          photoUrl, fit: BoxFit.cover)
-                                          : Icon(
-                                        Icons.person,
-                                        color: Colors.green,
-                                      )),
+                                      child:
+                                          localImage != null
+                                              ? Image.file(
+                                                localImage,
+                                                fit: BoxFit.cover,
+                                              )
+                                              : (photoUrl != null
+                                                  ? Image.network(
+                                                    photoUrl,
+                                                    fit: BoxFit.cover,
+                                                  )
+                                                  : Icon(
+                                                    Icons.person,
+                                                    color: Colors.green,
+                                                  )),
                                     ),
                                   );
                                 },
-                              )
-
+                              ),
                             ],
                           ),
                         ),
@@ -207,7 +174,7 @@ class HomeScreen extends StatelessWidget {
                         GestureDetector(
                           onTap:
                               () =>
-                              Navigator.pushNamed(context, "/find_doctor"),
+                                  Navigator.pushNamed(context, "/find_doctor"),
                           child: AbsorbPointer(
                             child: TextFormForSearch(
                               size: size,
@@ -265,7 +232,7 @@ class HomeScreen extends StatelessWidget {
                                         () => context
                                             .read<HomeCubit>()
                                             .getDoctorsBySpeciality(
-                                              "Ophthalmologist",
+                                              "ophthalmology",
                                             ),
                                     size: size,
                                     color: [
@@ -279,14 +246,25 @@ class HomeScreen extends StatelessWidget {
                                         () => context
                                             .read<HomeCubit>()
                                             .getDoctorsBySpeciality(
-                                              "Gastroenterologist",
+                                              "neurology",
                                             ),
                                     size: size,
                                     color: [
                                       Color(0XFFFF484C),
                                       Color(0XFFFF6C60),
                                     ],
-                                    image: "assets/images/Digestive.png",
+                                    image: "assets/images/NEUROLOGY.png",
+                                  ),
+                                  CustomIconsForClassification(
+                                    onTap:
+                                        () => context
+                                            .read<HomeCubit>()
+                                            .getDoctorsBySpeciality(
+                                              "pulmonology",
+                                            ),
+                                    size: size,
+                                    color: [Colors.blue, Colors.green],
+                                    image: "assets/images/PULMONOLOGY.png",
                                   ),
                                 ],
                               ),
@@ -351,7 +329,7 @@ class HomeScreen extends StatelessWidget {
                                         popular.isNotEmpty) {
                                       return ListView.builder(
                                         scrollDirection: Axis.horizontal,
-                                        itemCount: 5,
+                                        itemCount: context.read<HomeCubit>().popularDoctors.length>5?5:context.read<HomeCubit>().popularDoctors.length,
                                         itemBuilder: (context, index) {
                                           final doctor = popular[index];
                                           return ContainerForPopularDoctor(
@@ -434,7 +412,12 @@ class HomeScreen extends StatelessWidget {
                                           return ContainerForFeatureDoctor(
                                             size: size,
                                             doctor: doctor,
-                                            onTap: () => Navigator.pushNamed(context, "/doctor_details",arguments: doctor),
+                                            onTap:
+                                                () => Navigator.pushNamed(
+                                                  context,
+                                                  "/doctor_details",
+                                                  arguments: doctor,
+                                                ),
                                           );
                                         },
                                       );

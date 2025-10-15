@@ -20,6 +20,10 @@ class ProfielCubit extends Cubit<ProfileState> {
 
   File? get imageFile => _imageFile;
 
+  String email="";
+
+  String? name="";
+
   Future<void> logout(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.getString("authToken");
@@ -55,7 +59,6 @@ class ProfielCubit extends Cubit<ProfileState> {
   }
 
   Future<void> uploadImage(int patientId) async {
-    print(_imageFile);
     if (_imageFile == null) return;
     emit(ProfileUploading());
 
@@ -103,7 +106,8 @@ class ProfielCubit extends Cubit<ProfileState> {
         final data = jsonDecode(response.body);
         final photoUrl = data['photo'];
         final user =data['user'];
-        final email=user['email'];
+        email=user['email'];
+        name=user['username'];
         emit(FetchPatientSuccess(photoUrl: photoUrl,email: email));
       } else {
         emit(ProfileUploadError(

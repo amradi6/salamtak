@@ -30,7 +30,7 @@ class _SignupScreenState extends State<SignupScreen> {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is SingUpSuccess) {
-          Navigator.pushNamed(context, '/layout');
+          Navigator.pushReplacementNamed(context, "/login");
         }
         if (state is SingUpError) {
           ScaffoldMessenger.of(context).clearSnackBars();

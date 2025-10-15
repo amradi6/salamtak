@@ -18,8 +18,8 @@ class _BookedDoctorsScreenState extends State<BookedDoctorsScreen> {
   @override
   void initState() {
     Future.microtask(() async {
-    final patientId = await context.read<AuthCubit>().patientId;
-    context.read<BookedDoctorsCubit>().getUpcomingBookings(patientId);
+      final patientId = await context.read<AuthCubit>().patientId;
+      context.read<BookedDoctorsCubit>().getUpcomingBookings(patientId);
     });
     super.initState();
   }
@@ -73,16 +73,22 @@ class _BookedDoctorsScreenState extends State<BookedDoctorsScreen> {
                       if (state is UpcomingBookingLoading) {
                         return SingleChildScrollView(
                           child: Column(
-                            children:
-                              List.generate(5, (index) {
-                                return Padding(
-                                  padding:  EdgeInsets.only(bottom: size.height * 0.017499),
-                                  child: DoctorShimmer(size: size, width: size.width*0.894506, height: size.height*0.425462),
-                                );
-                              },),
+                            children: List.generate(5, (index) {
+                              return Padding(
+                                padding: EdgeInsets.only(
+                                  bottom: size.height * 0.017499,
+                                ),
+                                child: DoctorShimmer(
+                                  size: size,
+                                  width: size.width * 0.894506,
+                                  height: size.height * 0.425462,
+                                ),
+                              );
+                            }),
                           ),
                         );
-                      } else if (state is UpcomingBookingSuccess) {
+                      } else if (state is UpcomingBookingSuccess &&
+                          state.bookings.isNotEmpty) {
                         List<dynamic> bookings = state.bookings;
                         return SingleChildScrollView(
                           child: Column(
@@ -90,7 +96,7 @@ class _BookedDoctorsScreenState extends State<BookedDoctorsScreen> {
                                 bookings.map((booking) {
                                   final doctor = booking["doctor"];
                                   final user = doctor["user"];
-                                  final bookingId=booking["id"];
+                                  final bookingId = booking["id"];
                                   return ContainerForBooked(
                                     size: size,
                                     bookingId: bookingId,
@@ -112,7 +118,17 @@ class _BookedDoctorsScreenState extends State<BookedDoctorsScreen> {
                       } else if (state is UpcomingBookingError) {
                         return Center(child: Text(state.message));
                       }
-                      return SizedBox();
+                      return Center(
+                        child: Text(
+                          "You Don't Have an appointment",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 18,
+                            fontFamily: "Inter",
+                            color: Colors.grey,
+                          ),
+                        ),
+                      );
                     },
                   ),
                 ),

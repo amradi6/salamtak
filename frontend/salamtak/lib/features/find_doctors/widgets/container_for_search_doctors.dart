@@ -111,13 +111,15 @@ class ContainerForFindDoctors extends StatelessWidget {
                                   size: size.width * 0.026,
                                 ),
                                 SizedBox(width: size.width * 0.0052),
-                                Text(
-                                  "${doctor.numberOfPatients} Patient Stories",
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w300,
-                                    color: Color(0XFF677294),
-                                    fontFamily: "Rubik",
+                                Expanded(
+                                  child: Text(
+                                    "${doctor.numberOfPatients} Patient Stories",
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w300,
+                                      color: Color(0XFF677294),
+                                      fontFamily: "Rubik",
+                                    ),
                                   ),
                                 ),
                               ],
@@ -146,66 +148,70 @@ class ContainerForFindDoctors extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: size.height * 0.01738),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Consultation",
-                              style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w300,
-                                fontFamily: "Rubik",
-                                color: Color(0XFF0EBE7F),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Consultation",
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w300,
+                                  fontFamily: "Rubik",
+                                  color: Color(0XFF0EBE7F),
+                                ),
+                              ),
+                              SizedBox(height: size.height * 0.006),
+                              Expanded(
+                                child: Text(
+                                  "${doctor.consultation.toString()} min",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w300,
+                                    fontFamily: "Rubik",
+                                    color: Color(0XFF677294),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Spacer(),
+                        SizedBox(
+                          width: size.width * 0.291,
+                          height: size.height * 0.0422,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                context,
+                                "/doctor_details_for_booking",
+                                arguments: doctor,
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0XFF0EBE7F),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(4)),
                               ),
                             ),
-                            SizedBox(height: size.height * 0.006),
-                            Text(
-                              "${doctor.consultation.toString()} min",
+                            child: Text(
+                              "Book Now",
                               style: TextStyle(
+                                color: Color(0XFFFFFFFF),
+                                fontFamily: "Rubik",
                                 fontSize: 12,
-                                fontWeight: FontWeight.w300,
-                                fontFamily: "Rubik",
-                                color: Color(0XFF677294),
+                                fontWeight: FontWeight.w200,
                               ),
                             ),
-                          ],
-                        ),
-                      ),
-                      Spacer(),
-                      SizedBox(
-                        width: size.width * 0.291,
-                        height: size.height * 0.0422,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushNamed(
-                              context,
-                              "/doctor_details_for_booking",
-                              arguments: doctor,
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0XFF0EBE7F),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(4)),
-                            ),
-                          ),
-                          child: Text(
-                            "Book Now",
-                            style: TextStyle(
-                              color: Color(0XFFFFFFFF),
-                              fontFamily: "Rubik",
-                              fontSize: 12,
-                              fontWeight: FontWeight.w200,
-                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),

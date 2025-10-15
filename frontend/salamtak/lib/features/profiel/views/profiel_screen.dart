@@ -35,6 +35,11 @@ class _ProfielScreenState extends State<ProfielScreen>
       vsync: this,
       duration: Duration(milliseconds: 200),
     );
+    Future.microtask(
+      () async => context.read<ProfielCubit>().fetchPatient(
+        await context.read<AuthCubit>().patientId,
+      ),
+    );
   }
 
   @override
@@ -83,116 +88,68 @@ class _ProfielScreenState extends State<ProfielScreen>
                           photoUrl = state.photoUrl;
                         }
                         return GestureDetector(
-                            onTap: () async {
-                              await cubit.pickImage();
-                              if (cubit.imageFile != null) {
-                                cubit.uploadImage(await context
-                                    .read<AuthCubit>()
-                                    .patientId);
-                                await cubit.fetchPatient(await context
-                                    .read<AuthCubit>()
-                                    .patientId);
-                              }
-                            },
-                            child: Container(
-                              height: size.width * 0.23334,
-                              width: size.width * 0.23334,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                    width: 5, color: Colors.black12),
+                          onTap: () async {
+                            await cubit.pickImage();
+                            if (cubit.imageFile != null) {
+                              cubit.uploadImage(
+                                await context.read<AuthCubit>().patientId,
+                              );
+                              await cubit.fetchPatient(
+                                await context.read<AuthCubit>().patientId,
+                              );
+                            }
+                          },
+                          child: Container(
+                            height: size.width * 0.23334,
+                            width: size.width * 0.23334,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                width: 5,
+                                color: Colors.black12,
                               ),
-                              child: ClipOval(
-                                child: localImage != null
-                                    ? Image.file(localImage, fit: BoxFit.cover)
-                                    : (photoUrl != null
-                                    ? Image.network(photoUrl, fit: BoxFit.cover)
-                                    : Icon(
-                                  Icons.person,
-                                  size: 50,
-                                  color: Colors.green,
-                                )),
-                              ),
-
-                            ));
+                            ),
+                            child: ClipOval(
+                              child:
+                                  localImage != null
+                                      ? Image.file(
+                                        localImage,
+                                        fit: BoxFit.cover,
+                                      )
+                                      : (photoUrl != null
+                                          ? Image.network(
+                                            photoUrl,
+                                            fit: BoxFit.cover,
+                                          )
+                                          : Icon(
+                                            Icons.person,
+                                            size: 50,
+                                            color: Colors.green,
+                                          )),
+                            ),
+                          ),
+                        );
                       },
                     ),
                     SizedBox(height: size.height * 0.01749),
-                    FutureBuilder(
-                        future: context.read<AuthCubit>().fetchPatientName(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return Text(
-                              "Loading...",
-                              style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.w700,
-                                fontFamily: "Rubik",
-                                color: Color(0XFF111827),
-                              ),
-                            );
-                          }
-                          else if (snapshot.hasError) {
-                            return Text(
-                              "Error",
-                              style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.w700,
-                                fontFamily: "Rubik",
-                                color: Color(0XFF111827),
-                              ),
-                            );
-                          }
-                          else {
-                            return Text(
-                              snapshot.data ?? "User",
-                              style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.w700,
-                                fontFamily: "Rubik",
-                                color: Color(0XFF111827),
-                              ),
-                            );
-                          }
-                        }),
+                    Text(
+                      context.read<ProfielCubit>().name ?? "User",
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w700,
+                        fontFamily: "Rubik",
+                        color: Color(0XFF111827),
+                      ),
+                    ),
                     SizedBox(height: size.height * 0.0076),
-                    BlocBuilder<ProfielCubit,ProfileState>(
-                      builder: (context, state) {
-                        if(state is FetchPatientSuccess &&  state.email != null) {
-                          return Text(
-                            state.email!,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontFamily: "Inter",
-                              fontSize: 11.9,
-                              color: Color(0XFF6B7280),
-                            ),
-                          );
-                        }
-                        else if(state is FetchPatientLoad){
-                          return Text(
-                            "Loading...",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontFamily: "Inter",
-                              fontSize: 11.9,
-                              color: Color(0XFF6B7280),
-                            ),
-                          );
-                        }
-                        else{
-                         return Text(
-                            "Error",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontFamily: "Inter",
-                              fontSize: 11.9,
-                              color: Color(0XFF6B7280),
-                            ),
-                          );
-                        }
-                      },
+                    Text(
+                      context.read<ProfielCubit>().email,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontFamily: "Inter",
+                        fontSize: 11.9,
+                        color: Color(0XFF6B7280),
+                      ),
                     ),
                   ],
                 ),
@@ -418,7 +375,7 @@ class _ProfielScreenState extends State<ProfielScreen>
                           leading: ClipRRect(
                             borderRadius: BorderRadius.circular(50),
                             child: Image.asset(
-                              "assets/images/AmrAdi.jpg",
+                              "assets/images/doctor.png",
                               height: size.width * 0.11667,
                               width: size.width * 0.11667,
                             ),
@@ -510,7 +467,7 @@ class _ProfielScreenState extends State<ProfielScreen>
                               leading: ClipRRect(
                                 borderRadius: BorderRadius.circular(50),
                                 child: Image.asset(
-                                  "assets/images/AmrAdi.jpg",
+                                  "assets/images/doctor.png",
                                   height: size.width * 0.11667,
                                   width: size.width * 0.11667,
                                 ),
@@ -543,7 +500,7 @@ class _ProfielScreenState extends State<ProfielScreen>
                               leading: ClipRRect(
                                 borderRadius: BorderRadius.circular(50),
                                 child: Image.asset(
-                                  "assets/images/AmrAdi.jpg",
+                                  "assets/images/doctor.png",
                                   height: size.width * 0.11667,
                                   width: size.width * 0.11667,
                                 ),
