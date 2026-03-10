@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/core/constants/widgets/circle_for_bg.dart';
-import 'package:salamtak/features/auth/cubit/auth_cubit.dart';
-import 'package:salamtak/features/auth/cubit/auth_state.dart';
-import 'package:salamtak/features/auth/views/forgot_screen.dart';
-import 'package:salamtak/features/auth/widgets/auth_with_google.dart';
-import 'package:salamtak/features/auth/widgets/custom_elevated_button.dart';
-import 'package:salamtak/features/auth/widgets/custom_text_button.dart';
-import 'package:salamtak/features/auth/widgets/custom_text_form_field.dart';
+import 'package:salamtak/features/auth/presentation/screen/forgot_screen.dart';
+import 'package:salamtak/features/auth/presentation/widgets/auth_with_google.dart';
+import 'package:salamtak/features/auth/presentation/widgets/custom_elevated_button.dart';
+import 'package:salamtak/features/auth/presentation/widgets/custom_text_button.dart';
+import 'package:salamtak/features/auth/presentation/widgets/custom_text_form_field.dart';
+import 'package:salamtak/features/auth/presentation/cubit/auth_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

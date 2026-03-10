@@ -2,10 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:salamtak/features/auth/cubit/auth_cubit.dart';
-import 'package:salamtak/features/auth/cubit/auth_state.dart';
-import 'package:salamtak/features/auth/widgets/auth_with_google.dart';
-import 'package:salamtak/features/auth/widgets/custom_text_form_field.dart';
+import 'package:salamtak/features/auth/presentation/cubit/auth_bloc.dart';
+import 'package:salamtak/features/auth/presentation/widgets/auth_with_google.dart';
+import 'package:salamtak/features/auth/presentation/widgets/custom_text_form_field.dart';
 
 import '../widgets/custom_elevated_button.dart';
 
@@ -47,10 +46,12 @@ class _SignupScreenState extends State<SignupScreen> {
       builder: (context, state) {
         if (state is SingUpLoading) {
           return const Scaffold(
-            body: Center(child: CircularProgressIndicator(
-              color: Colors.green,
-              backgroundColor: Colors.white,
-            ),),
+            body: Center(
+              child: CircularProgressIndicator(
+                color: Colors.green,
+                backgroundColor: Colors.white,
+              ),
+            ),
           );
         }
         return Scaffold(
@@ -211,10 +212,9 @@ class _SignupScreenState extends State<SignupScreen> {
                           await context.read<AuthCubit>().signup(
                             email: emailController.text,
                             username: name.replaceAll(" ", ""),
-                            password1: passwordController.text,
-                            password2: passwordController.text,
+                            password: passwordController.text,
                           );
-                          await authCubit.saveDisplayName(name);
+                          // await authCubit.saveDisplayName(name);
                         },
                       ),
                       SizedBox(height: size.height * 0.002111),

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/core/constants/widgets/circle_for_bg.dart';
-import 'package:salamtak/features/auth/cubit/auth_cubit.dart';
-
 import '../widgets/custom_elevated_button.dart';
 
 class WhoAreYouScreen extends StatefulWidget {
@@ -13,22 +10,22 @@ class WhoAreYouScreen extends StatefulWidget {
 }
 
 class _WhoAreYouScreenState extends State<WhoAreYouScreen> {
-  @override
-  void initState() {
-    super.initState();
-    _checkLoginStatus();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _checkLoginStatus();
+  // }
 
-  Future<void> _checkLoginStatus() async {
-    final authCubit = context.read<AuthCubit>();
-    final isLoggedIn = await authCubit.isLoggedIn();
-    if (isLoggedIn) {
-      Future.microtask(() {
-        if (!mounted) return;
-        Navigator.pushReplacementNamed(context, "/layout");
-      });
-    }
-  }
+  // Future<void> _checkLoginStatus() async {
+  //   final authCubit = context.read<AuthCubit>();
+  //   final isLoggedIn = await authCubit.isLoggedIn();
+  //   if (isLoggedIn) {
+  //     Future.microtask(() {
+  //       if (!mounted) return;
+  //       Navigator.pushReplacementNamed(context, "/layout");
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

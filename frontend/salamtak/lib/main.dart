@@ -1,31 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:salamtak/features/auth/cubit/auth_cubit.dart';
-import 'package:salamtak/features/booked_doctors/cubit/booked_doctors_cubit.dart';
-import 'package:salamtak/features/doctor_details/cubit/doctor_details_cubit.dart';
-import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_cubit.dart';
-import 'package:salamtak/features/find_doctors/cubit/find_doctor_cubit.dart';
-import 'package:salamtak/features/home/cubit/home__cubit.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'core/router/app_routes.dart';
-import 'features/profiel/cubit/profiel_cubit.dart';
+import 'package:salamtak/core/constants/supabase_config.dart';
+import 'package:salamtak/core/di/injection_container.dart' as di;
+import 'package:salamtak/core/di/injection_container.dart';
+import 'package:salamtak/features/auth/presentation/cubit/auth_bloc.dart';
 
-void main() async {
+import 'package:salamtak/core/router/app_routes.dart';
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(
-    MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (_) => AuthCubit()),
-        BlocProvider(create: (_) => HomeCubit()),
-        BlocProvider(create: (_) => FavoriteDoctorCubit()),
-        BlocProvider(create: (_) => FindDoctorCubit()),
-        BlocProvider(create: (_) => DoctorDetailsCubit()),
-        BlocProvider(create: (_) => ProfielCubit()),
-        BlocProvider(create: (_) => BookedDoctorsCubit()),
-      ],
-      child: MyApp(),
-    ),
+  await Supabase.initialize(
+    url: SupabaseConfig.supabaseUrl,
+    anonKey: SupabaseConfig.supabaseAnonKey,
   );
+
+  await di.configureDependencies();
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -33,10 +26,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: "/",
-      onGenerateRoute: AppRoutes.generateRoute,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthCubit>(create: (_) => sl<AuthCubit>()),
+        // BlocProvider<HomeCubit>(create: (_) => sl<HomeCubit>()),
+        // BlocProvider<FindDoctorCubit>(create: (_) => sl<FindDoctorCubit>()),
+        // BlocProvider<FavoriteDoctorCubit>(create: (_) => sl<FavoriteDoctorCubit>()),
+        // BlocProvider<DoctorDetailsCubit>(create: (_) => sl<DoctorDetailsCubit>()),
+        // BlocProvider<BookedDoctorsCubit>(create: (_) => sl<BookedDoctorsCubit>()),
+        // BlocProvider<ProfileCubit>(create: (_) => sl<ProfileCubit>()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/',
+        onGenerateRoute: AppRoutes.generateRoute,
+      ),
     );
   }
 }

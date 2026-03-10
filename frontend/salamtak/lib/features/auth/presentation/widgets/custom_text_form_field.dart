@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:salamtak/features/auth/cubit/auth_cubit.dart';
-import 'package:salamtak/features/auth/cubit/auth_state.dart';
+import 'package:salamtak/features/auth/presentation/cubit/auth_bloc.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
