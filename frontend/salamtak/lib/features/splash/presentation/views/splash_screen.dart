@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/core/di/injection_container.dart';
 import 'package:salamtak/features/splash/presentation/cubit/splash_cubit.dart';
 
-
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
@@ -33,7 +32,6 @@ class _SplashView extends StatelessWidget {
         backgroundColor: const Color(0xFFFFFFFF),
         body: Stack(
           children: [
-            // ── top-left decorative circle ──────────────────────────────────
             Positioned(
               top: size.height * -0.1242,
               left: size.width * -0.0859,
@@ -50,7 +48,6 @@ class _SplashView extends StatelessWidget {
               ),
             ),
 
-            // ── bottom-right decorative circle ──────────────────────────────
             Positioned(
               top: size.height * 0.8057,
               left: size.width * 0.5260,
@@ -67,7 +64,6 @@ class _SplashView extends StatelessWidget {
               ),
             ),
 
-            // ── logo + app name ─────────────────────────────────────────────
             Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,

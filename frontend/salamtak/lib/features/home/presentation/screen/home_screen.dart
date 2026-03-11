@@ -1,15 +1,12 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/core/constants/widgets/circle_for_bg.dart';
 import 'package:salamtak/core/constants/widgets/text_form_for_search.dart';
-import 'package:salamtak/features/auth/cubit/auth_cubit.dart';
-import 'package:salamtak/features/home/cubit/home__cubit.dart';
-import 'package:salamtak/features/home/cubit/home__state.dart';
-import 'package:salamtak/features/home/widgets/container_for_feature_doctor.dart';
-import 'package:salamtak/features/home/widgets/container_for_popular_doctor.dart';
-import 'package:salamtak/features/home/widgets/custom_icons_for_classification.dart .dart';
+import 'package:salamtak/features/home/presentation/widgets/build_popular_section.dart';
+import 'package:salamtak/features/home/presentation/widgets/container_for_feature_doctor.dart';
+import 'package:salamtak/features/home/presentation/widgets/container_for_popular_doctor.dart';
+import 'package:salamtak/features/home/presentation/cubit/home_cubit.dart';
+import 'package:salamtak/features/home/presentation/widgets/custom_icons_for_classification.dart%20.dart';
 import 'package:salamtak/features/profiel/cubit/profiel_cubit.dart';
 import 'package:salamtak/features/profiel/cubit/profiel_state.dart';
 import 'package:salamtak/shared/utils/doctor_shimmer.dart';
@@ -32,20 +29,16 @@ class HomeScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
-        var popular = context.read<HomeCubit>().popularDoctors;
-        final feature = context.read<HomeCubit>().featureDoctors;
+        final popular =
+            state is PopularDoctorsSuccess
+                ? state.popularDoctors
+                : context.read<HomeCubit>().cachedPopularDoctors;
+        final feature = state is DoctorSuccess ? state.featureDoctors : [];
         return Scaffold(
           backgroundColor: Color(0XFFFFFFFF),
           body: RefreshIndicator(
             onRefresh: () async {
-              final authCubit = context.read<AuthCubit>();
-              final profielCubit = context.read<ProfielCubit>();
-              final homeCubit = context.read<HomeCubit>();
-              final patientId = await authCubit.patientId;
-              await Future.wait([
-                homeCubit.fetchPopularDoctors(),
-                profielCubit.fetchPatient(patientId),
-              ]);
+              await context.read<HomeCubit>().fetchPopularDoctors;
             },
             color: Colors.green,
             child: Stack(
@@ -97,18 +90,17 @@ class HomeScreen extends StatelessWidget {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    "Hi ${context.read<ProfielCubit>().name}",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w200,
-                                      fontFamily: "Rubik",
-                                      color: Color(0XFFFAFAFA),
-                                      decoration:
-                                          TextDecoration
-                                              .none,
-                                    ),
-                                  ),
+                                  // TODO you should changed when completed profile cubit
+                                  // Text(
+                                  //   "Hi ${context.read<ProfielCubit>().name}",
+                                  //   style: TextStyle(
+                                  //     fontSize: 20,
+                                  //     fontWeight: FontWeight.w200,
+                                  //     fontFamily: "Rubik",
+                                  //     color: Color(0XFFFAFAFA),
+                                  //     decoration: TextDecoration.none,
+                                  //   ),
+                                  // ),
                                   SizedBox(height: size.height * 0.0074506),
                                   Text(
                                     "Find Your Doctor",
@@ -117,60 +109,60 @@ class HomeScreen extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                       fontFamily: "Rubik",
                                       color: Color(0XFFFFFFFF),
-                                      decoration:
-                                          TextDecoration
-                                              .none,
+                                      decoration: TextDecoration.none,
                                     ),
                                   ),
                                 ],
                               ),
                               SizedBox(width: size.width * 0.18489583),
-                              BlocBuilder<ProfielCubit, ProfileState>(
-                                builder: (context, state) {
-                                  String? photoUrl;
-                                  File? localImage;
-
-                                  if (state is ProfileImagePicked) {
-                                    localImage = state.imageFile;
-                                  } else if (state is FetchPatientSuccess) {
-                                    photoUrl = state.photoUrl;
-                                  }
-
-                                  return Container(
-                                    height: size.width * 0.14584,
-                                    width: size.width * 0.14584,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                        width: 5,
-                                        color: Colors.black12,
-                                      ),
-                                    ),
-                                    child: ClipOval(
-                                      child:
-                                          localImage != null
-                                              ? Image.file(
-                                                localImage,
-                                                fit: BoxFit.cover,
-                                              )
-                                              : (photoUrl != null
-                                                  ? Image.network(
-                                                    photoUrl,
-                                                    fit: BoxFit.cover,
-                                                  )
-                                                  : Icon(
-                                                    Icons.person,
-                                                    color: Colors.green,
-                                                  )),
-                                    ),
-                                  );
-                                },
-                              ),
+                              // TODO you should changed when completed profile cubit
+                              // BlocBuilder<ProfielCubit, ProfileState>(
+                              //   builder: (context, state) {
+                              //     String? photoUrl;
+                              //     File? localImage;
+                              //
+                              //     if (state is ProfileImagePicked) {
+                              //       localImage = state.imageFile;
+                              //     } else if (state is FetchPatientSuccess) {
+                              //       photoUrl = state.photoUrl;
+                              //     }
+                              //
+                              //     return Container(
+                              //       height: size.width * 0.14584,
+                              //       width: size.width * 0.14584,
+                              //       decoration: BoxDecoration(
+                              //         color: Colors.white,
+                              //         shape: BoxShape.circle,
+                              //         border: Border.all(
+                              //           width: 5,
+                              //           color: Colors.black12,
+                              //         ),
+                              //       ),
+                              //       child: ClipOval(
+                              //         child:
+                              //             localImage != null
+                              //                 ? Image.file(
+                              //                   localImage,
+                              //                   fit: BoxFit.cover,
+                              //                 )
+                              //                 : (photoUrl != null
+                              //                     ? Image.network(
+                              //                       photoUrl,
+                              //                       fit: BoxFit.cover,
+                              //                     )
+                              //                     : Icon(
+                              //                       Icons.person,
+                              //                       color: Colors.green,
+                              //                     )),
+                              //       ),
+                              //     );
+                              //   },
+                              // ),
                             ],
                           ),
                         ),
                         SizedBox(height: size.height * 0.0335278),
+                        //Todo you should changed when completed find doctor screen
                         GestureDetector(
                           onTap:
                               () =>
@@ -312,49 +304,12 @@ class HomeScreen extends StatelessWidget {
                                 SizedBox(height: size.height * 0.027319011),
                                 SizedBox(
                                   height: size.height * 0.327828138,
-                                  child: () {
-                                    if (state is PopularDoctorsLoading) {
-                                      return ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: 5,
-                                        itemBuilder: (context, index) {
-                                          return DoctorShimmer(
-                                            size: size,
-                                            height: size.height * 0.327828138,
-                                            width: size.width * 0.4947916,
-                                          );
-                                        },
-                                      );
-                                    } else if (state is PopularDoctorsSuccess ||
-                                        popular.isNotEmpty) {
-                                      return ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: context.read<HomeCubit>().popularDoctors.length>5?5:context.read<HomeCubit>().popularDoctors.length,
-                                        itemBuilder: (context, index) {
-                                          final doctor = popular[index];
-                                          return ContainerForPopularDoctor(
-                                            onTap: () {
-                                              Navigator.of(context).pushNamed(
-                                                "/doctor_details",
-                                                arguments: doctor,
-                                              );
-                                            },
-                                            size: size,
-                                            image: doctor.image,
-                                            nameDoctor: doctor.name,
-                                            doctorSpecialty: doctor.specialty,
-                                            rating: doctor.rating,
-                                          );
-                                        },
-                                      );
-                                    } else if (state is PopularDoctorsError) {
-                                      return Center(
-                                        child: Text("Error: ${state.message}"),
-                                      );
-                                    } else {
-                                      return Center(child: Text("No Data"));
-                                    }
-                                  }(),
+                                  child: buildPopularSection(
+                                    context,
+                                    size,
+                                    state,
+                                    popular,
+                                  ),
                                 ),
                               ],
                             ),
@@ -385,82 +340,11 @@ class HomeScreen extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(height: size.height * 0.027319011),
-                                SizedBox(
-                                  height: size.height * 0.2,
-                                  child: () {
-                                    if (state is DoctorLoading) {
-                                      return ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: 5,
-                                        itemBuilder: (context, index) {
-                                          return DoctorShimmer(
-                                            size: size,
-                                            height: size.height * 0.2,
-                                            width: size.width * 0.3,
-                                          );
-                                        },
-                                      );
-                                    } else if (((feature.isNotEmpty) &&
-                                            state is ChangeTabState) ||
-                                        (feature.isNotEmpty) &&
-                                            state is DoctorSuccess) {
-                                      return ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: feature.length,
-                                        itemBuilder: (context, index) {
-                                          final doctor = feature[index];
-                                          return ContainerForFeatureDoctor(
-                                            size: size,
-                                            doctor: doctor,
-                                            onTap:
-                                                () => Navigator.pushNamed(
-                                                  context,
-                                                  "/doctor_details",
-                                                  arguments: doctor,
-                                                ),
-                                          );
-                                        },
-                                      );
-                                    } else if (feature.isEmpty &&
-                                        state is! DoctorSuccess &&
-                                        state is! DoctorError) {
-                                      return Center(
-                                        child: Text(
-                                          "Please select a specialty to view doctors.",
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                      );
-                                    } else if (state is DoctorSuccess &&
-                                        feature.isEmpty) {
-                                      return Center(
-                                        child: Text(
-                                          "No doctors available for the selected specialty.",
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                      );
-                                    } else if (state is DoctorError) {
-                                      return Center(
-                                        child: Text("Error: ${state.message}"),
-                                      );
-                                    } else {
-                                      return Center(
-                                        child: Text(
-                                          "Please select a specialty to view doctors.",
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                  }(),
-                                ),
+                                // SizedBox(
+                                //   height: size.height * 0.2,
+                                //   child: _buildFeatureSection(
+                                //       context, size, state, feature),
+                                // ),
                               ],
                             ),
 

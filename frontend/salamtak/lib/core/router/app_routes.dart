@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:salamtak/features/auth/presentation/screen/login_screen.dart';
 import 'package:salamtak/features/auth/presentation/screen/signup_screen.dart';
 import 'package:salamtak/features/auth/presentation/screen/who_are_you_screen.dart';
+import 'package:salamtak/features/home/presentation/screen/home_screen.dart';
+import 'package:salamtak/features/home/presentation/screen/layout_screen.dart';
 import 'package:salamtak/features/onboarding/views/onboarding_screen_01.dart';
 import 'package:salamtak/features/onboarding/views/onboarding_screen_02.dart';
 import 'package:salamtak/features/onboarding/views/onboarding_screen_03.dart';
@@ -25,14 +27,14 @@ class AppRoutes {
         return createRoute(screen: LoginScreen());
       case "/who_are_you":
         return createRoute(screen: WhoAreYouScreen());
-      // case "/home":
-      //   return createRoute(screen: HomeScreen());
+      case "/home":
+        return createRoute(screen: HomeScreen());
       // case "/find_doctor":
       //   return createRoute(screen: FindDoctorScreen());
       // case "/favorite_doctor":
       //   return createRoute(screen: FavoriteDoctorsScreen());
-      // case "/layout":
-      //   return createRoute(screen: LayoutScreen());
+      case "/layout":
+        return createRoute(screen: LayoutScreen());
       // case "/doctor_details":
       //   final doctor = settings.arguments as Doctors;
       //   return createRoute(screen: DoctorDetailsScreen(doctor: doctor));

@@ -20,14 +20,13 @@ import 'package:salamtak/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:salamtak/features/auth/domain/usecases/signup_usecase.dart';
 import 'package:salamtak/features/auth/presentation/cubit/auth_bloc.dart';
 
-// Uncomment each block as you finish migrating that feature:
 
 // ── home ──────────────────────────────────────────────────────────────────────
-// import 'package:salamtak/features/home/data/datasources/home_remote_datasource.dart';
-// import 'package:salamtak/features/home/data/repositories/home_repository_impl.dart';
-// import 'package:salamtak/features/home/domain/repositories/home_repository.dart';
-// import 'package:salamtak/features/home/domain/usecases/home_usecases.dart';
-// import 'package:salamtak/features/home/presentation/cubit/home_cubit.dart';
+import 'package:salamtak/features/home/data/datasources/home_remote_datasource.dart';
+import 'package:salamtak/features/home/data/repositories/home_repository_impl.dart';
+import 'package:salamtak/features/home/domain/repositories/home_repository.dart';
+import 'package:salamtak/features/home/domain/usecases/home_usecases.dart';
+import 'package:salamtak/features/home/presentation/cubit/home_cubit.dart';
 
 // ── find_doctors ──────────────────────────────────────────────────────────────
 // import 'package:salamtak/features/find_doctors/data/datasources/find_doctor_remote_datasource.dart';
@@ -99,11 +98,11 @@ Future<void> configureDependencies() async {
   // ════════════════════════════════════════════════════════════════════════
   // HOME
   // ════════════════════════════════════════════════════════════════════════
-  // sl.registerLazySingleton<HomeRemoteDataSource>(() => HomeRemoteDataSourceImpl(sl()));
-  // sl.registerLazySingleton<HomeRepository>(() => HomeRepositoryImpl(sl()));
-  // sl.registerLazySingleton(() => GetPopularDoctorsUseCase(sl()));
-  // sl.registerLazySingleton(() => GetDoctorsBySpecialtyUseCase(sl()));
-  // sl.registerFactory(() => HomeCubit(getPopularDoctors: sl(), getDoctorsBySpecialty: sl()));
+  sl.registerLazySingleton<HomeRemoteDataSource>(() => HomeRemoteDataSourceImpl(sl()));
+  sl.registerLazySingleton<HomeRepository>(() => HomeRepositoryImpl(sl()));
+  sl.registerLazySingleton(() => GetPopularDoctorsUseCase(sl()));
+  sl.registerLazySingleton(() => GetDoctorsBySpecialtyUseCase(sl()));
+  sl.registerFactory(() => HomeCubit(getPopularDoctors: sl(), getDoctorsBySpecialty: sl()));
 
   // ════════════════════════════════════════════════════════════════════════
   // FIND DOCTORS

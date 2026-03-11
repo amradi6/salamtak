@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:salamtak/features/auth/cubit/auth_cubit.dart';
+// import 'package:salamtak/features/auth/cubit/auth_cubit.dart';
 import 'package:salamtak/features/profiel/cubit/profiel_cubit.dart';
 import 'package:salamtak/features/profiel/cubit/profiel_state.dart';
 import 'package:salamtak/features/profiel/widgets/build_alert_warning.dart';
@@ -35,11 +35,11 @@ class _ProfielScreenState extends State<ProfielScreen>
       vsync: this,
       duration: Duration(milliseconds: 200),
     );
-    Future.microtask(
-      () async => context.read<ProfielCubit>().fetchPatient(
-        await context.read<AuthCubit>().patientId,
-      ),
-    );
+    // Future.microtask(
+    //   () async => context.read<ProfielCubit>().fetchPatient(
+    //     await context.read<AuthCubit>().patientId,
+    //   ),
+    // );
   }
 
   @override
@@ -91,12 +91,12 @@ class _ProfielScreenState extends State<ProfielScreen>
                           onTap: () async {
                             await cubit.pickImage();
                             if (cubit.imageFile != null) {
-                              cubit.uploadImage(
-                                await context.read<AuthCubit>().patientId,
-                              );
-                              await cubit.fetchPatient(
-                                await context.read<AuthCubit>().patientId,
-                              );
+                              // cubit.uploadImage(
+                                 // await context.read<AuthCubit>().patientId,
+                              // );
+                              // await cubit.fetchPatient(
+                              //   await context.read<AuthCubit>().patientId,
+                              // );
                             }
                           },
                           child: Container(

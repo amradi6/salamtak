@@ -1,15 +1,16 @@
-import 'package:salamtak/data/models/doctors.dart';
+part of 'home_cubit.dart';
 
-class HomeState {}
+@immutable
+sealed class HomeState {}
 
-final class HomeInitialState extends HomeState {}
+final class HomeInitial extends HomeState {}
 
 class ChangeTabState extends HomeState {}
 
 class PopularDoctorsLoading extends HomeState {}
 
 class PopularDoctorsSuccess extends HomeState {
-  final List<Doctors> popularDoctors;
+  final List<DoctorEntity> popularDoctors;
 
   PopularDoctorsSuccess(this.popularDoctors);
 }
@@ -23,7 +24,7 @@ class PopularDoctorsError extends HomeState {
 class DoctorLoading extends HomeState {}
 
 class DoctorSuccess extends HomeState {
-  final List<Doctors> featureDoctors;
+  final List<DoctorEntity> featureDoctors;
 
   DoctorSuccess(this.featureDoctors);
 }

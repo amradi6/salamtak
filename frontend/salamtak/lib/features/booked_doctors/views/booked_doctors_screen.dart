@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/core/constants/widgets/circle_for_bg.dart';
-import 'package:salamtak/features/auth/cubit/auth_cubit.dart';
+import 'package:salamtak/features/auth/presentation/cubit/auth_bloc.dart';
 import 'package:salamtak/features/booked_doctors/cubit/booked_doctors_cubit.dart';
 import 'package:salamtak/features/booked_doctors/cubit/booked_doctors_state.dart';
 import 'package:salamtak/features/booked_doctors/widgets/container_for_booked.dart';
@@ -16,13 +16,13 @@ class BookedDoctorsScreen extends StatefulWidget {
 
 class _BookedDoctorsScreenState extends State<BookedDoctorsScreen> {
   @override
-  void initState() {
-    Future.microtask(() async {
-      final patientId = await context.read<AuthCubit>().patientId;
-      context.read<BookedDoctorsCubit>().getUpcomingBookings(patientId);
-    });
-    super.initState();
-  }
+  // void initState() {
+  //   Future.microtask(() async {
+  //      final patientId = await context.read<AuthCubit>().patientId;
+  //     context.read<BookedDoctorsCubit>().getUpcomingBookings(patientId);
+  //   });
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:salamtak/features/auth/cubit/auth_cubit.dart';
+import 'package:salamtak/features/auth/presentation/cubit/auth_bloc.dart';
 import 'package:salamtak/features/booked_doctors/cubit/booked_doctors_cubit.dart';
 
 class ContainerForBooked extends StatelessWidget {
@@ -228,7 +228,7 @@ class ContainerForBooked extends StatelessWidget {
                       children: [
                         ElevatedButton(
                           onPressed: () async {
-                            context.read<BookedDoctorsCubit>().deleteBooking(bookingId,await context.read<AuthCubit>().patientId);
+                            // context.read<BookedDoctorsCubit>().deleteBooking(bookingId,await context.read<AuthCubit>().patientId);
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color(0XFFFEF2F2),
