@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/core/constants/widgets/circle_for_bg.dart';
 import 'package:salamtak/core/constants/widgets/text_form_for_search.dart';
-import 'package:salamtak/data/models/doctors.dart';
+import 'package:salamtak/core/entities/doctor_entity.dart';
 import 'package:salamtak/features/find_doctors/cubit/find_doctor_cubit.dart';
 import 'package:salamtak/features/find_doctors/cubit/find_doctor_state.dart';
 import 'package:salamtak/features/find_doctors/widgets/container_for_search_doctors.dart';
-import 'package:salamtak/shared/utils/doctor_shimmer.dart';
+import 'package:salamtak/core/constants/widgets/doctor_shimmer.dart';
 
 class FindDoctorScreen extends StatefulWidget {
   const FindDoctorScreen({super.key});
@@ -136,7 +136,7 @@ class _FindDoctorScreenState extends State<FindDoctorScreen> {
                       width: size.width * 0.872,
                       child: BlocBuilder<FindDoctorCubit, FindDoctorState>(
                         builder: (context, state) {
-                          List<Doctors> doctors =
+                          List<DoctorEntity> doctors =
                               context.watch<FindDoctorCubit>().allDoctors;
                           if (state is FindDoctorLoad) {
                             return ListView.builder(

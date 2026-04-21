@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:salamtak/data/models/doctors.dart';
+import 'package:salamtak/core/entities/doctor_entity.dart';
 import 'package:salamtak/features/doctor_details/cubit/doctor_details_cubit.dart';
 import 'package:salamtak/features/doctor_details/cubit/doctor_details_state.dart';
 import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_cubit.dart';
@@ -9,7 +9,7 @@ import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_state.d
 class DoctorDetailsScreen extends StatefulWidget {
   const DoctorDetailsScreen({super.key, required this.doctor});
 
-  final Doctors doctor;
+  final DoctorEntity doctor;
 
   @override
   State<DoctorDetailsScreen> createState() => _DoctorDetailsScreenState();
@@ -64,9 +64,9 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                           builder: (context, state) {
                             return IconButton(
                               onPressed: () {
-                                context
-                                    .read<FavoriteDoctorCubit>()
-                                    .toggleFavorite(widget.doctor);
+                                // context
+                                //     .read<FavoriteDoctorCubit>()
+                                //     .toggleFavorite(widget.doctor);
                               },
                               icon: Container(
                                 width: size.height * 0.064,
@@ -99,7 +99,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                       height: size.height * 0.1986,
                       child: CircleAvatar(
                         radius: 60,
-                        backgroundImage: NetworkImage(widget.doctor.image),
+                        backgroundImage: NetworkImage(widget.doctor.imageUrl),
                       ),
                     ),
                   ),
@@ -286,7 +286,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                               SizedBox(width: size.width * 0.041),
                               Expanded(
                                 child: Text(
-                                  widget.doctor.email!,
+                                  widget.doctor.email,
                                   softWrap: true,
                                   maxLines: 2,
                                   style: TextStyle(
@@ -317,7 +317,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                               ),
                               SizedBox(width: size.width * 0.041),
                               Text(
-                                widget.doctor.address!,
+                                widget.doctor.address,
                                 style: TextStyle(
                                   fontFamily: "Inter",
                                   fontWeight: FontWeight.w400,
@@ -360,9 +360,8 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                         ),
                       ),
                       SizedBox(height: size.height * 0.02483),
-                      if (widget.doctor.services != null &&
-                          widget.doctor.services!.isNotEmpty) ...[
-                        ...widget.doctor.services!.map(
+                      if (widget.doctor.services.isNotEmpty) ...[
+                        ...widget.doctor.services.map(
                           (service) => Padding(
                             padding: EdgeInsets.only(
                               bottom: size.height * 0.0149,

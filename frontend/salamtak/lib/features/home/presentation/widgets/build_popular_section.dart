@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:salamtak/features/home/presentation/widgets/container_for_popular_doctor.dart';
-import 'package:salamtak/shared/utils/doctor_shimmer.dart';
+import 'package:salamtak/core/constants/widgets/doctor_shimmer.dart';
 
 import '../cubit/home_cubit.dart';
 

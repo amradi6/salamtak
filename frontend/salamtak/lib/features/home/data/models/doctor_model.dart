@@ -20,17 +20,16 @@ class DoctorModel extends DoctorEntity {
   });
 
   factory DoctorModel.fromMap(
-    Map<String, dynamic> m, {
+    Map<dynamic, dynamic> m, {
     bool isFavorite = false,
   }) {
     final user =
         (m['profiles'] ?? m['user_profiles'] ?? m['users'] ?? m['user'] ?? {})
-            as Map<String, dynamic>;
-    print("user : $user");
+            as Map<dynamic, dynamic>;
     return DoctorModel(
       id: m['id'] as int,
       email: user['email'] as String? ?? '',
-      name: user['username'] as String? ?? 'Unknown',
+      name: m['username'] as String? ?? 'Unknown',
       imageUrl: m['photo'] as String? ?? '',
       specialty: (m['specialty'] ?? m['sepciality']) as String? ?? '',
       rating: (m['rating'] as num?)?.toDouble() ?? 0.0,

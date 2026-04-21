@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:salamtak/data/models/doctors.dart';
+import 'package:salamtak/core/entities/doctor_entity.dart';
 import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_cubit.dart';
 import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_state.dart';
 
@@ -13,7 +13,7 @@ class ContainerForFindDoctors extends StatelessWidget {
   });
 
   final Size size;
-  final Doctors doctor;
+  final DoctorEntity doctor;
   final void Function()? onTap;
 
   @override
@@ -44,7 +44,7 @@ class ContainerForFindDoctors extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(4)),
                         child: Image.network(
-                          doctor.image,
+                          doctor.imageUrl,
                           width: size.width * 0.239,
                           height: size.height * 0.108,
                           fit: BoxFit.cover,
@@ -78,7 +78,7 @@ class ContainerForFindDoctors extends StatelessWidget {
                             ),
                             SizedBox(height: size.height * 0.0049),
                             Text(
-                              "${doctor.numberOfYearsOfExperience} Years experience ",
+                              "${doctor.yearsOfExperience} Years experience ",
                               style: TextStyle(
                                 color: Color(0XFF677294),
                                 fontFamily: "Rubik",
@@ -130,9 +130,9 @@ class ContainerForFindDoctors extends StatelessWidget {
                       SizedBox(width: size.width * 0.04),
                       IconButton(
                         onPressed: () {
-                          context.read<FavoriteDoctorCubit>().toggleFavorite(
-                            doctor,
-                          );
+                          // context.read<FavoriteDoctorCubit>().toggleFavorite(
+                          //   doctor,
+                          // );
                         },
                         icon: Icon(
                           Icons.favorite,

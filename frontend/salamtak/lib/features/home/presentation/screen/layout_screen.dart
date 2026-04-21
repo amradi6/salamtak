@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/core/constants/utils/nav_icon.dart';
 import 'package:salamtak/features/home/presentation/cubit/home_cubit.dart';
 
-import 'package:salamtak/features/home/presentation/screen//home_screen.dart';
+import 'package:salamtak/features/home/presentation/screen/home_screen.dart';
 
 class LayoutScreen extends StatelessWidget {
   const LayoutScreen({super.key});

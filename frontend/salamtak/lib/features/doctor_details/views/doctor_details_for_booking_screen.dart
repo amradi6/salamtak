@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:salamtak/data/models/doctors.dart';
+import 'package:salamtak/core/entities/doctor_entity.dart';
 import 'package:salamtak/features/doctor_details/cubit/doctor_details_cubit.dart';
 import 'package:salamtak/features/doctor_details/cubit/doctor_details_state.dart';
 import 'package:salamtak/features/doctor_details/utils/thank_you_alert.dart';
 import 'package:salamtak/features/doctor_details/widgets/available_times_for_doctors.dart';
-import 'package:salamtak/shared/utils/doctor_shimmer.dart';
+import 'package:salamtak/core/constants/widgets/doctor_shimmer.dart';
 
 class DoctorDetailsForBookingScreen extends StatefulWidget {
   const DoctorDetailsForBookingScreen({super.key, required this.doctor});
 
-  final Doctors doctor;
+  final DoctorEntity doctor;
 
   @override
   State<DoctorDetailsForBookingScreen> createState() =>
@@ -92,7 +92,7 @@ class _DoctorDetailsForBookingScreenState
                               child: CircleAvatar(
                                 radius: 50,
                                 backgroundImage: NetworkImage(
-                                  widget.doctor.image,
+                                  widget.doctor.imageUrl,
                                 ),
                               ),
                             ),

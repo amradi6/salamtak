@@ -8,7 +8,7 @@ import 'package:salamtak/features/onboarding/views/onboarding_screen_01.dart';
 import 'package:salamtak/features/onboarding/views/onboarding_screen_02.dart';
 import 'package:salamtak/features/onboarding/views/onboarding_screen_03.dart';
 import 'package:salamtak/features/splash/presentation/views/splash_screen.dart';
-import 'package:salamtak/shared/utils/create_route.dart';
+import 'package:salamtak/core/router/create_route.dart';
 
 class AppRoutes {
   static Route<dynamic> generateRoute(RouteSettings settings) {

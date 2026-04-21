@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:salamtak/data/models/doctors.dart';
+import 'package:salamtak/core/entities/doctor_entity.dart';
 import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_cubit.dart';
 import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_state.dart';
 
@@ -12,7 +12,7 @@ class FavoriteDoctorsCards extends StatelessWidget {
   });
 
   final Size size;
-  final Doctors doctor;
+  final DoctorEntity doctor;
 
   @override
   Widget build(BuildContext context) {
@@ -37,13 +37,13 @@ class FavoriteDoctorsCards extends StatelessWidget {
                 children: [
                   IconButton(
                     onPressed: () {
-                      context.read<FavoriteDoctorCubit>().toggleFavorite(
-                        doctor,
-                      );
-                      context
-                          .read<FavoriteDoctorCubit>()
-                          .controller
-                          .clear();
+                      // context.read<FavoriteDoctorCubit>().toggleFavorite(
+                      //   doctor,
+                      // );
+                      // context
+                      //     .read<FavoriteDoctorCubit>()
+                      //     .controller
+                      //     .clear();
                     },
                     icon: Icon(
                       Icons.favorite,
@@ -56,7 +56,7 @@ class FavoriteDoctorsCards extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(50)),
                 child: Image.network(
-                  doctor.image,
+                  doctor.imageUrl,
                   height: size.width * 0.2041,
                   width: size.width * 0.2041,
                   fit: BoxFit.cover,

@@ -1,5 +1,3 @@
-// lib/core/di/injection_container.dart
-
 import 'package:get_it/get_it.dart';
 import 'package:salamtak/features/splash/data/datasources/splash_local_datasource.dart';
 import 'package:salamtak/features/splash/data/repositories/splash_repository_impl.dart';
@@ -10,7 +8,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 // ── splash ────────────────────────────────────────────────────────────────────
 
-
 // ── auth ──────────────────────────────────────────────────────────────────────
 import 'package:salamtak/features/auth/data/datasource/auth_remote_datasource.dart';
 import 'package:salamtak/features/auth/data/repositories/auth_repository_impl.dart';
@@ -19,7 +16,6 @@ import 'package:salamtak/features/auth/domain/usecases/login_usecase.dart';
 import 'package:salamtak/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:salamtak/features/auth/domain/usecases/signup_usecase.dart';
 import 'package:salamtak/features/auth/presentation/cubit/auth_bloc.dart';
-
 
 // ── home ──────────────────────────────────────────────────────────────────────
 import 'package:salamtak/features/home/data/datasources/home_remote_datasource.dart';
@@ -72,7 +68,9 @@ Future<void> configureDependencies() async {
   // ════════════════════════════════════════════════════════════════════════
   // SPLASH
   // ════════════════════════════════════════════════════════════════════════
-  sl.registerLazySingleton<SplashLocalDatasource>(() => SplashLocalDatasourceImpl(sl()));
+  sl.registerLazySingleton<SplashLocalDatasource>(
+    () => SplashLocalDatasourceImpl(sl()),
+  );
   sl.registerLazySingleton<SplashRepository>(() => SplashRepositoryImpl(sl()));
   sl.registerLazySingleton(() => GetInitialRouteUsecase(sl()));
   sl.registerFactory(() => SplashCubit(getInitialRoute: sl()));
@@ -81,28 +79,29 @@ Future<void> configureDependencies() async {
   // AUTH
   // ════════════════════════════════════════════════════════════════════════
   sl.registerLazySingleton<AuthRemoteDatasource>(
-        () => AuthRemoteDatasourceImpl(sl()),
+    () => AuthRemoteDatasourceImpl(sl()),
   );
   sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(sl()));
   sl.registerLazySingleton(() => LoginUseCase(sl()));
   sl.registerLazySingleton(() => SignupUseCase(sl()));
   sl.registerLazySingleton(() => LogoutUseCase(sl()));
   sl.registerFactory(
-        () => AuthCubit(
-      loginUseCase: sl(),
-      signupUseCase: sl(),
-      logoutUseCase: sl(),
-    ),
+    () =>
+        AuthCubit(loginUseCase: sl(), signupUseCase: sl(), logoutUseCase: sl()),
   );
 
   // ════════════════════════════════════════════════════════════════════════
   // HOME
   // ════════════════════════════════════════════════════════════════════════
-  sl.registerLazySingleton<HomeRemoteDataSource>(() => HomeRemoteDataSourceImpl(sl()));
+  sl.registerLazySingleton<HomeRemoteDataSource>(
+    () => HomeRemoteDataSourceImpl(sl()),
+  );
   sl.registerLazySingleton<HomeRepository>(() => HomeRepositoryImpl(sl()));
   sl.registerLazySingleton(() => GetPopularDoctorsUseCase(sl()));
   sl.registerLazySingleton(() => GetDoctorsBySpecialtyUseCase(sl()));
-  sl.registerFactory(() => HomeCubit(getPopularDoctors: sl(), getDoctorsBySpecialty: sl()));
+  sl.registerFactory(
+    () => HomeCubit(getPopularDoctors: sl(), getDoctorsBySpecialty: sl()),
+  );
 
   // ════════════════════════════════════════════════════════════════════════
   // FIND DOCTORS

@@ -1,11 +1,11 @@
-import 'package:salamtak/data/models/doctors.dart';
+import 'package:salamtak/core/entities/doctor_entity.dart';
 
 class FavoriteDoctorState {}
 
 final class FavoriteDoctorInitialState extends FavoriteDoctorState {}
 
 final class DoctorFavoriteFilterState extends FavoriteDoctorState {
-  final List<Doctors> filteredDoctors;
+  final List<DoctorEntity> filteredDoctors;
 
   DoctorFavoriteFilterState(this.filteredDoctors);
 }
@@ -13,7 +13,7 @@ final class DoctorFavoriteFilterState extends FavoriteDoctorState {
 final class FavoriteDoctorLoading extends FavoriteDoctorState{}
 
 final class FavoriteDoctorSuccess extends FavoriteDoctorState{
-  List<Doctors> allDoctors = [];
+  List<DoctorEntity> allDoctors = [];
   FavoriteDoctorSuccess(this.allDoctors);
 }
 

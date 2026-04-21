@@ -8,6 +8,8 @@ import 'package:salamtak/features/auth/presentation/widgets/custom_text_button.d
 import 'package:salamtak/features/auth/presentation/widgets/custom_text_form_field.dart';
 import 'package:salamtak/features/auth/presentation/cubit/auth_bloc.dart';
 
+// TODO i need check flow auth and fix error
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 

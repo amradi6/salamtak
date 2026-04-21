@@ -17,11 +17,11 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   Future<List<DoctorModel>> getPopularDoctors() async {
     final data = await _client
         .from(SupabaseConfig.doctorsTable)
-        .select('*, profiles!inner(email, username)')
+        .select('*')
         .order('rating', ascending: false)
         .limit(10);
     return (data as List)
-        .map((r) => DoctorModel.fromMap(r as Map<String, dynamic>))
+        .map((r) => DoctorModel.fromMap(r as Map<dynamic, dynamic>))
         .toList();
   }
 

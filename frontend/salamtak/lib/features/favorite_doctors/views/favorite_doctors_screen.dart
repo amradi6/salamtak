@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/core/constants/widgets/circle_for_bg.dart';
 import 'package:salamtak/core/constants/widgets/text_form_for_search.dart';
-import 'package:salamtak/data/models/doctors.dart';
+import 'package:salamtak/core/entities/doctor_entity.dart';
 import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_cubit.dart';
 import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_state.dart';
 import 'package:salamtak/features/favorite_doctors/widgets/favorite_doctors_cards.dart';
-import 'package:salamtak/shared/utils/doctor_shimmer.dart';
+import 'package:salamtak/core/constants/widgets/doctor_shimmer.dart';
 
 class FavoriteDoctorsScreen extends StatefulWidget {
   const FavoriteDoctorsScreen({super.key});
@@ -22,7 +22,7 @@ class _FavoriteDoctorsScreenState extends State<FavoriteDoctorsScreen> {
     Future.microtask(() {
       if (!mounted) return;
       context.read<FavoriteDoctorCubit>().syncFavoritesToServer();
-      context.read<FavoriteDoctorCubit>().fetchAllDoctors();
+      // context.read<FavoriteDoctorCubit>().fetchAllDoctors();
     });
   }
 
@@ -56,7 +56,7 @@ class _FavoriteDoctorsScreenState extends State<FavoriteDoctorsScreen> {
             ),
             child: RefreshIndicator(
               onRefresh: () async {
-                await context.read<FavoriteDoctorCubit>().fetchAllDoctors();
+                // await context.read<FavoriteDoctorCubit>().fetchAllDoctors();
               },
               color: Colors.green,
               child: SingleChildScrollView(
@@ -132,7 +132,7 @@ class _FavoriteDoctorsScreenState extends State<FavoriteDoctorsScreen> {
                     SizedBox(height: size.height * 0.029),
                     BlocBuilder<FavoriteDoctorCubit, FavoriteDoctorState>(
                       builder: (context, state) {
-                        List<Doctors> doctor =
+                        List<DoctorEntity> doctor =
                             context
                                 .watch<FavoriteDoctorCubit>()
                                 .favoriteDoctors;

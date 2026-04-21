@@ -3,13 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
-import 'package:salamtak/data/models/doctors.dart';
+import 'package:salamtak/core/entities/doctor_entity.dart';
 import 'package:salamtak/features/favorite_doctors/cubit/favorite_doctor_state.dart';
 
 class FavoriteDoctorCubit extends Cubit<FavoriteDoctorState> {
   FavoriteDoctorCubit() : super(FavoriteDoctorInitialState());
 
-  final List<Doctors> allDoctors = [];
+  final List<DoctorEntity> allDoctors = [];
 
   get favoriteDoctors =>
       allDoctors.where((d) => d.isFavorite ?? false).toList();
@@ -48,53 +48,53 @@ class FavoriteDoctorCubit extends Cubit<FavoriteDoctorState> {
     }
   }
 
-  Future<void> fetchAllDoctors() async {
-    emit(FavoriteDoctorLoading());
-    try {
-      final response = await http.get(
-        Uri.parse("https://mohammadhussien.pythonanywhere.com/getdoctors/"),
-      );
+  // Future<void> fetchAllDoctors() async {
+  //   emit(FavoriteDoctorLoading());
+  //   try {
+  //     final response = await http.get(
+  //       Uri.parse("https://mohammadhussien.pythonanywhere.com/getdoctors/"),
+  //     );
+  //
+  //     if (response.statusCode == 200) {
+  //       final List<dynamic> data = jsonDecode(response.body);
+  //
+  //       allDoctors.clear();
+  //       favoriteIds.clear();
+  //
+  //       for (var item in data) {
+  //         final doctor = DoctorEntity.fromJson(item);
+  //         allDoctors.add(doctor);
+  //
+  //         if (doctor.isFavorite!) {
+  //           favoriteIds.add(doctor.id);
+  //         }
+  //       }
+  //       emit(FavoriteDoctorSuccess(allDoctors));
+  //     }
+  //     else {
+  //       emit(FavoriteDoctorError("Failed to load doctors."));
+  //     }
+  //   } catch (e) {
+  //     emit(
+  //       FavoriteDoctorError(
+  //         "An error occurred while connecting to the server.",
+  //       ),
+  //     );
+  //   }
+  // }
 
-      if (response.statusCode == 200) {
-        final List<dynamic> data = jsonDecode(response.body);
-
-        allDoctors.clear();
-        favoriteIds.clear();
-
-        for (var item in data) {
-          final doctor = Doctors.fromMap(item);
-          allDoctors.add(doctor);
-
-          if (doctor.isFavorite!) {
-            favoriteIds.add(doctor.id);
-          }
-        }
-        emit(FavoriteDoctorSuccess(allDoctors));
-      }
-      else {
-        emit(FavoriteDoctorError("Failed to load doctors."));
-      }
-    } catch (e) {
-      emit(
-        FavoriteDoctorError(
-          "An error occurred while connecting to the server.",
-        ),
-      );
-    }
-  }
-
-  void toggleFavorite(Doctors doctor) {
-    if (favoriteIds.contains(doctor.id)) {
-      favoriteIds.remove(doctor.id);
-      doctor.isFavorite = false;
-    } else {
-      favoriteIds.add(doctor.id);
-      doctor.isFavorite = true;
-    }
-
-    _pendingChanges.add(doctor.id);
-    emit(FavoriteDoctorSuccess(allDoctors));
-  }
+  // void toggleFavorite(DoctorEntity doctor) {
+  //   if (favoriteIds.contains(doctor.id)) {
+  //     favoriteIds.remove(doctor.id);
+  //     doctor.isFavorite = false;
+  //   } else {
+  //     favoriteIds.add(doctor.id);
+  //     doctor.isFavorite = true;
+  //   }
+  //
+  //   _pendingChanges.add(doctor.id);
+  //   emit(FavoriteDoctorSuccess(allDoctors));
+  // }
 
   void filterFavoriteDoctors(String name) {
     isSearching = true;

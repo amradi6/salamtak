@@ -5,7 +5,7 @@ import 'package:salamtak/features/auth/presentation/cubit/auth_bloc.dart';
 import 'package:salamtak/features/booked_doctors/cubit/booked_doctors_cubit.dart';
 import 'package:salamtak/features/booked_doctors/cubit/booked_doctors_state.dart';
 import 'package:salamtak/features/booked_doctors/widgets/container_for_booked.dart';
-import 'package:salamtak/shared/utils/doctor_shimmer.dart';
+import 'package:salamtak/core/constants/widgets/doctor_shimmer.dart';
 
 class BookedDoctorsScreen extends StatefulWidget {
   const BookedDoctorsScreen({super.key});

@@ -3,13 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salamtak/core/constants/widgets/circle_for_bg.dart';
 import 'package:salamtak/core/constants/widgets/text_form_for_search.dart';
 import 'package:salamtak/features/home/presentation/widgets/build_popular_section.dart';
-import 'package:salamtak/features/home/presentation/widgets/container_for_feature_doctor.dart';
-import 'package:salamtak/features/home/presentation/widgets/container_for_popular_doctor.dart';
 import 'package:salamtak/features/home/presentation/cubit/home_cubit.dart';
 import 'package:salamtak/features/home/presentation/widgets/custom_icons_for_classification.dart%20.dart';
-import 'package:salamtak/features/profiel/cubit/profiel_cubit.dart';
-import 'package:salamtak/features/profiel/cubit/profiel_state.dart';
-import 'package:salamtak/shared/utils/doctor_shimmer.dart';
 
 class NoGlowScrollBehavior extends ScrollBehavior {
   Widget buildViewportChrome(
@@ -21,8 +16,21 @@ class NoGlowScrollBehavior extends ScrollBehavior {
   }
 }
 
-class HomeScreen extends StatelessWidget {
+// Todo i need check why show error in popular section in home screen
+
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<HomeCubit>().fetchPopularDoctors();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +46,7 @@ class HomeScreen extends StatelessWidget {
           backgroundColor: Color(0XFFFFFFFF),
           body: RefreshIndicator(
             onRefresh: () async {
-              await context.read<HomeCubit>().fetchPopularDoctors;
+              await context.read<HomeCubit>().fetchPopularDoctors();
             },
             color: Colors.green,
             child: Stack(
